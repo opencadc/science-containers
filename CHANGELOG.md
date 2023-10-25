@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/opencadc/scicon/compare/v0.4.2...v0.5.0) (2023-10-25)
+
+
+### Features
+
+* **ci:** added pre-commit ci action ([2cc8b3d](https://github.com/opencadc/scicon/commit/2cc8b3d92aeca39e3605a38d2fe3e90fbe36c347))
+
 ## [0.4.2](https://github.com/opencadc/scicon/compare/v0.4.1...v0.4.2) (2023-10-25)
 
 
