@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.0](https://github.com/opencadc/science-containers/compare/v0.4.2...v0.5.0) (2024-01-08)
+
+
+### Features
+
+* **base Image:** debugged micromamba installation process ([4a6b0ac](https://github.com/opencadc/science-containers/commit/4a6b0acc470da7ffc265459d4de443464ecbb607))
+* **ci:** added pre-commit ci action ([2cc8b3d](https://github.com/opencadc/science-containers/commit/2cc8b3d92aeca39e3605a38d2fe3e90fbe36c347))
+
+
+### Documentation
+
+* **rework:** index rework ([0072015](https://github.com/opencadc/science-containers/commit/00720150466de4de4d2097a405f839e0ff48d764))
+* **rework:** rework ([5bc217c](https://github.com/opencadc/science-containers/commit/5bc217cc11b4ab72b156d8f96f8d35995b4a8d2b))
+
 ## [0.4.2](https://github.com/opencadc/scicon/compare/v0.4.1...v0.4.2) (2023-10-25)
 
 
