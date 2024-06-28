@@ -1,0 +1,84 @@
+#! /bin/csh -f
+#
+#   clean casa files
+#
+#   @todo   TempLattice18579_0  from ia.transpose()   [now done]
+#           tab<PID>_0
+#
+#   @todo   Since integration tests also need to clean, better have something in python
+#
+
+# see also https://open-jira.nrao.edu/browse/CAS-11030
+set dirs = (_immath __tmp_fromTFmask __tmp_outputmask __tmp_frominmask _tmp_copy___tmp_frominmask)
+
+# we don't want this script to crash if the foreach's have no match.
+set nonomatch=1
+
+
+if ($#argv == 0) then
+  echo 'For cleaning suspect casa temporary files:'
+  echo "    "$dirs
+  echo '     and casapy*.log ipython-*.log files'
+  echo 'Use any argument to clean local directory.'
+  echo 'Use -r for recursive clean of log files.'
+  echo 'Use -x to clean up your Xvfb instances.'
+  exit 0
+endif
+
+#  these are files with a fixed name (no $$ or tmpfile() usage)
+#  that need to be cleaned up if a CASA script crashes in certain ways
+#  @todo should be filed as a CASA bug, we shouldn't need to do this
+foreach dir ($dirs)
+   if (-d $dir) then
+      echo Removing suspect directory $dir
+      rm -rf $dir
+   endif
+end
+
+foreach dir (TempLattice*_*)
+  echo Removing suspect directory $dir
+  rm -rf $dir
+end
+
+
+set temp=(`getopt -s csh -o r -- $argv:q`)
+eval set argv=\($temp:q\)
+
+switch ($1:q)
+    case -x:
+      echo "Clean up Xvbf instances (linux only)"
+      killall Xvfb
+      breaksw
+    case -r:
+      echo "recursive clean"
+      find . -name casapy-\*.log -exec rm {} \;
+      find . -name casa-\*.log -exec rm {} \;
+      find . -name ipython-\*.log -exec rm {} \;
+      breaksw
+
+    default:
+        echo -n "Checking casapy log files "
+        set log1 = (`echo casapy*.log`)
+        echo Found $#log1
+        echo -n "Checking ipython log files "
+        set log2 = (`echo ipython-*.log`)
+        echo Found $#log2
+        echo -n "Checking casa log files "
+        set log3 = (`echo casa-*.log`)
+        echo Found $#log3
+
+        if ($#log1) then
+          echo Cleaning $#log1 ' casapy*.log files'
+          rm -f $log1
+        endif
+
+        if ($#log2) then
+          echo Cleaning $#log2 'ipython-*.log files'
+          rm -f $log2
+        endif
+
+        if ($#log3) then
+          echo Cleaning $#log3 ' casa-*.log files'
+          rm -f $log3
+        endif
+endsw
