@@ -1,0 +1,4 @@
+This directory contains software containers relevant for the radio and 
+submillimetre astronomy communities which sit adjacent to CASA.
+For example, JCMT's Starlink software, and the galario package
+which fits UV data outside of CASA.
