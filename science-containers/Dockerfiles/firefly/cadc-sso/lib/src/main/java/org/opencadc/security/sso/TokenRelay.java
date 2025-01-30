@@ -5,7 +5,7 @@
  *
  * <p>This package includes the following key components:</p>
  * <ul>
- *   <li>{@link org.opencadc.security.sso.CadcSsoCookie} - A class for managing SSO cookies and retrieving authentication tokens.</li>
+ *   <li>{@link org.opencadc.security.sso.TokenRelay} - A class that retrieves the authentication token from the SSO cookie.</li>
  * </ul>
  *
  * <p>The primary purpose of this package is to facilitate secure authentication and
@@ -22,12 +22,24 @@ import edu.caltech.ipac.firefly.server.util.Logger;
 
 import javax.servlet.http.Cookie;
 
-public class CadcSsoCookie implements SsoAdapter {
+public class TokenRelay implements SsoAdapter {
 
     private static final Logger.LoggerImpl LOGGER = Logger.getLogger();
-    private static final String CADC_SSO_COOKIE_NAME = System.getenv().getOrDefault("CADC_SSO_COOKIE_NAME", "CADC_SSO");
-    private static final String CADC_ALLOWED_DOMAIN = System.getenv().getOrDefault("CADC_ALLOWED_DOMAIN", ".canfar.net");
     private Token token = null;
+
+    /**
+     * SSO Cookie Properties
+     * SSO_COOKIE_NAME: The name of the SSO cookie.
+     * SSO_COOKIE_DOMAIN: The domain of the SSO cookie.
+     */
+    private static final String SSO_COOKIE_NAME = System.getenv().getOrDefault("CADC_SSO_COOKIE_NAME", "CADC_SSO");
+    private static final String SSO_COOKIE_DOMAIN = System.getenv().getOrDefault("CADC_SSO_COOKIE_DOMAIN", ".canfar.net");
+    
+    /**
+     * Downstream Service Properties
+     * ALLOWED_DOMAIN: The domain of the downstream service.
+     */
+    private static final String ALLOWED_DOMAIN = System.getenv().getOrDefault("CADC_ALLOWED_DOMAIN", ".canfar.net");
 
     /**
      * Retrieves the authentication token from the SSO cookie.
@@ -42,17 +54,28 @@ public class CadcSsoCookie implements SsoAdapter {
      *
      * @return Token The authentication token if the SSO cookie is found and the domain is allowed, otherwise null.
      */
+
+    /**
+     * Retrieves the request agent from the server context. This method is package-private
+     * to allow for testing with a mock request agent.
+     * 
+     * @return RequestAgent The request agent associated with the current request.
+     */
+    RequestAgent getRequestAgent() {
+        return ServerContext.getRequestOwner().getRequestAgent();
+    }
+
     @Override
     public Token getAuthToken() {
         token = null;
         try {
-            RequestAgent agent = ServerContext.getRequestOwner().getRequestAgent();
-            Cookie ssoCookie = agent.getCookie(CADC_SSO_COOKIE_NAME);
+            RequestAgent agent = getRequestAgent();
+            Cookie ssoCookie = agent.getCookie(SSO_COOKIE_NAME);
 
             if (ssoCookie != null) {
                 String ssoToken = ssoCookie.getValue(); // Get the value of the cookie
                 String cookieDomain = ssoCookie.getDomain(); // Get the domain of the cookie
-                if (!CADC_ALLOWED_DOMAIN.endsWith(cookieDomain) || cookieDomain == null) {
+                if (!SSO_COOKIE_DOMAIN.endsWith(cookieDomain) || cookieDomain == null) {
                     LOGGER.info("SSO Token found, but domain is not allowed " + cookieDomain);
                     return null;
                 }
@@ -70,6 +93,8 @@ public class CadcSsoCookie implements SsoAdapter {
         }
         return token;
     }
+
+    
     
     /**
      * Sets the authorization credential for the given HTTP service input.
@@ -83,7 +108,7 @@ public class CadcSsoCookie implements SsoAdapter {
     @Override
     public void setAuthCredential(HttpServiceInput inputs) {
         Token token = getAuthToken();
-        if (token != null && token.getId() != null && SsoAdapter.requireAuthCredential(inputs.getRequestUrl(), CADC_ALLOWED_DOMAIN)) {
+        if (token != null && token.getId() != null && SsoAdapter.requireAuthCredential(inputs.getRequestUrl(), ALLOWED_DOMAIN)) {
             inputs.setHeader("Authorization", "Bearer " + token.getId());
         }
     }
