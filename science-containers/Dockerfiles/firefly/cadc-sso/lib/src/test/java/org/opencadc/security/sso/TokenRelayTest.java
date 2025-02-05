@@ -2,7 +2,6 @@ package org.opencadc.security.sso;
 
 import edu.caltech.ipac.firefly.data.userdata.UserInfo;
 import edu.caltech.ipac.firefly.server.RequestAgent;
-import edu.caltech.ipac.firefly.server.network.HttpServiceInput;
 import edu.caltech.ipac.firefly.server.security.SsoAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ class TokenRelayTest {
     }
 
     @Test
-    void testGetAuthToken_ValidSSOCookie() {
+    void testGetAuthTokenValidSSOCookie() {
         Cookie validCookie = new Cookie("CADC_SSO", "valid_token");
         validCookie.setDomain(".canfar.net");
 
@@ -42,7 +41,7 @@ class TokenRelayTest {
     }
 
     @Test
-    void testGetAuthToken_InvalidSSOCookieDomain() {
+    void testGetAuthTokenInvalidSSOCookieDomain() {
         Cookie invalidCookie = new Cookie("CADC_SSO", "valid_token");
         invalidCookie.setDomain(".invalid.com");
 
@@ -57,7 +56,7 @@ class TokenRelayTest {
     }
 
     @Test
-    void testGetAuthToken_NoCookie() {
+    void testGetAuthTokenNoCookie() {
         when(mockAgent.getCookie("CADC_SSO")).thenReturn(null);
 
         TokenRelay spyRelay = Mockito.spy(tokenRelay);
@@ -68,35 +67,11 @@ class TokenRelayTest {
         assertNull(token);
     }
 
-    // @Test
-    // void testSetAuthCredential_ValidToken() {
-    //     HttpServiceInput input = new HttpServiceInput("https://secure.canfar.net/api");
-        
-    //     TokenRelay spyRelay = Mockito.spy(tokenRelay);
-    //     SsoAdapter.Token mockToken = new SsoAdapter.Token("mock_token");
-    //     doReturn(mockToken).when(spyRelay).getAuthToken();
-
-    //     spyRelay.setAuthCredential(input);
-
-    //     assertEquals("Bearer mock_token", input.getHeaders().get("Authorization"));
-    // }
-
-    // @Test
-    // void testSetAuthCredential_NoToken() {
-    //     HttpServiceInput input = new HttpServiceInput("https://secure.canfar.net/api");
-        
-    //     TokenRelay spyRelay = Mockito.spy(tokenRelay);
-    //     doReturn(null).when(spyRelay).getAuthToken();
-
-    //     spyRelay.setAuthCredential(input);
-
-    //     assertNull(input.getHeaders().get("Authorization"));
-    // }
-
-    // @Test
-    // void testGetUserInfo() {
-    //     UserInfo userInfo = tokenRelay.getUserInfo();
-    //     assertNotNull(userInfo);
-    //     assertNull(userInfo.getLoginName()); // Default empty user
-    // }
+    @Test
+    void testGetUserInfo() {
+        UserInfo userInfo = tokenRelay.getUserInfo();
+        assertNotNull(userInfo);
+        assertNotNull(userInfo.getLoginName()); // Default User
+        assert(userInfo.getLoginName().equals("Guest")); // Default User is Guest
+    }
 }

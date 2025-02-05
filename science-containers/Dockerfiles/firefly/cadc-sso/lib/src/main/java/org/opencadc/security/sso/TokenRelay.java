@@ -76,15 +76,15 @@ public class TokenRelay implements SsoAdapter {
                 String ssoToken = ssoCookie.getValue(); // Get the value of the cookie
                 String cookieDomain = ssoCookie.getDomain(); // Get the domain of the cookie
                 if (!SSO_COOKIE_DOMAIN.endsWith(cookieDomain) || cookieDomain == null) {
-                    LOGGER.info("SSO Token found, but domain is not allowed " + cookieDomain);
+                    LOGGER.info("SSO Token found, but invalid domain " + cookieDomain);
                     return null;
                 }
                 token = new Token(ssoToken);
-                LOGGER.info("Retrieved SSO Token for domain " + cookieDomain);
+                LOGGER.info("Retrieved SSO Token for " + cookieDomain);
             }
             else{
                 LOGGER.info("SSO Token not found");
-                LOGGER.info("SSO Token not found. Available cookies: " + agent.getCookies().keySet());
+                LOGGER.info("SSO Token not found in Cookie Name: " + SSO_COOKIE_NAME);
             }
 
         }
@@ -93,7 +93,6 @@ public class TokenRelay implements SsoAdapter {
         }
         return token;
     }
-
     
     
     /**
@@ -108,7 +107,9 @@ public class TokenRelay implements SsoAdapter {
     @Override
     public void setAuthCredential(HttpServiceInput inputs) {
         Token token = getAuthToken();
-        if (token != null && token.getId() != null && SsoAdapter.requireAuthCredential(inputs.getRequestUrl(), ALLOWED_DOMAIN)) {
+        String requestURL = inputs.getRequestUrl();
+        Boolean allowed = SsoAdapter.requireAuthCredential(requestURL, ALLOWED_DOMAIN);
+        if (token != null && token.getId() != null && allowed) {
             inputs.setHeader("Authorization", "Bearer " + token.getId());
         }
     }
