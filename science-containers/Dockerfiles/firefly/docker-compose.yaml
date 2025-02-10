@@ -1,0 +1,15 @@
+services:
+  firefly:
+    image: opencadc/firefly
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PLATFORM=linux/amd64
+    ports:
+      - "8080:8080"
+    environment:
+      - PROPS_sso__framework__adapter=org.opencadc.security.sso.TokenRelay
+      - CADC_SSO_COOKIE_NAME="CADC_SSO".
+      - CADC_SSO_COOKIE_DOMAIN=".canfar.net"
+      - CADC_ALLOWED_DOMAIN=".canfar.net"
