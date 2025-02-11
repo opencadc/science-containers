@@ -9,7 +9,7 @@ RUN set -eux; \
     gradle build --info \
     && ls -l lib/build/libs/cadc-sso-*.jar
 
-FROM ipac/firefly:2024.3.5
-COPY --from=builder /firefly/cadc-sso/lib/build/libs/cadc-sso-*.jar /usr/local/tomcat/extensions/
-COPY --from=builder /firefly/launchTomcat.sh /usr/local/tomcat/
+FROM ipac/firefly:nightly
+COPY --from=builder /firefly/entrypoint.py /usr/local/tomcat/
+COPY --from=builder /firefly/cadc-sso/lib/build/libs/cadc-sso-*.jar /usr/local/tomcat/webapps-ref/firefly/WEB-INF/lib/
 

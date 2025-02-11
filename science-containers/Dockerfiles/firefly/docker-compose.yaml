@@ -1,6 +1,5 @@
 services:
   firefly:
-    image: opencadc/firefly
     build:
       context: .
       dockerfile: Dockerfile
