@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.6.0](https://github.com/opencadc/science-containers/compare/v0.5.0...v0.6.0) (2025-02-18)
+
+
+### Features
+
+* **build:** added gradle build file ([e2944d3](https://github.com/opencadc/science-containers/commit/e2944d3b37f2b629c0503b78a400985c4122bc96))
+* **cadc-sso:** added base implementation of the adapter ([d0fdc5c](https://github.com/opencadc/science-containers/commit/d0fdc5cc7256e83d9efe5e6f0b9acf7cc89a4c29))
+* **cadc-sso:** fixed firefly runtime issues and added documentation ([e50ef6c](https://github.com/opencadc/science-containers/commit/e50ef6c263b2e4e0f0355fce7ee9c41cff63fc72))
+* **entrypoint:** updated entrypoint logic ([e91431a](https://github.com/opencadc/science-containers/commit/e91431a650313b35f91b39c85b864fd85dd8093e))
+* **k8s:** added manifest to deploy firefly on keel ([b42ce76](https://github.com/opencadc/science-containers/commit/b42ce766caa4e0bcfab258a30c19ad2f61752ff2))
+* **prject:** setup for cadc-sso project ([9f22a34](https://github.com/opencadc/science-containers/commit/9f22a3408649229beb2f8d1a59197b806b31293d))
+
+
+### Bug Fixes
+
+* **build:** removed unused configuration section from build.gradle ([4b8fb81](https://github.com/opencadc/science-containers/commit/4b8fb81911b3c16ad7f32ee389886100c67651b1))
+* **cadc-sso:** added lib to be included ([dfacbdb](https://github.com/opencadc/science-containers/commit/dfacbdbfeeaa71c65f343a5254ea465f5d23503d))
+* **cadc-sso:** added significantly more testing and method to check if headers need to be added for downstream api access ([153a8a7](https://github.com/opencadc/science-containers/commit/153a8a7c5ca01ed466fb9b2dbe20fa5a71d02981))
+* **docker:** removed reference to entrypoint.py ([cb686b8](https://github.com/opencadc/science-containers/commit/cb686b81454514808dc5c38d05b15be6d1622d1f))
+* **docs:** updated based pr-comments ([070d81e](https://github.com/opencadc/science-containers/commit/070d81e20363c2ae026fd429aab04368f3c9b0d9))
+* **entrypoint:** fixes for firefly entrypoint ([ee33764](https://github.com/opencadc/science-containers/commit/ee337643f99cd35a081b00676d3a2a8b368a2d74))
+* **gitignore:** added cadc-sso/lib folder to be tracked by git ([985bee1](https://github.com/opencadc/science-containers/commit/985bee1bb3afb933c6adf3016c8f98b4c0970155))
+* **gitignore:** fixes ([42ce27a](https://github.com/opencadc/science-containers/commit/42ce27a69137cc97c1a5aa26d004a8bf6b2dbea9))
+* **gradle:** fixed gradle launcher vs daemon vm issues ([d11fc47](https://github.com/opencadc/science-containers/commit/d11fc478d4deddea60043072d591caa2b1e031a5))
+* remove image link ([bb627a6](https://github.com/opencadc/science-containers/commit/bb627a61834fae97ab5ee010579b490a763bf423))
+
+
+### Documentation
+
+* small text chagne ([2720ea5](https://github.com/opencadc/science-containers/commit/2720ea517c1ada920470f5aa95ffcf0221871311))
+* update for new registry authentication ([ea6b464](https://github.com/opencadc/science-containers/commit/ea6b4640732af037f7510ac7727893fff96e2a33))
+
 ## [0.5.0](https://github.com/opencadc/science-containers/compare/v0.4.2...v0.5.0) (2024-06-07)
 
 
