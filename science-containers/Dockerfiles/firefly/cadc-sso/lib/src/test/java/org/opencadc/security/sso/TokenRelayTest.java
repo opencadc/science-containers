@@ -74,6 +74,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import javax.servlet.http.Cookie;
+import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -107,22 +108,15 @@ class TokenRelayTest {
     }
 
     @Test
-    void testGetAuthTokenInvalidSSOCookieDomain() {
-        Cookie invalidCookie = new Cookie("CADC_SSO", "valid_token");
-        invalidCookie.setDomain(".invalid.com");
-
-        when(mockAgent.getCookie("CADC_SSO")).thenReturn(invalidCookie);
-
-        TokenRelay spyRelay = Mockito.spy(tokenRelay);
-        doReturn(mockAgent).when(spyRelay).getRequestAgent();
-
-        SsoAdapter.Token token = spyRelay.getAuthToken();
-
-        assertNull(token);
+    void testGetUserInfo() {
+        UserInfo userInfo = tokenRelay.getUserInfo();
+        assertNotNull(userInfo);
+        assertNotNull(userInfo.getLoginName()); // Default User
+        assert(userInfo.getLoginName().equals("Guest")); // Default User is Guest
     }
 
     @Test
-    void testGetAuthTokenNoCookie() {
+    void testGetAuthTokenNullCookie() {
         when(mockAgent.getCookie("CADC_SSO")).thenReturn(null);
 
         TokenRelay spyRelay = Mockito.spy(tokenRelay);
@@ -134,10 +128,149 @@ class TokenRelayTest {
     }
 
     @Test
-    void testGetUserInfo() {
-        UserInfo userInfo = tokenRelay.getUserInfo();
-        assertNotNull(userInfo);
-        assertNotNull(userInfo.getLoginName()); // Default User
-        assert(userInfo.getLoginName().equals("Guest")); // Default User is Guest
+    void testGetAuthTokenEmptyTokenValue() {
+        Cookie emptyTokenCookie = new Cookie("CADC_SSO", "");
+        emptyTokenCookie.setDomain(".canfar.net");
+
+        when(mockAgent.getCookie("CADC_SSO")).thenReturn(emptyTokenCookie);
+
+        TokenRelay spyRelay = Mockito.spy(tokenRelay);
+        doReturn(mockAgent).when(spyRelay).getRequestAgent();
+
+        SsoAdapter.Token token = spyRelay.getAuthToken();
+
+        assertNull(token);
+    }
+
+    @Test
+    void testGetAuthTokenInvalidDomain() {
+        Cookie invalidDomainCookie = new Cookie("CADC_SSO", "valid_token");
+        invalidDomainCookie.setDomain(".invalid.net");
+
+        when(mockAgent.getCookie("CADC_SSO")).thenReturn(invalidDomainCookie);
+
+        TokenRelay spyRelay = Mockito.spy(tokenRelay);
+        doReturn(mockAgent).when(spyRelay).getRequestAgent();
+
+        // Set ENFORCE_DOMAIN to true using reflection
+        try {
+            Field enforceDomainField = TokenRelay.class.getDeclaredField("ENFORCE_DOMAIN");
+            Field debugField = TokenRelay.class.getDeclaredField("DEBUG");
+            enforceDomainField.setAccessible(true);
+            enforceDomainField.setBoolean(spyRelay, true);
+            debugField.setAccessible(true);
+            debugField.setBoolean(spyRelay, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SsoAdapter.Token token = spyRelay.getAuthToken();
+
+        assertNull(token);
+    }
+
+    @Test
+    void testGetAuthTokenValidDomain() {
+        Cookie validDomainCookie = new Cookie("CADC_SSO", "valid_token");
+        validDomainCookie.setDomain(".canfar.net");
+
+        when(mockAgent.getCookie("CADC_SSO")).thenReturn(validDomainCookie);
+
+        TokenRelay spyRelay = Mockito.spy(tokenRelay);
+        doReturn(mockAgent).when(spyRelay).getRequestAgent();
+
+        // Set ENFORCE_DOMAIN to true using reflection
+        try {
+            Field enforceDomainField = TokenRelay.class.getDeclaredField("ENFORCE_DOMAIN");
+            enforceDomainField.setAccessible(true);
+            enforceDomainField.setBoolean(spyRelay, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SsoAdapter.Token token = spyRelay.getAuthToken();
+
+        assertNotNull(token);
+        assertEquals("valid_token", token.getId());
+    }
+
+    @Test
+    void testIsRequestToAllowedDomainValid() {
+        String requestURL = "https://example.canfar.net/resource";
+        String allowedDomain = ".canfar.net";
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void testIsRequestToAllowedDomainInvalid() {
+        String requestURL = "https://example.invalid.net/resource";
+        String allowedDomain = ".canfar.net";
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testIsRequestToAllowedDomainMalformedURL() {
+        String requestURL = "htp://malformed-url";
+        String allowedDomain = ".canfar.net";
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testIsRequestToAllowedDomainEmptyURL() {
+        String requestURL = "";
+        String allowedDomain = ".canfar.net";
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testIsRequestToAllowedDomainNullURL() {
+        String requestURL = null;
+        String allowedDomain = ".canfar.net";
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testIsRequestToAllowedDomainEmptyAllowedDomain() {
+        String requestURL = "https://example.canfar.net/resource";
+        String allowedDomain = "";
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testIsRequestToAllowedDomainNullAllowedDomain() {
+        String requestURL = "https://example.canfar.net/resource";
+        String allowedDomain = null;
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testURISyntaxException() {
+        String requestURL = "\"https://example.com/search?q=hello world\"";
+        String allowedDomain = ".canfar.net";
+
+        boolean result = TokenRelay.isRequestToAllowedDomain(requestURL, allowedDomain);
+
+        assertFalse(result);
     }
 }

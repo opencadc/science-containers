@@ -73,6 +73,11 @@ import edu.caltech.ipac.firefly.server.network.HttpServiceInput;
 import edu.caltech.ipac.firefly.server.security.SsoAdapter;
 import edu.caltech.ipac.firefly.server.util.Logger;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URISyntaxException;
+
 import javax.servlet.http.Cookie;
 
 /**
@@ -118,13 +123,14 @@ public class TokenRelay implements SsoAdapter {
      */
     private static final String SSO_COOKIE_NAME = System.getenv().getOrDefault("CADC_SSO_COOKIE_NAME", "CADC_SSO");
     private static final String SSO_COOKIE_DOMAIN = System.getenv().getOrDefault("CADC_SSO_COOKIE_DOMAIN", ".canfar.net");
+    private static boolean ENFORCE_DOMAIN = Boolean.parseBoolean(System.getenv().getOrDefault("CADC_SSO_ENFORCE_COOKIE_DOMAIN", "false"));
+    private static boolean DEBUG = Boolean.parseBoolean(System.getenv().getOrDefault("DEBUG", "false"));
     
     /**
      * Downstream Service Properties
      * ALLOWED_DOMAIN: The domain of the downstream service.
      */
     private static final String ALLOWED_DOMAIN = System.getenv().getOrDefault("CADC_ALLOWED_DOMAIN", ".canfar.net");
-
     /**
      * Retrieves the authentication token from the SSO cookie.
      * 
@@ -140,27 +146,57 @@ public class TokenRelay implements SsoAdapter {
         try {
             RequestAgent agent = getRequestAgent();
             Cookie ssoCookie = agent.getCookie(SSO_COOKIE_NAME);
-
             if (ssoCookie != null) {
+                if (DEBUG){
+                    cookieDetails(agent, ssoCookie);
+                }
+                
                 String ssoToken = ssoCookie.getValue(); // Get the value of the cookie
                 String cookieDomain = ssoCookie.getDomain(); // Get the domain of the cookie
-                if (!SSO_COOKIE_DOMAIN.endsWith(cookieDomain) || cookieDomain == null) {
-                    LOGGER.info("SSO Token found, but invalid domain " + cookieDomain);
+
+                if (ssoToken == null || ssoToken.isEmpty()) {
+                    LOGGER.error("Null or empty token value");
                     return null;
                 }
-                token = new Token(ssoToken);
-                LOGGER.info("Retrieved SSO Token for " + cookieDomain);
-            }
-            else{
-                LOGGER.info("SSO Token not found");
-                LOGGER.info("SSO Token not found in Cookie Name: " + SSO_COOKIE_NAME);
-            }
 
+                if (ENFORCE_DOMAIN) {
+                    if (cookieDomain == null || cookieDomain.isEmpty() || !cookieDomain.endsWith(SSO_COOKIE_DOMAIN)) {
+                        LOGGER.error("Invalid cookie domain. Expected: " + SSO_COOKIE_DOMAIN + ", Actual: " + cookieDomain);
+                        return null;
+                    }
+                }
+                // Create a new Token object with the token value from the cookie
+                token = new Token(ssoToken);
+                LOGGER.info("Retrieved SSO Token");
+            }
         }
         catch (Exception error){
-            LOGGER.error(error);
+            error.printStackTrace();
         }
         return token;
+    }
+
+
+    /**
+     * Logs detailed information about the provided SSO cookie and request agent.
+     *
+     * @param agent The request agent associated with the cookie.
+     * @param ssoCookie The SSO cookie whose details are to be logged.
+     */
+    private void cookieDetails(RequestAgent agent, Cookie ssoCookie) {
+        LOGGER.info("==================================="); // Log the cookie properties
+        LOGGER.info("COOKIE_NAME    : " + SSO_COOKIE_NAME);
+        LOGGER.info("COOKIE_DOMAIN  : " + SSO_COOKIE_DOMAIN);
+        LOGGER.info("ENFORCE_DOMAIN : " + ENFORCE_DOMAIN);
+        LOGGER.info("==================================="); // Log the cookie properties
+        LOGGER.info("Cookie Name    : " + ssoCookie.getName());
+        LOGGER.info("Cookie Domain  : " + ssoCookie.getDomain());
+        LOGGER.info("Cookie Value   : " + ssoCookie.getValue().substring(0, 10) + "...");
+        LOGGER.info("Cookie MaxAge  : " + ssoCookie.getMaxAge());
+        LOGGER.info("Cookie Secure  : " + ssoCookie.getSecure());
+        LOGGER.info("Cookie HttpOnly: " + ssoCookie.isHttpOnly());
+        LOGGER.info("Cookie Agent   : " + agent.getClass().getName());
+        LOGGER.info("==================================="); // Log the cookie properties
     }
     
     
@@ -177,9 +213,10 @@ public class TokenRelay implements SsoAdapter {
     public void setAuthCredential(HttpServiceInput inputs) {
         Token token = getAuthToken();
         String requestURL = inputs.getRequestUrl();
-        Boolean allowed = SsoAdapter.requireAuthCredential(requestURL, ALLOWED_DOMAIN);
+        Boolean allowed = isRequestToAllowedDomain(requestURL, ALLOWED_DOMAIN);
         if (token != null && token.getId() != null && allowed) {
             inputs.setHeader("Authorization", "Bearer " + token.getId());
+            LOGGER.info("Authorization Header Set");
         }
     }
 
@@ -202,5 +239,36 @@ public class TokenRelay implements SsoAdapter {
      */
     RequestAgent getRequestAgent() {
         return ServerContext.getRequestOwner().getRequestAgent();
+    }
+
+    /**
+     * Checks if the given request URL belongs to the allowed domain.
+     *
+     * @param requestURL The URL of the request to be checked.
+     * @param allowedDomain The domain that is allowed.
+     * @return true if the request URL's host ends with the allowed domain, false otherwise.
+     */
+    public static boolean isRequestToAllowedDomain(String requestURL, String allowedDomain){
+        if (DEBUG){
+            LOGGER.info("Request URL    : " + requestURL);
+            LOGGER.info("Allowed Domain : " + allowedDomain);
+        }
+        URL url;
+        boolean isAllowed = false;
+        if (requestURL == null || allowedDomain == null || requestURL.isEmpty() || allowedDomain.isEmpty()) {
+            LOGGER.error("Invalid request or allowed URL");
+            return false;
+        }
+        try {
+            url = new URI(requestURL).toURL();
+            String host = url.getHost();
+            isAllowed = host.endsWith(allowedDomain);
+        } catch (URISyntaxException err) {
+            err.printStackTrace();
+        } catch (MalformedURLException err) {
+            err.printStackTrace();
+        }
+        LOGGER.info("Valid Token Domain : " + isAllowed);
+        return isAllowed;
     }
 }
