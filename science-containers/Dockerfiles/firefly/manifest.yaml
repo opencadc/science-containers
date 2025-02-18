@@ -69,7 +69,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: firefly
-          image: ipac/firefly:2024.3.2
+          image: images.canfar.net/skaha/firefly:dev
           imagePullPolicy: IfNotPresent
           resources:
             requests:
@@ -97,7 +97,7 @@ spec:
               value: "/session/notebook/firefly/"
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
-                $'{"tap":
+                {"tap":
                     {"additional":
                       {"services":[
                         {
@@ -106,9 +106,9 @@ spec:
                           "centerWP": "62;-37;EQ_J2000",
                           "fovDeg": 10
                         }]
-                      }
                     }
-                  }'
+                  }
+                }
           # This provides initialDelaySeconds + periodSeconds*failureThreshold seconds, i.e. 5 + 5*5 = 30 seconds
           # for the container port to be ready before the container is considered unhealthy
           startupProbe:
