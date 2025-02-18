@@ -15,7 +15,7 @@ downloads/
 eggs/
 .eggs/
 lib/
-!science-containers/Dockerfiles/firefly/lib/
+!science-containers/Dockerfiles/firefly/cadc-sso/lib/*
 lib64/
 parts/
 sdist/
