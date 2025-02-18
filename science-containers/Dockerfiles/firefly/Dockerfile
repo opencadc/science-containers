@@ -12,5 +12,4 @@ RUN set -eux; \
 
 # Currently, the CADC-SSO Adapter only works with the nightly build of Firefly
 FROM ipac/firefly:nightly
-COPY --from=builder /firefly/entrypoint.py /usr/local/tomcat/
 COPY --from=builder /firefly/cadc-sso/lib/build/libs/cadc-sso-*.jar /usr/local/tomcat/webapps-ref/firefly/WEB-INF/lib/
