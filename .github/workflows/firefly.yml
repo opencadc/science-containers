@@ -32,7 +32,7 @@ jobs:
         id: upstream
         run: |
           # Extract version from Dockerfile and validate format
-          version=$(grep '^FROM ipac/firefly:' Dockerfile \
+          version=$(grep '^FROM ipac/firefly:' science-containers/Dockerfiles/firefly/Dockerfile \
                | head -1 \
                | sed -E 's#^FROM ipac/firefly:(.+)$#\1#')
           
