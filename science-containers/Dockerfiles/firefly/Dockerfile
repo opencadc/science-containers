@@ -1,9 +1,9 @@
-FROM gradle:jdk21 AS base
+FROM gradle:jdk21-alpine AS base
 
 COPY . /firefly
 WORKDIR /firefly/cadc-sso
 
-SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
+SHELL ["/bin/sh", "-eo", "pipefail", "-c"]
 
 FROM base AS builder
 RUN set -eux; \
@@ -11,5 +11,5 @@ RUN set -eux; \
     && ls -l lib/build/libs/cadc-sso-*.jar
 
 # Currently, the CADC-SSO Adapter only works with the nightly build of Firefly
-FROM ipac/firefly:nightly
+FROM ipac/firefly:2025.2
 COPY --from=builder /firefly/cadc-sso/lib/build/libs/cadc-sso-*.jar /usr/local/tomcat/webapps-ref/firefly/WEB-INF/lib/
