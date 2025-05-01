@@ -72,13 +72,13 @@ jobs:
         id: attest
         uses: actions/attest-build-provenance@v2.3.0
         with:
-          subject-name: images.canfar.net/skaha/firefly
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE }}
           subject-digest: ${{ steps.build.outputs.digest }}
           # push-to-registry: true
           show-summary: true
       - name: Install Cosign
         id: install-cosign
-        uses: sigstore/cosign@v3.8.2
+        uses: sigstore/cosign-installer@v3.8.2
         with:
           cosign-release: 'v2.4.3'
       - name: Cosign Container Image
