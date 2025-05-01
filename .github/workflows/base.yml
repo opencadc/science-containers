@@ -1,4 +1,4 @@
-name: Continous Deployment
+name: Build & Push skaha/base
 
 on:
   schedule:

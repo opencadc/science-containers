@@ -1,4 +1,4 @@
-name: Build & Push Firefly
+name: Build & Push skaha/firefly
 
 on:
   workflow_dispatch: {}
