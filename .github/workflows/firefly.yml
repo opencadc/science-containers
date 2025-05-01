@@ -12,6 +12,13 @@ on:
       - 'science-containers/Dockerfiles/firefly/**'
       - '.github/workflows/firefly.yml'
 
+permissions:
+  contents: read
+
+env:
+  REGISTRY: images.canfar.net
+  IMAGE: skaha/firefly
+
 jobs:
   build:
     # Repository name-guard to prevent this workflow from running on forks
@@ -20,8 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       attestations: write # Attest the build provenance
-      id-token: write # Generate OIDC token for attestations
-
+      id-token: write # Generate OIDC token for cosign
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -66,21 +72,33 @@ jobs:
           file: science-containers/Dockerfiles/firefly/Dockerfile
           push: true
           tags: |
-            images.canfar.net/skaha/firefly:${{ steps.upstream.outputs.version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ steps.upstream.outputs.version }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: mode=max
           sbom: true
           labels: |
-            org.opencontainers.image.title=skaha/firefly
+            org.opencontainers.image.title=${{ env.IMAGE }}
             org.opencontainers.image.description='CADC Firefly'
             org.opencontainers.image.version=${{ steps.upstream.outputs.version }}
             org.opencontainers.image.source=https://github.com/opencadc/science-containers
 
       - name: Attest Image
+        id: attest
         uses: actions/attest-build-provenance@v2.3.0
         with:
           subject-name: images.canfar.net/skaha/firefly
           subject-digest: ${{ steps.build.outputs.digest }}
-          push-to-registry: true
+          # push-to-registry: true
+          show-summary: true
+      - name: Install Cosign
+        id: install-cosign
+        uses: sigstore/cosign@v3.8.2
+        with:
+          cosign-release: 'v2.4.3'
+      - name: Cosign Container Image
+        id: cosign
+        run: |
+          cosign version
+          cosign sign --yes ${{ env.REGISTRY }}/${{ env.IMAGE }}@${{ steps.build.outputs.digest }} --upload
