@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/opencadc/science-containers/compare/v0.6.0...v0.7.0) (2025-05-01)
+
+
+### Features
+
+* **ci-cd:** added dependabot to auto update firefly base image, added github action to autobuild and push firefly container ([585adb7](https://github.com/opencadc/science-containers/commit/585adb70ac51a0c6e92a54209a352b5a42eac46e))
+
+
+### Bug Fixes
+
+* **gha:** fix for relative path to search for Dockerfile ([6fc4911](https://github.com/opencadc/science-containers/commit/6fc4911ad69c1d5d465ce1dca4acae0957786bc3))
+
 ## [0.6.0](https://github.com/opencadc/science-containers/compare/v0.5.0...v0.6.0) (2025-02-18)
 
 
