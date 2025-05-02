@@ -25,6 +25,9 @@ jobs:
     if: ${{ github.repository == 'opencadc/science-containers' }}
     name: Build & Push Base Containers
     runs-on: ubuntu-latest
+    permissions:
+      attestations: write # Attest the build provenance
+      id-token: write # Generate OIDC token for cosign
     strategy:
       matrix:
         ubuntu-version: ['20.04', '22.04', '24.04']
