@@ -54,7 +54,7 @@ jobs:
           context: science-containers/Dockerfiles/base
           file: science-containers/Dockerfiles/base/Dockerfile
           platforms: ${{ matrix.platform }}
-          build-args:
+          build-args: |
             UBUNTU_VERSION=${{ matrix.ubuntu-version }}
             PYTHON_VERSION=${{ matrix.python-version }}
           tags: |
