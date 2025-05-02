@@ -1,7 +1,7 @@
 ARG UBUNTU_VERSION=22.04
 ARG PYTHON_VERSION=3.13
 
-FROM ubuntu:${UBUNTU_VERSION} as OS
+FROM ubuntu:${UBUNTU_VERSION} AS base-os
 
 LABEL maintainer="CANFAR Project <support@canfar.net>"
 
@@ -39,7 +39,7 @@ RUN apt-get update --yes --quiet --fix-missing \
     && dpkg-reconfigure --frontend noninteractive tzdata \
     && locale-gen en_US.UTF-8
 
-FROM OS as python
+FROM base-os AS python
 
 ADD nsswitch.conf /etc/
 
