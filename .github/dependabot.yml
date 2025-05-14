@@ -23,3 +23,39 @@ updates:
       - "docker"
     pull-request-branch-name:
       separator: "-"
+  - package-ecosystem: "docker"
+    directory: "/science-containers/Dockerfiles/carta/beta"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "00:00"
+      timezone: "America/Vancouver"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "carta-beta"
+      include: "scope"
+    ignore:
+      - dependency-name: "ubuntu:*"
+    labels:
+      - "dependencies"
+      - "docker"
+    pull-request-branch-name:
+      separator: "-"
+  - package-ecosystem: "docker"
+    directory: "/science-containers/Dockerfiles/carta/stable"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "00:00"
+      timezone: "America/Vancouver"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "carta-beta"
+      include: "scope"
+    ignore:
+      - dependency-name: "ubuntu:*"
+    labels:
+      - "dependencies"
+      - "docker"
+    pull-request-branch-name:
+      separator: "-"
