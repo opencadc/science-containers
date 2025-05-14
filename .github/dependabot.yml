@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/science-containers/Dockerfiles/firefly"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "00:00"
+      timezone: "America/Vancouver"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "firefly"
+      include: "scope"
+    ignore:
+      - dependency-name: "gradle:jdk21-*"
+    groups:
+      firefly:
+        patterns:
+          - "ipac/firefly"
+        update-types: ["major", "minor"]
+    labels:
+      - "dependencies"
+      - "docker"
+    pull-request-branch-name:
+      separator: "-"
