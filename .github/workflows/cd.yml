@@ -75,8 +75,8 @@ jobs:
           username: ${{ secrets.HARBOR_CANFAR_USERNAME }}
           password: ${{ secrets.HARBOR_CANFAR_PASSWORD }}
       -
-        name: Build & Push Production Image
-        uses: docker/build-push-action@v3
+        name: Build & Push Production Base Image
+        uses: docker/build-push-action@v6
         id: build-push-production
         with:
           context: science-containers/Dockerfiles/base
@@ -90,3 +90,25 @@ jobs:
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      -
+        name: Build & Push CARTA Beta Image
+        uses: docker/build-push-action@v6
+        id: build-push-carta-beta
+        with:
+          context: science-containers/Dockerfiles/carta/beta
+          file: science-containers/Dockerfiles/carta/beta/Dockerfile
+          platforms: linux/amd64
+          tags: |
+            "5.0-beta"
+          push: true
+      -
+        name: Build & Push CARTA Stable Image
+        uses: docker/build-push-action@v6
+        id: build-push-carta-stable
+        with:
+          context: science-containers/Dockerfiles/carta/stable
+          file: science-containers/Dockerfiles/carta/stable/Dockerfile
+          platforms: linux/amd64
+          tags: |
+            "4.1"
+          push: true
