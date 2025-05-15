@@ -1,4 +1,4 @@
-name: Build & Push skaha/carta beta
+name: Build & Push skaha/carta 5.0-beta
 
 on:
   workflow_dispatch: {}
@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'science-containers/Dockerfiles/carta/beta/**'
-      - '.github/workflows/carta-beta.yml'
+      - 'science-containers/Dockerfiles/carta/**'
+      - '.github/workflows/carta.yml'
 
 permissions:
   contents: read
@@ -55,8 +55,8 @@ jobs:
         id: build
         uses: docker/build-push-action@v6.16.0
         with:
-          context: science-containers/Dockerfiles/carta/beta
-          file: science-containers/Dockerfiles/carta/beta/Dockerfile
+          context: science-containers/Dockerfiles/carta
+          file: science-containers/Dockerfiles/carta/Dockerfile
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ steps.upstream.outputs.version }}
