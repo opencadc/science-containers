@@ -62,8 +62,8 @@ markdown_extensions:
   - pymdownx.critic
   - pymdownx.details
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
       use_pygments: true
       linenums_style: pymdownx.inline
@@ -84,39 +84,72 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - Introduction and Access:
-    - complete/index.md
-  - General User Documentation:
-    - New User Documentation:
-      - general/NewUser/Overview.md
-      - Login: general/NewUser/Login.md
-      - Project Space: general/NewUser/ProjectSpace.md
-      - Launch Desktop: general/NewUser/LaunchDesktop.md
-      - Launch CARTA: general/NewUser/LaunchCARTA.md
-      - Launch Notebook: general/NewUser/LaunchNotebook.md
-    - In-Depth Documentation:
-      - Publishing Containers: complete/publishing.md
-      - Permissions: complete/permissions.md
-      - CANFAR Containers: complete/science-containers.md
-      - Headless: complete/headless.md
-      - Infrastructure: complete/science-platform.md
-      - Portal: complete/science-portal.md
-  - Tutorials and Help:
-    - General Tutorials:
-      - File Transfers: general/General_tools/File_transfers
-      - Using Web Storage: general/General_tools/Using_webstorage
-      - Using vostools: general/General_tools/Using_vostools
-      - Using sshfs: general/General_tools/Using_sshfs
-      - Group Management: general/General_tools/Group_management
-      - Transfering to Notebooks: general/Notebook/transfer_file
-    - Tips and Tricks:
-      - Using the desktop clipboard: general/TipsTricks/Using_clipboard
-      - Increasing desktop font : general/TipsTricks/Increase_font
-      - URL upload/download: general/TipsTricks/Direct_url
-    - ALMA Tutorials (Desktop Sessions):
-      - Starting CASA: general/ALMA_Desktop/start_casa
-      - Downloading from the ALMA archive (browser): general/ALMA_Desktop/archive_download
-      - Downloading from the ALMA archive (script): general/ALMA_Desktop/archive_script_download
-      - Example of reducing image data: general/ALMA_Desktop/typical_reduction
-      - Notes on CASA Containers (features, known bugs, etc): general/ALMA_Desktop/casa_containers
-  - FAQ: complete/faq.md
+  - Home: index.md
+  
+  # Section 1: Quick Start Guide
+  - Quick Start:
+    - Get Access: getting-started/access.md
+    - First Login: getting-started/first-login.md
+    - Launch Your First Session: general/NewUser/LaunchNotebook.md
+    - Basic File Operations: general/Notebook/transfer_file.md
+    
+  # Section 2: Core Concepts  
+  - Core Concepts:
+    - Platform Overview: general/NewUser/Overview.md
+    - Storage Systems Guide: storage-systems-guide.md
+    - Container Types: getting-started/choose-interface.md
+    - Project Spaces: general/NewUser/ProjectSpace.md
+    
+  # Section 3: Data Management
+  - Data Management:
+    - Complete Transfer Guide: data-transfer-guide.md
+    - Web Interface: general/General_tools/Using_webstorage.md
+    - Command Line (sshfs): general/General_tools/Using_sshfs.md
+    - VOSpace Tools: general/General_tools/Using_vostools.md
+    - Direct URL Access: general/TipsTricks/Direct_url.md
+    - Group Management: general/General_tools/Group_management.md
+    
+  # Section 4: Interactive Sessions
+  - Interactive Sessions:
+    - Jupyter Notebooks: general/NewUser/LaunchNotebook.md
+    - Desktop Applications: general/NewUser/LaunchDesktop.md
+    - CARTA Visualization: general/NewUser/LaunchCARTA.md
+    - Desktop Tips:
+      - Clipboard Usage: general/TipsTricks/Using_clipboard.md
+      - Font Size: general/TipsTricks/Increase_font.md
+    - Science Workflows:
+      - Radio Astronomy: tutorials/radio-astronomy.md
+      - Data Analysis: tutorials/data-analysis.md
+      - ALMA Workflows:
+        - Starting CASA: general/ALMA_Desktop/start_casa.md
+        - Archive Downloads: general/ALMA_Desktop/archive_download.md
+        - Script Downloads: general/ALMA_Desktop/archive_script_download.md
+        - Image Reduction: general/ALMA_Desktop/typical_reduction.md
+        - CASA Container Notes: general/ALMA_Desktop/casa_containers.md
+        
+  # Section 5: Container Development
+  - Container Development:
+    - Building Guide: container-building-guide.md
+    - Testing Containers: advanced/containers.md
+    - Publishing Containers: complete/publishing.md
+    - Available Containers: complete/science-containers.md
+    
+  # Section 6: Batch & Automation
+  - Batch & Automation:
+    - Headless Execution: headless-execution-guide.md
+    - API Access: advanced/api.md
+    - Batch Processing: advanced/batch.md
+    - Legacy Headless Docs: complete/headless.md
+    
+  # Section 7: Administration
+  - Administration:
+    - User Permissions: advanced/permissions.md
+    - Platform Infrastructure: complete/science-platform.md
+    - Science Portal Admin: complete/science-portal.md
+    
+  # Section 8: Reference & Support
+  - Reference & Support:
+    - FAQ: help/faq.md
+    - Community Support: https://cadc.slack.com/archives/C01K60U5Q87
+    - Email Support: mailto:support@canfar.net
+    - Report Issues: https://github.com/opencadc/science-platform/issues
