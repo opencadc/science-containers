@@ -90,62 +90,65 @@ nav:
   - Quick Start:
     - Get Access: getting-started/access.md
     - First Login: getting-started/first-login.md
-    - Launch Your First Session: general/NewUser/LaunchNotebook.md
-    - Basic File Operations: general/Notebook/transfer_file.md
+    - Login Process: general/NewUser/login.md
+    - Launch Your First Session: general/NewUser/launch-notebook.md
+    - Basic File Operations: general/Notebook/transfer-file.md
     
   # Section 2: Core Concepts  
   - Core Concepts:
-    - Platform Overview: general/NewUser/Overview.md
+    - Platform Overview: general/NewUser/overview.md
     - Storage Systems Guide: storage-systems-guide.md
     - Container Types: getting-started/choose-interface.md
-    - Project Spaces: general/NewUser/ProjectSpace.md
+    - Project Spaces: general/NewUser/project-space.md
     
   # Section 3: Data Management
   - Data Management:
     - Complete Transfer Guide: data-transfer-guide.md
-    - Web Interface: general/General_tools/Using_webstorage.md
-    - Command Line (sshfs): general/General_tools/Using_sshfs.md
-    - VOSpace Tools: general/General_tools/Using_vostools.md
-    - Direct URL Access: general/TipsTricks/Direct_url.md
-    - Group Management: general/General_tools/Group_management.md
+    - Web Interface: general/General_tools/web-file-manager.md
+    - Command Line (sshfs): general/General_tools/sshfs-setup.md
+    - VOSpace Tools: general/General_tools/vospace-tools.md
+    - Direct URL Access: general/TipsTricks/direct-url.md
+    - Group Management: general/General_tools/group-permissions.md
     
   # Section 4: Interactive Sessions
   - Interactive Sessions:
-    - Jupyter Notebooks: general/NewUser/LaunchNotebook.md
-    - Desktop Applications: general/NewUser/LaunchDesktop.md
-    - CARTA Visualization: general/NewUser/LaunchCARTA.md
-    - Desktop Tips:
-      - Clipboard Usage: general/TipsTricks/Using_clipboard.md
-      - Font Size: general/TipsTricks/Increase_font.md
-    - Science Workflows:
-      - Radio Astronomy: tutorials/radio-astronomy.md
+    - Jupyter Notebooks: general/NewUser/launch-notebook.md
+    - Desktop Sessions: general/NewUser/launch-desktop.md
+    - CARTA Visualization: general/NewUser/launch-carta.md
+    - Desktop Tips & Tricks:
+      - Clipboard Usage: general/TipsTricks/using-clipboard.md
+      - Font Size: general/TipsTricks/increase-font.md
+    - General Workflows:
       - Data Analysis: tutorials/data-analysis.md
-      - ALMA Workflows:
-        - Starting CASA: general/ALMA_Desktop/start_casa.md
-        - Archive Downloads: general/ALMA_Desktop/archive_download.md
-        - Script Downloads: general/ALMA_Desktop/archive_script_download.md
-        - Image Reduction: general/ALMA_Desktop/typical_reduction.md
-        - CASA Container Notes: general/ALMA_Desktop/casa_containers.md
+      - Desktop Applications: tutorials/desktop-apps.md
+    - Specialized Workflows:
+      - Radio Astronomy: tutorials/radio-astronomy.md
+      - ALMA Data Reduction:
+        - Getting Started: general/ALMA_Desktop/start-casa.md
+        - Archive Downloads: general/ALMA_Desktop/archive-download.md
+        - Script Downloads: general/ALMA_Desktop/archive-script-download.md
+        - Typical Reduction: general/ALMA_Desktop/typical-reduction.md
+        - CASA Container Notes: general/ALMA_Desktop/casa-containers.md
         
   # Section 5: Container Development
   - Container Development:
     - Building Guide: container-building-guide.md
     - Testing Containers: advanced/containers.md
-    - Publishing Containers: complete/publishing.md
-    - Available Containers: complete/science-containers.md
+    - Publishing Containers: complete/container-publishing-guide.md
+    - Available Containers: complete/available-containers.md
     
   # Section 6: Batch & Automation
   - Batch & Automation:
     - Headless Execution: headless-execution-guide.md
     - API Access: advanced/api.md
     - Batch Processing: advanced/batch.md
-    - Legacy Headless Docs: complete/headless.md
     
   # Section 7: Administration
   - Administration:
     - User Permissions: advanced/permissions.md
-    - Platform Infrastructure: complete/science-platform.md
-    - Science Portal Admin: complete/science-portal.md
+    - Platform Infrastructure: complete/platform-infrastructure.md
+    - Portal Administration: complete/portal-administration.md
+    - API Authorizations: complete/permissions.md
     
   # Section 8: Reference & Support
   - Reference & Support:
