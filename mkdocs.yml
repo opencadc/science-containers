@@ -36,10 +36,15 @@ theme:
     - content.action.edit
     - offline
     - navigation.sections
-    #- navigation.expand
+    - navigation.expand
+    - navigation.indexes
+    - toc.integrate
+    - header.autohide
+    - navigation.top
 
 plugins:
   - search
+  - tags
   - mkdocstrings
   - git-revision-date-localized:
         type: date
@@ -77,7 +82,11 @@ markdown_extensions:
   - pymdownx.smartsymbols
   - pymdownx.snippets:
       check_paths: true
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed
   - pymdownx.tasklist:
       custom_checkbox: true
@@ -85,70 +94,71 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  
+  - Contributing: CONTRIBUTING_DOCS.md # Link to the new contributing guide
+
   # Section 1: Quick Start Guide
   - Quick Start:
-    - Get Access: getting-started/access.md
-    - First Login: getting-started/first-login.md
-    - Login Process: general/NewUser/login.md
-    - Launch Your First Session: general/NewUser/launch-notebook.md
-    - Basic File Operations: general/Notebook/transfer-file.md
+    - Get Access: user-guide/access.md
+    - First Login: user-guide/first-login.md
+    - Login Process: user-guide/login.md
+    - Launch Your First Session: user-guide/launch-notebook.md # Assuming this is the primary launch guide
+    - Basic File Operations: user-guide/transfer-file.md
     
   # Section 2: Core Concepts  
   - Core Concepts:
-    - Platform Overview: general/NewUser/overview.md
+    - Platform Overview: user-guide/overview.md
     - Storage Systems Guide: storage-systems-guide.md
-    - Container Types: getting-started/choose-interface.md
-    - Project Spaces: general/NewUser/project-space.md
+    - Container Types: user-guide/choose-interface.md
+    - Project Spaces: user-guide/project-space.md
     
   # Section 3: Data Management
   - Data Management:
     - Complete Transfer Guide: data-transfer-guide.md
-    - Web Interface: general/General_tools/web-file-manager.md
-    - Command Line (sshfs): general/General_tools/sshfs-setup.md
-    - VOSpace Tools: general/General_tools/vospace-tools.md
-    - Direct URL Access: general/TipsTricks/direct-url.md
-    - Group Management: general/General_tools/group-permissions.md
+    - Web Interface: user-guide/web-file-manager.md
+    - Command Line (sshfs): user-guide/sshfs-setup.md
+    - VOSpace Tools: user-guide/vospace-tools.md
+    - Direct URL Access: user-guide/direct-url.md
+    - Group Management: user-guide/group-permissions.md
     
   # Section 4: Interactive Sessions
   - Interactive Sessions:
-    - Jupyter Notebooks: general/NewUser/launch-notebook.md
-    - Desktop Sessions: general/NewUser/launch-desktop.md
-    - CARTA Visualization: general/NewUser/launch-carta.md
+    - Jupyter Notebooks: user-guide/launch-notebook.md
+    - Desktop Sessions: user-guide/launch-desktop.md
+    - CARTA Visualization: user-guide/launch-carta.md
     - Desktop Tips & Tricks:
-      - Clipboard Usage: general/TipsTricks/using-clipboard.md
-      - Font Size: general/TipsTricks/increase-font.md
+      - Clipboard Usage: user-guide/using-clipboard.md
+      - Font Size: user-guide/increase-font.md
     - General Workflows:
       - Data Analysis: tutorials/data-analysis.md
       - Desktop Applications: tutorials/desktop-apps.md
     - Specialized Workflows:
       - Radio Astronomy: tutorials/radio-astronomy.md
       - ALMA Data Reduction:
-        - Getting Started: general/ALMA_Desktop/start-casa.md
-        - Archive Downloads: general/ALMA_Desktop/archive-download.md
-        - Script Downloads: general/ALMA_Desktop/archive-script-download.md
-        - Typical Reduction: general/ALMA_Desktop/typical-reduction.md
-        - CASA Container Notes: general/ALMA_Desktop/casa-containers.md
+        - Getting Started: tutorials/start-casa.md
+        - Archive Downloads: tutorials/archive-download.md
+        - Script Downloads: tutorials/archive-script-download.md
+        - Typical Reduction: tutorials/typical-reduction.md
+        - CASA Container Notes: tutorials/casa-containers.md
         
   # Section 5: Container Development
   - Container Development:
     - Building Guide: container-building-guide.md
-    - Testing Containers: advanced/containers.md
-    - Publishing Containers: complete/container-publishing-guide.md
-    - Available Containers: complete/available-containers.md
+    - Testing Containers: developer-guide/containers.md
+    - Publishing Containers: reference-material/container-publishing-guide.md
+    - Available Containers: reference-material/available-containers.md
     
   # Section 6: Batch & Automation
   - Batch & Automation:
     - Headless Execution: headless-execution-guide.md
-    - API Access: advanced/api.md
-    - Batch Processing: advanced/batch.md
+    - API Access: developer-guide/api.md
+    - Batch Processing: developer-guide/batch.md
     
   # Section 7: Administration
   - Administration:
-    - User Permissions: advanced/permissions.md
-    - Platform Infrastructure: complete/platform-infrastructure.md
-    - Portal Administration: complete/portal-administration.md
-    - API Authorizations: complete/permissions.md
+    - User Permissions: developer-guide/permissions.md # was advanced/permissions.md
+    - Platform Infrastructure: reference-material/platform-infrastructure.md
+    - Portal Administration: reference-material/portal-administration.md
+    - API Authorizations: reference-material/permissions.md # was complete/permissions.md
     
   # Section 8: Reference & Support
   - Reference & Support:
