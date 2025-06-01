@@ -94,75 +94,47 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Contributing: CONTRIBUTING_DOCS.md # Link to the new contributing guide
 
-  # Section 1: Quick Start Guide
-  - Quick Start:
-    - Get Access: user-guide/access.md
-    - First Login: user-guide/first-login.md
-    - Login Process: user-guide/login.md
-    - Launch Your First Session: user-guide/launch-notebook.md # Assuming this is the primary launch guide
-    - Basic File Operations: user-guide/transfer-file.md
-    
-  # Section 2: Core Concepts  
-  - Core Concepts:
-    - Platform Overview: user-guide/overview.md
-    - Storage Systems Guide: storage-systems-guide.md
-    - Container Types: user-guide/choose-interface.md
-    - Project Spaces: user-guide/project-space.md
-    
-  # Section 3: Data Management
-  - Data Management:
-    - Complete Transfer Guide: data-transfer-guide.md
-    - Web Interface: user-guide/web-file-manager.md
-    - Command Line (sshfs): user-guide/sshfs-setup.md
-    - VOSpace Tools: user-guide/vospace-tools.md
-    - Direct URL Access: user-guide/direct-url.md
-    - Group Management: user-guide/group-permissions.md
-    
-  # Section 4: Interactive Sessions
-  - Interactive Sessions:
-    - Jupyter Notebooks: user-guide/launch-notebook.md
-    - Desktop Sessions: user-guide/launch-desktop.md
-    - CARTA Visualization: user-guide/launch-carta.md
-    - Desktop Tips & Tricks:
+  # Getting Started - Quick 10-minute setup
+  - Getting Started: get-started/index.md
+
+  # Comprehensive User Guide organized by topic
+  - User Guide:
+    - user-guide/index.md
+    - Platform Concepts: user-guide/concepts/index.md
+    - Accounts & Permissions: user-guide/accounts-permissions/index.md
+    - Storage Systems: 
+      - user-guide/storage/index.md
+      - VOSpace API: user-guide/storage/vospace-api.md
+    - Container Usage: user-guide/containers/index.md
+    - Interactive Sessions:
+      - user-guide/interactive-sessions/index.md
+      - Jupyter Notebooks: user-guide/interactive-sessions/launch-notebook.md
+      - Desktop Sessions: user-guide/interactive-sessions/launch-desktop.md
+      - CARTA Visualization: user-guide/interactive-sessions/launch-carta.md
+      - Firefly Table Viewer: user-guide/interactive-sessions/launch-firefly.md
+      - Contributed Applications: user-guide/interactive-sessions/launch-contributed.md
+    - Batch Jobs: user-guide/batch-jobs/index.md
+    - Radio Astronomy: 
+      - user-guide/radio-astronomy/index.md
+      - CASA Workflows: user-guide/radio-astronomy/casa-workflows.md
+
+  # FAQ covering common questions and troubleshooting
+  - FAQ: faq/index.md
+
+  # Help and Support Resources
+  - Help & Support: help/index.md
+
+  # Legacy Content (tutorials and specialized guides)
+  - Legacy Documentation:
+    - Desktop Tips:
       - Clipboard Usage: user-guide/using-clipboard.md
       - Font Size: user-guide/increase-font.md
-    - General Workflows:
-      - Data Analysis: tutorials/data-analysis.md
-      - Desktop Applications: tutorials/desktop-apps.md
-    - Specialized Workflows:
-      - Radio Astronomy: tutorials/radio-astronomy.md
-      - ALMA Data Reduction:
-        - Getting Started: tutorials/start-casa.md
-        - Archive Downloads: tutorials/archive-download.md
-        - Script Downloads: tutorials/archive-script-download.md
-        - Typical Reduction: tutorials/typical-reduction.md
-        - CASA Container Notes: tutorials/casa-containers.md
-        
-  # Section 5: Container Development
-  - Container Development:
-    - Building Guide: container-building-guide.md
-    - Testing Containers: developer-guide/containers.md
-    - Publishing Containers: reference-material/container-publishing-guide.md
-    - Available Containers: reference-material/available-containers.md
-    
-  # Section 6: Batch & Automation
-  - Batch & Automation:
-    - Headless Execution: headless-execution-guide.md
-    - API Access: developer-guide/api.md
-    - Batch Processing: developer-guide/batch.md
-    
-  # Section 7: Administration
-  - Administration:
-    - User Permissions: developer-guide/permissions.md # was advanced/permissions.md
-    - Platform Infrastructure: reference-material/platform-infrastructure.md
-    - Portal Administration: reference-material/portal-administration.md
-    - API Authorizations: reference-material/permissions.md # was complete/permissions.md
-    
-  # Section 8: Reference & Support
-  - Reference & Support:
-    - FAQ: help/faq.md
-    - Community Support: https://cadc.slack.com/archives/C01K60U5Q87
-    - Email Support: mailto:support@canfar.net
-    - Report Issues: https://github.com/opencadc/science-platform/issues
+    - Project Management: user-guide/project-space.md
+    - Container Development:
+      - Testing Containers: developer-guide/containers.md
+    - Batch Processing:
+      - API Access: developer-guide/api.md
+      - Batch Processing: developer-guide/batch.md
+    - Administration:
+      - User Permissions: developer-guide/permissions.md
