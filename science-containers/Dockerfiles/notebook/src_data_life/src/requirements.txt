@@ -1,0 +1,17 @@
+numpy==1.26.4
+astropy==6.1.7
+matplotlib==3.10.3
+astroquery==0.4.10
+scipy==1.15.3
+reproject==0.14.1
+seaborn==0.13.0
+bdsf==1.13.0.post2
+ps_eor==0.32
+pandas==2.1.1
+pillow==10.1.0
+pyuvdata==3.2.1
+ipympl==0.9.3
+h5py==3.10.0
+pyfftw==0.15.0
+scikit-learn==1.3.1
+git+https://github.com/HydraRadio/hydra-pspec@canfar-no-mpi
