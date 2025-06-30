@@ -1,15 +1,17 @@
-# skaha-carta
+# CARTA beta (5.0 release candidate)
 
 ## About
 
-A CARTA 4.0 session container for skaha based on CARTA-remote (https://github.com/CARTAvis).
+A CARTA 5.0 (beta) session container for skaha based on CARTA-remote (https://github.com/CARTAvis).
+
+This Docker image is based on the current LTS (Long Term Support) version of Ubuntu.  It includes the CARTA-beta packages from the CARTA repository.  See the [CARTAVis download](https://cartavis.org/#download) page (`v5.0-beta.1` section) for the latest version of the CARTA software.
 
 A wrapper script, `skaha-carta`, is added to the container that calls the CARTA binary `carta`.
 
 ## Building
 
-```
-docker build -t images.canfar.net/skaha/carta:4.0 -f Dockerfile .
+```sh
+docker build -t images.canfar.net/skaha/carta:5.0-beta -f Dockerfile .
 ```
 
 ## Publishing to the image registry
