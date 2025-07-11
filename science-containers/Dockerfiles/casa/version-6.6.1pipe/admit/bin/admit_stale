@@ -1,0 +1,20 @@
+#! /usr/bin/env casarun
+#  -*- python -*-
+#
+
+# python system modules
+import sys, os, math
+#
+import admit
+import admit.util.utils as utils
+
+argv = admit.utils.casa_argv(sys.argv)
+
+verbose = True
+dryrun = True
+
+
+for ff in argv[1:]:
+    p = admit.Project(ff,commit=False)
+    p.mergeFlow(False)
+    p.setAstale(False,True,True)
