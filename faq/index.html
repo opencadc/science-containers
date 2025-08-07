@@ -1,0 +1,1607 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive documentation for the CANFAR Science Platform - enabling cloud-based astronomy research with containers, interactive sessions, and scalable computing resources.">
+      
+      
+        <meta name="author" content="CANFAR">
+      
+      
+        <link rel="canonical" href="https://opencadc.github.io/science-containers/faq/">
+      
+      
+        <link rel="prev" href="../user-guide/radio-astronomy/casa-workflows/">
+      
+      
+        <link rel="next" href="../help/">
+      
+      
+      <link rel="icon" href="../canfar-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>FAQ - CANFAR Science Platform</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-purple">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#frequently-asked-questions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="CANFAR Science Platform" class="md-header__button md-logo" aria-label="CANFAR Science Platform" data-md-component="logo">
+      
+  <img src="../canfar-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CANFAR Science Platform
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FAQ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/opencadc/science-containers/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    opencadc/science-containers
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../get-started/" class="md-tabs__link">
+        
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../user-guide/" class="md-tabs__link">
+          
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../help/" class="md-tabs__link">
+        
+  
+    
+  
+  Help & Support
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CANFAR Science Platform" class="md-nav__button md-logo" aria-label="CANFAR Science Platform" data-md-component="logo">
+      
+  <img src="../canfar-logo.png" alt="logo">
+
+    </a>
+    CANFAR Science Platform
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/opencadc/science-containers/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    opencadc/science-containers
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user-guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/concepts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Platform Concepts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/accounts-permissions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accounts & Permissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storage Systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/storage/vospace-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VOSpace API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/containers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Container Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user-guide/interactive-sessions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Interactive Sessions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            Interactive Sessions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/interactive-sessions/launch-notebook/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jupyter Notebooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/interactive-sessions/launch-desktop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Desktop Sessions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/interactive-sessions/launch-carta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CARTA Visualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/interactive-sessions/launch-firefly/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firefly Table Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/interactive-sessions/launch-contributed/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contributed Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/batch-jobs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Batch Jobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_9" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user-guide/radio-astronomy/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Radio Astronomy
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_9" id="__nav_3_9_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            Radio Astronomy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/radio-astronomy/casa-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CASA Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Page contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Page contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#account-and-access" class="md-nav__link">
+    Account and Access
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage-and-data" class="md-nav__link">
+    Storage and Data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sessions-and-computing" class="md-nav__link">
+    Sessions and Computing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-and-containers" class="md-nav__link">
+    Software and Containers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collaboration-and-sharing" class="md-nav__link">
+    Collaboration and Sharing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    Advanced Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    Performance Tips
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    Getting Help
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-requests-and-feedback" class="md-nav__link">
+    Feature Requests and Feedback
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../help/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Help & Support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/opencadc/science-containers/blob/main/docs/faq/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/opencadc/science-containers/raw/main/docs/faq/index.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"/></svg>
+    </a>
+  
+
+
+<h1 id="frequently-asked-questions">Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h1>
+<p>This section answers common questions about using the CANFAR Science Platform, from basic usage to advanced troubleshooting.</p>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="how-do-i-get-access-to-canfar">How do I get access to CANFAR?<a class="headerlink" href="#how-do-i-get-access-to-canfar" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Request an account</strong>: Visit <a href="https://canfar.net">canfar.net</a> and click "Request Account"</li>
+<li><strong>Provide justification</strong>: Explain your research needs and institutional affiliation</li>
+<li><strong>Wait for approval</strong>: Account approval typically takes 1-2 business days</li>
+<li><strong>Join a group</strong>: Contact your project PI to be added to relevant research groups</li>
+</ol>
+<h3 id="whats-the-difference-between-the-session-types">What's the difference between the session types?<a class="headerlink" href="#whats-the-difference-between-the-session-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Session Type</th>
+<th>Best For</th>
+<th>Resources</th>
+<th>GUI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Notebook</strong></td>
+<td>Interactive analysis, prototyping</td>
+<td>Low-Medium</td>
+<td>Jupyter Lab</td>
+</tr>
+<tr>
+<td><strong>Desktop</strong></td>
+<td>GUI applications, multi-app workflows</td>
+<td>Medium-High</td>
+<td>Full Linux desktop</td>
+</tr>
+<tr>
+<td><strong>CARTA</strong></td>
+<td>Image/cube visualization</td>
+<td>Medium</td>
+<td>Specialized viewer</td>
+</tr>
+<tr>
+<td><strong>Headless</strong></td>
+<td>Batch processing, automation</td>
+<td>Variable</td>
+<td>None (API only)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-much-does-it-cost-to-use-canfar">How much does it cost to use CANFAR?<a class="headerlink" href="#how-much-does-it-cost-to-use-canfar" title="Permanent link">&para;</a></h3>
+<p>CANFAR is <strong>free for academic research</strong>. The platform is funded by the Canadian government and partner institutions to support astronomical research. Commercial users may have different arrangements.</p>
+<h2 id="account-and-access">Account and Access<a class="headerlink" href="#account-and-access" title="Permanent link">&para;</a></h2>
+<h3 id="i-forgot-my-password-how-do-i-reset-it">I forgot my password. How do I reset it?<a class="headerlink" href="#i-forgot-my-password-how-do-i-reset-it" title="Permanent link">&para;</a></h3>
+<p>CANFAR uses <strong>certificate-based authentication</strong>, not passwords. If you're having login issues:</p>
+<ol>
+<li>Check that your browser certificate is properly installed</li>
+<li>Try a different browser</li>
+<li>Contact <a href="mailto:support@canfar.net">support@canfar.net</a> for certificate reissue</li>
+</ol>
+<h3 id="how-do-i-join-a-research-group">How do I join a research group?<a class="headerlink" href="#how-do-i-join-a-research-group" title="Permanent link">&para;</a></h3>
+<p>Groups control access to shared storage and resources:</p>
+<ol>
+<li><strong>Contact the group PI</strong>: Ask to be added to the relevant project group</li>
+<li><strong>Provide your CANFAR username</strong>: Usually your email address</li>
+<li><strong>Wait for approval</strong>: PIs can add members through the Science Portal</li>
+</ol>
+<h3 id="can-i-access-canfar-from-anywhere-in-the-world">Can I access CANFAR from anywhere in the world?<a class="headerlink" href="#can-i-access-canfar-from-anywhere-in-the-world" title="Permanent link">&para;</a></h3>
+<p>Yes, CANFAR is accessible from anywhere with internet access. However, large data transfers may be faster from Canadian institutions due to network proximity.</p>
+<h2 id="storage-and-data">Storage and Data<a class="headerlink" href="#storage-and-data" title="Permanent link">&para;</a></h2>
+<h3 id="how-much-storage-do-i-get">How much storage do I get?<a class="headerlink" href="#how-much-storage-do-i-get" title="Permanent link">&para;</a></h3>
+<p>Storage allocation depends on your groups:</p>
+<ul>
+<li><strong>Personal space</strong>: 10GB in <code>/arc/home/[username]/</code></li>
+<li><strong>Group storage</strong>: Varies by project, typically 100GB to several TB</li>
+<li><strong>Temporary storage</strong>: Unlimited in <code>/tmp/</code> (cleared when session ends)</li>
+</ul>
+<h3 id="where-should-i-put-my-data">Where should I put my data?<a class="headerlink" href="#where-should-i-put-my-data" title="Permanent link">&para;</a></h3>
+<p>Follow this storage strategy:</p>
+<ul>
+<li><strong>Raw data</strong>: <code>/arc/projects/[group]/raw/</code> - Original, unmodified observations</li>
+<li><strong>Working data</strong>: <code>/arc/projects/[group]/data/</code> - Data being actively processed</li>
+<li><strong>Results</strong>: <code>/arc/projects/[group]/results/</code> - Final analysis outputs</li>
+<li><strong>Scripts</strong>: <code>/arc/projects/[group]/scripts/</code> - Analysis code and pipelines</li>
+<li><strong>Personal work</strong>: <code>/arc/home/[username]/</code> - Individual analysis and notes</li>
+</ul>
+<h3 id="how-do-i-transfer-large-datasets">How do I transfer large datasets?<a class="headerlink" href="#how-do-i-transfer-large-datasets" title="Permanent link">&para;</a></h3>
+<p>For datasets larger than a few GB:</p>
+<p><strong>From external sources</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Use rsync for resumable transfers</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>rsync<span class="w"> </span>-avz<span class="w"> </span>--progress<span class="w"> </span>source/<span class="w"> </span>username@canfar.net:/arc/projects/mygroup/
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># For very large files, use VOSpace</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>cadc-data<span class="w"> </span>put<span class="w"> </span>largefile.fits<span class="w"> </span>vos:myproject/data/
+</span></code></pre></div></p>
+<p><strong>To/from CANFAR</strong>:
+- Use the Science Portal file manager for files &lt;1GB
+- Use command-line tools (<code>rsync</code>, <code>scp</code>) for larger transfers
+- Use VOSpace for files &gt;10GB</p>
+<h3 id="what-file-formats-are-supported">What file formats are supported?<a class="headerlink" href="#what-file-formats-are-supported" title="Permanent link">&para;</a></h3>
+<p>CANFAR supports all standard astronomical formats:</p>
+<ul>
+<li><strong>FITS</strong>: Standard astronomical images and tables</li>
+<li><strong>HDF5</strong>: Large datasets and modern archives</li>
+<li><strong>CASA formats</strong>: Measurement sets and images</li>
+<li><strong>Text formats</strong>: CSV, ASCII tables, JSON</li>
+<li><strong>Images</strong>: PNG, JPEG, PDF for plots and figures</li>
+</ul>
+<h2 id="sessions-and-computing">Sessions and Computing<a class="headerlink" href="#sessions-and-computing" title="Permanent link">&para;</a></h2>
+<h3 id="how-long-can-my-session-run">How long can my session run?<a class="headerlink" href="#how-long-can-my-session-run" title="Permanent link">&para;</a></h3>
+<p><strong>Interactive sessions</strong>:
+- Maximum 7 days of continuous runtime
+- Automatic shutdown after 24 hours of inactivity
+- Can be resumed if not explicitly deleted</p>
+<p><strong>Batch jobs</strong>:
+- No strict time limits
+- Queue priority depends on resource usage
+- Long jobs (&gt;24 hours) may have lower priority</p>
+<h3 id="my-session-wont-start-what-should-i-do">My session won't start. What should I do?<a class="headerlink" href="#my-session-wont-start-what-should-i-do" title="Permanent link">&para;</a></h3>
+<p>Common causes and solutions:</p>
+<p><strong>Resource constraints</strong>:
+- Try reducing memory or CPU requirements
+- Check resource availability in the Science Portal
+- Consider running during off-peak hours (evenings, weekends)</p>
+<p><strong>Container issues</strong>:
+- Verify the container name is correct
+- Try a different container version
+- Check if the container is deprecated</p>
+<p><strong>Account problems</strong>:
+- Verify you're in the correct groups
+- Check that your account is active
+- Contact support if needed</p>
+<h3 id="can-i-run-gpu-accelerated-applications">Can I run GPU-accelerated applications?<a class="headerlink" href="#can-i-run-gpu-accelerated-applications" title="Permanent link">&para;</a></h3>
+<p>Yes, CANFAR provides GPU resources for supported workloads:</p>
+<p><strong>Available GPUs</strong>:
+- NVIDIA Tesla V100: Machine learning, deep learning
+- NVIDIA RTX series: General GPU computing
+- Limited availability - request in session configuration</p>
+<p><strong>Common GPU applications</strong>:
+- TensorFlow and PyTorch for machine learning
+- CUDA-accelerated astronomy codes
+- Image processing and computer vision</p>
+<p><strong>Requesting GPU access</strong>:
+1. Select "GPU" in session configuration
+2. Choose appropriate GPU type
+3. Ensure your container supports GPU computing</p>
+<h3 id="how-do-i-monitor-my-resource-usage">How do I monitor my resource usage?<a class="headerlink" href="#how-do-i-monitor-my-resource-usage" title="Permanent link">&para;</a></h3>
+<p><strong>In interactive sessions</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Check memory usage</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>free<span class="w"> </span>-h
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Monitor CPU usage</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>htop
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Check disk usage</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>df<span class="w"> </span>-h
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Monitor GPU usage (if applicable)</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>nvidia-smi
+</span></code></pre></div></p>
+<p><strong>Through the Science Portal</strong>:
+- View active sessions and their resource consumption
+- Monitor group storage usage
+- Track session history and runtime</p>
+<h2 id="software-and-containers">Software and Containers<a class="headerlink" href="#software-and-containers" title="Permanent link">&para;</a></h2>
+<h3 id="what-software-is-available">What software is available?<a class="headerlink" href="#what-software-is-available" title="Permanent link">&para;</a></h3>
+<p>CANFAR provides containers with pre-installed software:</p>
+<p><strong>General astronomy</strong>:
+- <strong>astroml</strong>: Modern Python astronomy stack (AstroPy, NumPy, SciPy, Matplotlib)
+- <strong>General purpose</strong>: Basic Python data science tools</p>
+<p><strong>Specialized tools</strong>:
+- <strong>CASA</strong>: Radio astronomy data reduction
+- <strong>CARTA</strong>: Image and data cube visualization
+- <strong>DS9</strong>: FITS image viewer
+- <strong>TOPCAT</strong>: Table analysis and visualization</p>
+<p><strong>Development environments</strong>:
+- <strong>Jupyter</strong>: Interactive notebooks
+- <strong>Linux desktop</strong>: Full graphical environment
+- <strong>Custom containers</strong>: Build your own software stacks</p>
+<h3 id="can-i-install-additional-software">Can I install additional software?<a class="headerlink" href="#can-i-install-additional-software" title="Permanent link">&para;</a></h3>
+<p><strong>In existing containers</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Install Python packages (temporary)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>package_name
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Install system packages (if you have sudo access)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>package_name
+</span></code></pre></div></p>
+<p><strong>Permanent installations</strong>:
+- Build custom containers with your software stack
+- See the <a href="../user-guide/containers/">Container Guide</a> for details</p>
+<h3 id="how-do-i-update-to-newer-software-versions">How do I update to newer software versions?<a class="headerlink" href="#how-do-i-update-to-newer-software-versions" title="Permanent link">&para;</a></h3>
+<p><strong>Container updates</strong>:
+- CANFAR regularly updates container images
+- New versions appear in the session creation menu
+- Older versions remain available for compatibility</p>
+<p><strong>Manual updates</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Update Python packages</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>--user<span class="w"> </span>package_name
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Update conda environments (if applicable)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>conda<span class="w"> </span>update<span class="w"> </span>--all
+</span></code></pre></div></p>
+<h2 id="collaboration-and-sharing">Collaboration and Sharing<a class="headerlink" href="#collaboration-and-sharing" title="Permanent link">&para;</a></h2>
+<h3 id="how-do-i-share-my-work-with-collaborators">How do I share my work with collaborators?<a class="headerlink" href="#how-do-i-share-my-work-with-collaborators" title="Permanent link">&para;</a></h3>
+<p><strong>Session sharing</strong>:
+1. In your active session, access the sharing menu
+2. Add collaborator usernames
+3. Set permissions (view-only or full access)
+4. Collaborators can join your session in real-time</p>
+<p><strong>Data sharing</strong>:
+- Add collaborators to your project group
+- Use shared group storage in <code>/arc/projects/[group]/</code>
+- Set appropriate file permissions</p>
+<p><strong>Code sharing</strong>:
+- Use Git repositories for version control
+- Share Jupyter notebooks through group storage
+- Document your analysis workflows</p>
+<h3 id="can-multiple-people-use-the-same-session">Can multiple people use the same session?<a class="headerlink" href="#can-multiple-people-use-the-same-session" title="Permanent link">&para;</a></h3>
+<p>Yes, interactive sessions support real-time collaboration:</p>
+<ul>
+<li><strong>Shared desktop</strong>: Multiple users can see and control the same desktop</li>
+<li><strong>Jupyter sharing</strong>: Collaborative notebook editing</li>
+<li><strong>CARTA sharing</strong>: Synchronized image viewing and analysis</li>
+</ul>
+<h3 id="how-do-i-cite-canfar-in-my-publications">How do I cite CANFAR in my publications?<a class="headerlink" href="#how-do-i-cite-canfar-in-my-publications" title="Permanent link">&para;</a></h3>
+<p>Include this acknowledgment in your papers:</p>
+<blockquote>
+<p>"This research made use of the CANFAR computing facility, which is managed by the National Research Council of Canada and funded by the Canadian Space Agency."</p>
+</blockquote>
+<p>For more detailed citation information, see <a href="https://canfar.net/citation">canfar.net/citation</a>.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="my-analysis-is-running-slowly-how-can-i-speed-it-up">My analysis is running slowly. How can I speed it up?<a class="headerlink" href="#my-analysis-is-running-slowly-how-can-i-speed-it-up" title="Permanent link">&para;</a></h3>
+<p><strong>Check resource usage</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Monitor system resources</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>htop
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>iotop<span class="w">  </span><span class="c1"># Disk I/O</span>
+</span></code></pre></div></p>
+<p><strong>Optimization strategies</strong>:</p>
+<ol>
+<li><strong>Use scratch storage</strong>: Process data in <code>/tmp/</code> for faster I/O</li>
+<li><strong>Increase resources</strong>: Request more memory or CPU cores</li>
+<li><strong>Optimize code</strong>: Use vectorized operations, efficient algorithms</li>
+<li><strong>Parallel processing</strong>: Utilize multiple cores when possible</li>
+<li><strong>Data locality</strong>: Keep frequently accessed data in fast storage</li>
+</ol>
+<h3 id="im-getting-out-of-memory-errors-what-should-i-do">I'm getting "out of memory" errors. What should I do?<a class="headerlink" href="#im-getting-out-of-memory-errors-what-should-i-do" title="Permanent link">&para;</a></h3>
+<p><strong>Immediate solutions</strong>:
+- Close unnecessary applications
+- Clear Python/CASA cache
+- Process data in smaller chunks</p>
+<p><strong>Long-term solutions</strong>:
+- Request more memory for your session
+- Optimize your analysis to use less memory
+- Use memory-mapped file access for large datasets</p>
+<h3 id="my-container-wont-start-or-crashes-immediately-help">My container won't start or crashes immediately. Help!<a class="headerlink" href="#my-container-wont-start-or-crashes-immediately-help" title="Permanent link">&para;</a></h3>
+<p><strong>Diagnostic steps</strong>:</p>
+<ol>
+<li><strong>Check container logs</strong>: Look for error messages in session logs</li>
+<li><strong>Try different container</strong>: Test with a basic container (e.g., astroml)</li>
+<li><strong>Reduce resources</strong>: Start with minimal memory/CPU requirements</li>
+<li><strong>Check group permissions</strong>: Ensure you have access to required storage</li>
+</ol>
+<p><strong>Common fixes</strong>:
+- Update browser to latest version
+- Clear browser cache and cookies
+- Try incognito/private browsing mode
+- Check network connectivity</p>
+<h3 id="i-cant-access-my-files-where-did-they-go">I can't access my files. Where did they go?<a class="headerlink" href="#i-cant-access-my-files-where-did-they-go" title="Permanent link">&para;</a></h3>
+<p><strong>Check common locations</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Personal storage</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ls<span class="w"> </span>/arc/home/<span class="k">$(</span>whoami<span class="k">)</span>/
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Group storage</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>ls<span class="w"> </span>/arc/projects/
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Temporary files (session-specific)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>ls<span class="w"> </span>/tmp/
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>ls<span class="w"> </span>~/
+</span></code></pre></div></p>
+<p><strong>File recovery</strong>:
+- Files in <code>/tmp/</code> are deleted when sessions end
+- Files in <code>/arc/</code> storage are persistent
+- Contact support for backup restoration if needed</p>
+<h3 id="browser-issues-and-compatibility">Browser issues and compatibility<a class="headerlink" href="#browser-issues-and-compatibility" title="Permanent link">&para;</a></h3>
+<p><strong>Supported browsers</strong>:
+- <strong>Chrome/Chromium</strong>: Best compatibility and performance
+- <strong>Firefox</strong>: Good compatibility
+- <strong>Safari</strong>: Limited support, some features may not work
+- <strong>Edge</strong>: Basic support</p>
+<p><strong>Common browser fixes</strong>:
+- Enable cookies and JavaScript
+- Disable ad blockers for canfar.net
+- Clear browser cache and cookies
+- Update browser to latest version</p>
+<h2 id="advanced-usage">Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permanent link">&para;</a></h2>
+<h3 id="can-i-run-my-own-docker-containers">Can I run my own Docker containers?<a class="headerlink" href="#can-i-run-my-own-docker-containers" title="Permanent link">&para;</a></h3>
+<p>Yes, you can build and use custom containers:</p>
+<ol>
+<li><strong>Build locally</strong>: Create your Dockerfile with required software</li>
+<li><strong>Push to Harbor</strong>: Upload to CANFAR's container registry</li>
+<li><strong>Use in sessions</strong>: Select your custom container in session creation</li>
+</ol>
+<p>See the <a href="../user-guide/containers/">Container Development Guide</a> for detailed instructions.</p>
+<h3 id="how-do-i-automate-workflows-with-the-api">How do I automate workflows with the API?<a class="headerlink" href="#how-do-i-automate-workflows-with-the-api" title="Permanent link">&para;</a></h3>
+<p>CANFAR provides REST APIs for programmatic access:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">requests</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># Submit a batch job</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="s2">&quot;https://ws-uv.canfar.net/skaha/v0/session&quot;</span><span class="p">,</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;automated-analysis&quot;</span><span class="p">,</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;images.canfar.net/skaha/astroml:latest&quot;</span><span class="p">,</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="s2">&quot;cores&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="s2">&quot;ram&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;headless&quot;</span><span class="p">,</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>        <span class="s2">&quot;cmd&quot;</span><span class="p">:</span> <span class="s2">&quot;python /arc/projects/myproject/analyze.py&quot;</span><span class="p">,</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="p">},</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="can-i-connect-external-tools-to-canfar">Can I connect external tools to CANFAR?<a class="headerlink" href="#can-i-connect-external-tools-to-canfar" title="Permanent link">&para;</a></h3>
+<p><strong>SSHFS mounting</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Mount CANFAR storage locally</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sshfs<span class="w"> </span>username@canfar.net:/arc/projects/mygroup/<span class="w"> </span>~/canfar_mount/
+</span></code></pre></div></p>
+<p><strong>VOSpace access</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Access VOSpace programmatically</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span> <span class="nn">cadcdata</span> <span class="kn">import</span> <span class="n">CadcDataClient</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">client</span> <span class="o">=</span> <span class="n">CadcDataClient</span><span class="p">()</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">client</span><span class="o">.</span><span class="n">put_file</span><span class="p">(</span><span class="s2">&quot;local_file.fits&quot;</span><span class="p">,</span> <span class="s2">&quot;vos:myproject/data/file.fits&quot;</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h2 id="performance-tips">Performance Tips<a class="headerlink" href="#performance-tips" title="Permanent link">&para;</a></h2>
+<h3 id="general-optimization">General optimization<a class="headerlink" href="#general-optimization" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Choose appropriate resources</strong>: Don't over-request CPU/memory</li>
+<li><strong>Use scratch storage</strong>: Process data in <code>/tmp/</code> for speed</li>
+<li><strong>Monitor usage</strong>: Keep an eye on resource consumption</li>
+<li><strong>Clean up</strong>: Remove temporary files regularly</li>
+<li><strong>Work during off-peak</strong>: Better performance evenings/weekends</li>
+</ol>
+<h3 id="for-large-datasets">For large datasets<a class="headerlink" href="#for-large-datasets" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Stream processing</strong>: Process data in chunks rather than loading entirely</li>
+<li><strong>Parallel processing</strong>: Use multiple cores effectively</li>
+<li><strong>Memory mapping</strong>: Use memory-mapped file access</li>
+<li><strong>Compression</strong>: Compress intermediate results to save I/O</li>
+<li><strong>Batch operations</strong>: Group similar operations together</li>
+</ol>
+<h3 id="for-collaborative-work">For collaborative work<a class="headerlink" href="#for-collaborative-work" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Coordinate resource usage</strong>: Avoid competing for resources</li>
+<li><strong>Share efficiently</strong>: Use read-only sharing when possible</li>
+<li><strong>Document workflows</strong>: Clear documentation helps collaboration</li>
+<li><strong>Version control</strong>: Use Git for shared code development</li>
+</ol>
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<h3 id="self-help-resources">Self-help resources<a class="headerlink" href="#self-help-resources" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Documentation</strong>: Browse the <a href="../user-guide/">User Guide</a></li>
+<li><strong>Radio Astronomy</strong>: Check <a href="../user-guide/radio-astronomy/">radio astronomy guide</a> for specialized workflows</li>
+<li><strong>Community</strong>: Join our Discord for peer support</li>
+<li><strong>Examples</strong>: Look at example notebooks and scripts</li>
+</ul>
+<h3 id="contacting-support">Contacting support<a class="headerlink" href="#contacting-support" title="Permanent link">&para;</a></h3>
+<p><strong>Email</strong>: <a href="mailto:support@canfar.net">support@canfar.net</a></p>
+<p><strong>Include in your support request</strong>:
+- Your CANFAR username
+- Description of the problem
+- Steps to reproduce the issue
+- Error messages (copy/paste exact text)
+- Session type and container used</p>
+<p><strong>Response time</strong>: Support typically responds within 1-2 business days.</p>
+<h3 id="community-support">Community support<a class="headerlink" href="#community-support" title="Permanent link">&para;</a></h3>
+<p><strong>Discord community</strong>: Join our Discord server for:
+- Quick questions and answers
+- Tips and tricks sharing
+- Collaboration opportunities
+- Announcements of new features</p>
+<p><strong>Office hours</strong>: Weekly virtual office hours for real-time help (check Discord for schedule).</p>
+<h2 id="feature-requests-and-feedback">Feature Requests and Feedback<a class="headerlink" href="#feature-requests-and-feedback" title="Permanent link">&para;</a></h2>
+<h3 id="suggesting-improvements">Suggesting improvements<a class="headerlink" href="#suggesting-improvements" title="Permanent link">&para;</a></h3>
+<p>We welcome feedback and suggestions:</p>
+<ul>
+<li><strong>Feature requests</strong>: Email specific ideas to support</li>
+<li><strong>Bug reports</strong>: Include detailed reproduction steps</li>
+<li><strong>Documentation</strong>: Suggest improvements or missing topics</li>
+<li><strong>Software requests</strong>: Request additional containers or software</li>
+</ul>
+<h3 id="contributing-to-canfar">Contributing to CANFAR<a class="headerlink" href="#contributing-to-canfar" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Documentation</strong>: Help improve these docs (see <a href="../help/#contributing-to-documentation">Contributing Guide</a>)</li>
+<li><strong>Containers</strong>: Share useful container recipes</li>
+<li><strong>Tutorials</strong>: Create tutorials for your research area</li>
+<li><strong>Testing</strong>: Help test new features in beta</li>
+</ul>
+<p>Your feedback helps make CANFAR better for the entire astronomy community!</p>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2025-08-07T16:16:12-07:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-08-07</span>
+      
+        <br>
+        Created:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2025-08-07T16:16:12-07:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-08-07</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../user-guide/radio-astronomy/casa-workflows/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CASA Workflows">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                CASA Workflows
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../help/" class="md-footer__link md-footer__link--next" aria-label="Next: Help &amp; Support">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Help & Support
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023-2025 CANFAR &ndash; <a href="#__consent">Change cookie settings</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/opencadc" target="_blank" rel="noopener" title="CANFAR on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://discord.gg/vcCQ8QBvBa" target="_blank" rel="noopener" title="Join our Discord" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:support@canfar.net" target="_blank" rel="noopener" title="Email Support" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48H48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0L0 176z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.footnote.tooltips", "content.tabs.link", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="../javascripts/mobile-fix.js"></script>
+      
+    
+  </body>
+</html>
