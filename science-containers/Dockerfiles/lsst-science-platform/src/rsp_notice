@@ -1,0 +1,20 @@
+--------------- WELCOME TO THE TERMINAL ON CANFAR -------------------
+
+Rubin Observatory Science Platform Notebook Aspect running and
+configured for CANFAR.  If you have issues please contact:
+	   support@canfar.net
+
+Rubin TAP services access requires an access token. Set the
+environment variable ACCESS_TOKEN to the value of your Rubin Access
+Token.
+
+Rubin Access Tokens can be craeted using these instructions:
+	https://rsp.lsst.io/guides/auth/creating-user-tokens.html
+
+Find useful documentation for the software and Notebook Aspect at:
+        https://pipelines.lsst.io
+        https://rsp.lsst.io
+
+The Rubin Observatory Science Pipelines environment is in:
+        /opt/lsst/software/stack
+
