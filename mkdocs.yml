@@ -2,8 +2,8 @@ site_name: CANFAR Science Platform
 site_url: https://opencadc.github.io/science-containers/
 site_author: CANFAR
 site_description: >-
-  Comprehensive documentation for the CANFAR Science Platform - 
-  enabling cloud-based astronomy research with containers, interactive sessions, 
+  Comprehensive documentation for the CANFAR Science Platform -
+  enabling cloud-based astronomy research with containers, interactive sessions,
   and scalable computing resources.
 repo_url: https://github.com/opencadc/science-containers/
 repo_name: opencadc/science-containers
@@ -31,7 +31,7 @@ theme:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
+      primary: custom
       accent: deep purple
       toggle:
         icon: material/brightness-7
@@ -39,7 +39,7 @@ theme:
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
+      primary: custom
       accent: deep purple
       toggle:
         icon: material/brightness-4
@@ -96,7 +96,7 @@ plugins:
 extra_css:
   - stylesheets/extra.css
 
-# Custom JavaScript  
+# Custom JavaScript
 extra_javascript:
   - javascripts/mobile-fix.js
 
@@ -111,6 +111,7 @@ markdown_extensions:
   - toc:
       permalink: true
       title: Page contents
+      toc_depth: 2
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.betterem:
@@ -160,9 +161,8 @@ nav:
     - user-guide/index.md
     - Platform Concepts: user-guide/concepts/index.md
     - Accounts & Permissions: user-guide/accounts-permissions/index.md
-    - Storage Systems: 
-      - user-guide/storage/index.md
-      - VOSpace API: user-guide/storage/vospace-api.md
+    - Storage Systems: user-guide/storage/index.md
+    - VOSpace API: user-guide/storage/vospace-api.md
     - Container Usage: user-guide/containers/index.md
     - Interactive Sessions:
       - user-guide/interactive-sessions/index.md
@@ -172,7 +172,7 @@ nav:
       - Firefly Table Viewer: user-guide/interactive-sessions/launch-firefly.md
       - Contributed Applications: user-guide/interactive-sessions/launch-contributed.md
     - Batch Jobs: user-guide/batch-jobs/index.md
-    - Radio Astronomy: 
+    - Radio Astronomy:
       - user-guide/radio-astronomy/index.md
       - CASA Workflows: user-guide/radio-astronomy/casa-workflows.md
 
