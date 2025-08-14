@@ -9,7 +9,6 @@ RUN apt update && \
 RUN mkdir /carta
 WORKDIR /carta
 
-EXPOSE 6901
 EXPOSE 3002
 
 RUN chmod -R a+rwx /carta
