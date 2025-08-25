@@ -31,13 +31,18 @@ RUN chmod +x /skaha/startup.sh
 RUN chmod +x /usr/local/bin/jupyter
 
 # Some items to make this a better experience on CANFAR
-RUN /skaha/startup.sh pip install cadctap cadcdata vos
-RUN /skaha/startup.sh pip install rsp-jupyter-extensions
-RUN mkdir -p /rubin/cst_repos
+RUN /skaha/startup.sh "apt-get install -y libx11-dev"
+RUN /skaha/startup.sh pip install cadctap cadcdata vos 'lsdb[full]'
+RUN /skaha/startup.sh pip install rsp-jupyter-extensions safir
+RUN /skaha/startup.sh pip install git+https://github.com/shinybrar/skaha.git@demo#egg=skaha
+
+RUN mkdir -p /session/notebook/rubin/tutorials
 RUN apt-get install -y git-lfs
 RUN git lfs install
-RUN git clone https://github.com/lsst/tutorial-notebooks.git /rubin/cst_repos/tutorial-notebooks
-RUN git clone https://github.com/lsst/tutorial-notebooks-data.git /rubin/cst_repos/tutorial-notebooks-data
+RUN git clone https://github.com/lsst/tutorial-notebooks.git /session/notebook/rubin/tutorials/tutorial-notebooks
+RUN /skaha/startup.sh "apt-get install -y graphviz"
+RUN mkdir /Users
+# RUN git clone https://github.com/lsst/tutorial-notebooks-data.git /session/notebook/rubin/tutorials/tutorial-notebooks-data
 
 # This is just for when using this as standalong container
-ENTRYPOINT ["bash", "/skaha/startup.sh"]
+ENTRYPOINT ["/skaha/startup.sh"]

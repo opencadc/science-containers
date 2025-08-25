@@ -1,0 +1,15 @@
+    datastore:
+      cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+      records:
+        table: file_datastore_records
+      root: https://ws.canfar.net/lsst/minoc/files/lsst:dc2
+    registry:
+      db: postgresql://lsstuser@ad-uv-01.canfar.net:5432/butlerlsstdb
+      managers:
+        attributes: lsst.daf.butler.registry.attributes.DefaultButlerAttributeManager
+        collections: lsst.daf.butler.registry.collections.synthIntKey.SynthIntKeyCollectionManager
+        datasets: lsst.daf.butler.registry.datasets.byDimensions.ByDimensionsDatasetRecordStorageManagerUUID
+        datastores: lsst.daf.butler.registry.bridge.monolithic.MonolithicDatastoreRegistryBridgeManager
+        dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
+        opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
+      namespace: lsstdc2
