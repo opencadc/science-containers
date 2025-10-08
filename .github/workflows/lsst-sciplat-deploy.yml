@@ -3,7 +3,7 @@ name: Build and Push lsst/sciplat to Harbor
 on:
   push:
     branches:
-      - main # Or your desired branch
+      - deploy # Or your desired branch
 
   jobs:
     build-and-push:
