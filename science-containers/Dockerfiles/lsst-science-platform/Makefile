@@ -6,7 +6,7 @@ VERSION = latest_release
 DATE := $(shell date '+%Y%m%d')
 
 build: dependencies Dockerfile
-	docker build --build-arg VERSION=$(VERSION) -t $(NAME):$(DATE) -f Dockerfile .
+	docker build --build-arg VERSION=$(VERSION) -t $(NAME):$(VERSION) -f Dockerfile .
 
 push: build
 	docker push $(NAME):$(DATE)
