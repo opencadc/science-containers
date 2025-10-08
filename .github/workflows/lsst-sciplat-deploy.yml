@@ -19,8 +19,8 @@ on:
           uses: docker/login-action@v3
           with:
             registry: images.canfar.net # Replace with your Harbor registry URL
-              username: ${{ secrets.CANFAR_USERNAME }}
-              password: ${{ secrets.CANFAR_IMAGES_TOKEN }}
+            username: ${{ secrets.CANFAR_USERNAME }}
+            password: ${{ secrets.CANFAR_IMAGES_TOKEN }}
 
         - name: Build and push Docker image
           uses: docker/build-push-action@v5
