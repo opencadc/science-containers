@@ -1,6 +1,6 @@
 # This Dockerfile is used to build the LSST Science Platform container
 # This is currently an ALMA LINUX distro
-ARG VERSION
+ARG VERSION=latest_release
 FROM lsstsqre/sciplat-lab:${VERSION}
 
 # The RSP removes the passwd and group files 
