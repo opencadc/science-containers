@@ -33,8 +33,11 @@ RUN chmod +x /usr/local/bin/jupyter
 # Some items to make this a better experience on CANFAR
 RUN /skaha/startup.sh "apt-get install -y libx11-dev"
 RUN /skaha/startup.sh pip install cadctap cadcdata vos 'lsdb[full]'
-RUN /skaha/startup.sh pip install rsp-jupyter-extensions safir
-RUN /skaha/startup.sh pip install git+https://github.com/shinybrar/skaha.git@demo#egg=skaha
+RUN /skaha/startup.sh pip install rsp-jupyter-extensions safir canfar
+
+RUN mkdir -p /opt/canfar
+WORKDIR /opt/canfar
+RUN /skaha/startup.sh "git clone https://github.com/ijiraq/daf_butler"
 
 RUN mkdir -p /session/notebook/rubin/tutorials
 RUN apt-get install -y git-lfs
