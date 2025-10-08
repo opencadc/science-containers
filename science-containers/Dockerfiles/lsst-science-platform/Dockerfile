@@ -41,19 +41,6 @@ COPY src/jupyter /usr/bin/jupyter
 # Some items to make this a better experience on CANFAR
 RUN /skaha/startup.sh pip install cadctap cadcdata vos canfar safir rsp-jupyter-extensions lsdb
 
-# load the latest daf_butler for LSST to get CADC authentication
-# WORKDIR /opt/cadc
-# RUN git clone https://github.com/lsst/daf_butler.git
-# WORKDIR /opt/cadc/daf_butler
-# COPY src/build_daf_butler.sh .
-# RUN chmod +x build_daf_butler.sh
-# RUN ./build_daf_butler.sh
-
-# RUN mkdir -p /session/notebook/rubin/tutorials
-# RUN git lfs install
-# RUN git clone https://github.com/lsst/tutorial-notebooks.git /session/notebook/rubin/tutorials/tutorial-notebooks
-# RUN git clone https://github.com/lsst/tutorial-notebooks-data.git /session/notebook/rubin/tutorials/tutorial-notebooks-data
-
 # This is just for when using this as standalong container
 WORKDIR /
 ENTRYPOINT ["/skaha/startup.sh"]
