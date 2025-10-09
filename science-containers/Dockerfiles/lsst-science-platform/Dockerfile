@@ -9,7 +9,11 @@ FROM lsstsqre/sciplat-lab:${VERSION}
 USER 0:0
 COPY src/passwd /etc/passwd
 COPY src/group /etc/group
-
+RUN cat /var/lib/dpkg/statoverride
+RUN rm /var/lib/dpkg/statoverride
+RUN rm /var/lib/dpkg/lock
+RUN dpkg --configure -a
+RUN apt-get -f install
 # Add xterm so this can be run on Desktop App 
 # RUN apt-get install -y xterm
 
