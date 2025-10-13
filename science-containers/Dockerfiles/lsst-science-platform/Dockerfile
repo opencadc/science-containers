@@ -1,6 +1,6 @@
 # This Dockerfile is used to build the LSST Science Platform container
 # This is currently an ALMA LINUX distro
-ARG VERSION=latest_release
+ARG VERSION=latest_daily
 FROM lsstsqre/sciplat-lab:${VERSION}
 
 # The RSP removes the passwd and group files 
@@ -25,9 +25,9 @@ RUN curl https://ds9.si.edu/download/centos9x86/xpa.centos9x86.2.1.20.tar.gz | t
 # Add our own MOTD
 COPY src/rsp_notice /usr/local/share/jupyterlab/etc/rsp_notice
 
-# THe skaha platform expects to find 'jupyter' in the path
+# The skaha platform expects to find 'jupyter' in the path
 # but we need to activate the correct conda first.
-# add a startup script that initialize the environment correctly
+# add a startup script that initializes the environment correctly
 RUN mkdir /skaha
 COPY src/startup.sh /skaha/startup.sh
 # COPY src/jupyter /usr/local/bin/jupyter
