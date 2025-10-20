@@ -26,9 +26,9 @@ COPY src/rsp_notice /usr/local/share/jupyterlab/etc/rsp_notice
 # add a startup script that initialize the environment correctly
 RUN mkdir /skaha
 COPY src/startup.sh /skaha/startup.sh
-COPY src/jupyter /usr/local/bin/jupyter
+# COPY src/jupyter /usr/local/bin/jupyter
 RUN chmod +x /skaha/startup.sh
-RUN chmod +x /usr/local/bin/jupyter
+# RUN chmod +x /usr/local/bin/jupyter
 
 # Some items to make this a better experience on CANFAR
 RUN /skaha/startup.sh "apt-get install -y libx11-dev"
