@@ -33,8 +33,7 @@ RUN chmod +x /skaha/startup.sh
 # Some items to make this a better experience on CANFAR
 RUN /skaha/startup.sh "apt-get install -y libx11-dev"
 RUN /skaha/startup.sh pip install cadctap cadcdata vos 'lsdb[full]'
-RUN /skaha/startup.sh pip install rsp-jupyter-extensions safir
-RUN /skaha/startup.sh pip install canfar
+RUN /skaha/startup.sh pip install rsp-jupyter-extensions safir canfar
 
 RUN mkdir -p /session/notebook/rubin/tutorials
 RUN apt-get install -y git-lfs
