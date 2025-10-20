@@ -39,6 +39,9 @@ RUN /skaha/startup.sh "apt-get install -y libx11-dev"
 RUN /skaha/startup.sh pip install cadctap cadcdata vos 'lsdb[full]'
 RUN /skaha/startup.sh pip install rsp-jupyter-extensions safir canfar
 
+RUN mkdir -p /firefly
+COPY src/index.html /firefly/index.html
+
 RUN mkdir -p /session/notebook/rubin/tutorials
 RUN apt-get install -y git-lfs
 RUN git lfs install
