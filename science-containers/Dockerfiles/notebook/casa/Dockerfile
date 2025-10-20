@@ -1,43 +1,29 @@
-ARG ROOT_CONTAINER=jupyter/scipy-notebook:latest
-FROM ${ROOT_CONTAINER}
+FROM images.canfar.net/skaha/astroml:latest
 
 LABEL maintainer="CANFAR Project <support@canfar.net>"
 
 USER root
 WORKDIR /tmp
 
-# update base
-RUN apt-get update --yes --quiet --fix-missing \
-    && apt-get upgrade --yes --quiet
 
-# install bunch of packages
-COPY packages.apt .
-RUN apt-get install --yes --quiet $(cat packages.apt)
-RUN apt-get clean --yes \
-    && apt-get autoremove --purge --quiet --yes \
-    && rm -rf /var/lib/apt/lists/* /var/tmp/*
+RUN pip install --no-cache \
+    casaconfig \
+    casatools \
+    casatasks \
+    casashell \
+    casaplotserver \
+    casatestutils \
+    casatablebrowser \
+    casalogger \
+    casafeather \
+    casampi \
+    almatasks 
 
-# nsswitch for correct sss lookup
-ADD nsswitch.conf /etc/
+#Note: packages casaplotms and casaviewer are excluded because the graphical 
+# interface doesn't work properly in the Notebook environment
 
-# modify basic environment from jupyter/scipy-notebook
-COPY env.yml .
+#copy configuration file to direct CASA to run-time data
+#(NB: pip installs casa in /opt/conda/lib/python3.12/site-packages)
+COPY casasiteconfig.py /opt/conda/lib/python3.12/site-packages/
 
-USER ${NB_USER}
 
-RUN mamba remove nomkl --yes
-RUN rm ${CONDA_DIR}/conda-meta/pinned
-
-RUN mamba env update --quiet -n base --file env.yml \
-    && mamba update --quiet --all --yes \
-    && mamba clean --all --quiet --force --yes \
-    && fix-permissions ${CONDA_DIR} \
-    && fix-permissions /home/${NB_USER}
-
-USER root
-ADD pinned ${CONDA_DIR}/conda-meta/pinned
-COPY condarc .
-RUN cat condarc >> ${CONDA_DIR}/.condarc
-RUN fix-permissions ${CONDA_DIR}
-
-WORKDIR ${HOME}

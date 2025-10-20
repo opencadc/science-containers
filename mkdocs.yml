@@ -1,122 +1,183 @@
 site_name: CANFAR Science Platform
 site_url: https://opencadc.github.io/science-containers/
 site_author: CANFAR
-site_description: Documentation and Science Containers for the CANFAR Science Platform
+site_description: >-
+  Comprehensive documentation for the CANFAR Science Platform -
+  enabling cloud-based astronomy research with containers, interactive sessions,
+  and scalable computing resources.
 repo_url: https://github.com/opencadc/science-containers/
 repo_name: opencadc/science-containers
 edit_uri: blob/main/docs/
-copyright: Copyright &copy; 2023 CANFAR
+copyright: >
+  Copyright &copy; 2023-2025 CANFAR &ndash;
+  <a href="#__consent">Change cookie settings</a>
 remote_branch: gh-pages
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/opencadc
+      name: CANFAR on GitHub
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/vcCQ8QBvBa
+      name: Join our Discord
+    - icon: fontawesome/solid/envelope
+      link: mailto:support@canfar.net
+      name: Email Support
 
 theme:
   name: material
   palette:
+    # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
+      primary: custom
+      accent: deep purple
       toggle:
-        icon: material/toggle-switch
+        icon: material/brightness-7
         name: Switch to dark mode
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
+      primary: custom
+      accent: deep purple
       toggle:
-        icon: material/toggle-switch-off-outline
+        icon: material/brightness-4
         name: Switch to light mode
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: Inter
+    code: JetBrains Mono
   language: en
+  logo: canfar-logo.png
+  favicon: canfar-logo.png
   icon:
-    repo: fontawesome/brands/github-alt
-    edit: material/pencil-box
-    view: material/eye-outline
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
   features:
-    - tabs
-    - instant
+    - announce.dismiss
     - content.action.edit
-    - offline
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.footnote.tooltips
+    - content.tabs.link
+    - content.tooltips
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
     - navigation.sections
-    #- navigation.expand
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - toc.integrate
 
 plugins:
-  - search
-  - mkdocstrings
+  - search:
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - git-revision-date-localized:
-        type: date
-        fallback_to_build_date: true
+      type: timeago
+      timezone: America/Vancouver
+      locale: en
+      fallback_to_build_date: true
+      enable_creation_date: true
+  - tags
+
+# Custom CSS
+extra_css:
+  - stylesheets/extra.css
+
+# Custom JavaScript
+extra_javascript:
+  - javascripts/mobile-fix.js
 
 # Extensions
 markdown_extensions:
-  - markdown.extensions.admonition
-  - markdown.extensions.attr_list
-  - markdown.extensions.def_list
-  - markdown.extensions.footnotes
-  - markdown.extensions.meta
-  - markdown.extensions.toc:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
       permalink: true
+      title: Page contents
+      toc_depth: 2
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.betterem:
       smart_enable: all
   - pymdownx.caret
-  - pymdownx.critic
   - pymdownx.details
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
-      use_pygments: true
-      linenums_style: pymdownx.inline
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.magiclink:
+      normalize_issue_symbols: true
       repo_url_shorthand: true
-      user: squidfunk
-      repo: mkdocs-material
+      user: opencadc
+      repo: science-containers
   - pymdownx.mark
   - pymdownx.smartsymbols
-  - pymdownx.snippets:
-      check_paths: true
-  - pymdownx.superfences
-  - pymdownx.tabbed
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
 
 nav:
-  - Introduction and Access:
-    - complete/index.md
-  - General User Documentation:
-    - New User Documentation:
-      - general/NewUser/Overview.md
-      - Login: general/NewUser/Login.md
-      - Project Space: general/NewUser/ProjectSpace.md
-      - Launch Desktop: general/NewUser/LaunchDesktop.md
-      - Launch CARTA: general/NewUser/LaunchCARTA.md
-      - Launch Notebook: general/NewUser/LaunchNotebook.md
-    - In-Depth Documentation:
-      - Publishing Containers: complete/publishing.md
-      - Permissions: complete/permissions.md
-      - CANFAR Containers: complete/science-containers.md
-      - Headless: complete/headless.md
-      - Infrastructure: complete/science-platform.md
-      - Portal: complete/science-portal.md
-  - Tutorials and Help:
-    - General Tutorials:
-      - File Transfers: general/General_tools/File_transfers
-      - Using Web Storage: general/General_tools/Using_webstorage
-      - Using vostools: general/General_tools/Using_vostools
-      - Using sshfs: general/General_tools/Using_sshfs
-      - Group Management: general/General_tools/Group_management
-      - Transfering to Notebooks: general/Notebook/transfer_file
-    - Tips and Tricks:
-      - Using the desktop clipboard: general/TipsTricks/Using_clipboard
-      - Increasing desktop font : general/TipsTricks/Increase_font
-      - URL upload/download: general/TipsTricks/Direct_url
-    - ALMA Tutorials (Desktop Sessions):
-      - Starting CASA: general/ALMA_Desktop/start_casa
-      - Downloading from the ALMA archive (browser): general/ALMA_Desktop/archive_download
-      - Downloading from the ALMA archive (script): general/ALMA_Desktop/archive_script_download
-      - Example of reducing image data: general/ALMA_Desktop/typical_reduction
-      - Notes on CASA Containers (features, known bugs, etc): general/ALMA_Desktop/casa_containers
-  - FAQ: complete/faq.md
+  - Home: index.md
+
+  # Getting Started - Quick 10-minute setup
+  - Getting Started: get-started/index.md
+
+  # Comprehensive User Guide organized by topic
+  - User Guide:
+    - user-guide/index.md
+    - Platform Concepts: user-guide/concepts/index.md
+    - Accounts & Permissions: user-guide/accounts-permissions/index.md
+    - Storage Systems: user-guide/storage/index.md
+    - VOSpace API: user-guide/storage/vospace-api.md
+    - Container Usage: user-guide/containers/index.md
+    - Interactive Sessions:
+      - user-guide/interactive-sessions/index.md
+      - Jupyter Notebooks: user-guide/interactive-sessions/launch-notebook.md
+      - Desktop Sessions: user-guide/interactive-sessions/launch-desktop.md
+      - CARTA Visualization: user-guide/interactive-sessions/launch-carta.md
+      - Firefly Table Viewer: user-guide/interactive-sessions/launch-firefly.md
+      - Contributed Applications: user-guide/interactive-sessions/launch-contributed.md
+    - Batch Jobs: user-guide/batch-jobs/index.md
+    - Radio Astronomy:
+      - user-guide/radio-astronomy/index.md
+      - CASA Workflows: user-guide/radio-astronomy/casa-workflows.md
+
+  # FAQ covering common questions and troubleshooting
+  - FAQ: faq/index.md
+
+  # Help and Support Resources
+  - Help & Support: help/index.md
