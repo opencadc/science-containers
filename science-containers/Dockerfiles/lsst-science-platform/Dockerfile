@@ -1,7 +1,7 @@
 # This Dockerfile is used to build the LSST Science Platform container
 # This is currently an ALMA LINUX distro
 ARG VERSION=latest_daily
-FROM lsstsqre/sciplat-lab:${VERSION}
+FROM lsstsqre/sciplat-lab:${VERSION} as deploy
 
 # The RSP removes the passwd and group files 
 # but that makes adding software fail. Add back
@@ -15,12 +15,16 @@ RUN rm /var/lib/dpkg/lock
 RUN dpkg --configure -a
 RUN apt-get -f install
 # Add xterm so this can be run on Desktop App 
-# RUN apt-get install -y xterm
+RUN apt-get install -y libx11-dev
+RUN apt-get install -y xterm
+RUN apt-get install -y git-lfs
+RUN apt-get install -y graphviz
 
 # install ds9, no packages and not on lsst platform by default
 #RUN curl https://ds9.si.edu/download/centos7/ds9.centos7.8.5.tar.gz | tar -zx -f - -C /usr/bin/
 RUN curl https://ds9.si.edu/download/centos9x86/ds9.centos9x86.8.7b1.tar.gz | tar -zx -f - -C /usr/bin/
 RUN curl https://ds9.si.edu/download/centos9x86/xpa.centos9x86.2.1.20.tar.gz | tar -zx -f - -C /usr/bin/
+
 
 # Add our own MOTD
 COPY src/rsp_notice /usr/local/share/jupyterlab/etc/rsp_notice
@@ -30,29 +34,34 @@ COPY src/rsp_notice /usr/local/share/jupyterlab/etc/rsp_notice
 # add a startup script that initializes the environment correctly
 RUN mkdir /skaha
 COPY src/startup.sh /skaha/startup.sh
-# COPY src/jupyter /usr/local/bin/jupyter
 RUN chmod +x /skaha/startup.sh
-# RUN chmod +x /usr/local/bin/jupyter
+COPY src/launch_firefly_on_canfar.py /skaha/launch_firefly_on_canfar.py
+COPY src/jupyter /usr/bin/jupyter
 
 # Some items to make this a better experience on CANFAR
-RUN /skaha/startup.sh "apt-get install -y libx11-dev"
-RUN /skaha/startup.sh pip install cadctap cadcdata vos 'lsdb[full]'
-RUN /skaha/startup.sh pip install rsp-jupyter-extensions safir canfar
+RUN /skaha/startup.sh pip install cadctap cadcdata vos canfar safir rsp-jupyter-extensions lsdb
 
-RUN mkdir -p /firefly
-COPY src/index.html /firefly/index.html
+# load the latest daf_butler for LSST to get CADC authentication
+# WORKDIR /opt/cadc
+# RUN git clone https://github.com/lsst/daf_butler.git
+# WORKDIR /opt/cadc/daf_butler
+# COPY src/build_daf_butler.sh .
+# RUN chmod +x build_daf_butler.sh
+# RUN ./build_daf_butler.sh
 
-# RUN mkdir -p /opt/canfar
-# WORKDIR /opt/canfar
-# RUN /skaha/startup.sh "git clone https://github.com/ijiraq/daf_butler"
-
-RUN mkdir -p /session/notebook/rubin/tutorials
-RUN apt-get install -y git-lfs
-RUN git lfs install
-RUN git clone https://github.com/lsst/tutorial-notebooks.git /session/notebook/rubin/tutorials/tutorial-notebooks
-RUN /skaha/startup.sh "apt-get install -y graphviz"
-RUN mkdir /Users
+# RUN mkdir -p /session/notebook/rubin/tutorials
+# RUN git lfs install
+# RUN git clone https://github.com/lsst/tutorial-notebooks.git /session/notebook/rubin/tutorials/tutorial-notebooks
 # RUN git clone https://github.com/lsst/tutorial-notebooks-data.git /session/notebook/rubin/tutorials/tutorial-notebooks-data
 
 # This is just for when using this as standalong container
+WORKDIR /
 ENTRYPOINT ["/skaha/startup.sh"]
+
+FROM deploy as dev
+RUN echo "Adding a user to run local developement"
+RUN mkdir -p /arc/home
+RUN groupadd -g 1001 jkavelaars
+RUN useradd -u 1001 -g 1001 -s /bin/bash -d /arc/home/jkavelaars -m jkavelaars
+WORKDIR /arc/home/jkavelaars
+USER jkavelaars
