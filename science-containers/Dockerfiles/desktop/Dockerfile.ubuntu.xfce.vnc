@@ -1,15 +1,17 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
-FROM ubuntu:16.04
+# Ubuntu 24.04.3 LTS
+FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2
 
-MAINTAINER Tobias Schneck "tobias.schneck@consol.de"
-ENV REFRESHED_AT 2018-03-27
+ENV REFRESHED_AT 2025-12-08
 
-LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
-      io.k8s.display-name="Headless VNC Container based on Ubuntu" \
-      io.openshift.expose-services="6901:http,5901:xvnc" \
-      io.openshift.tags="vnc, ubuntu, xfce" \
-      io.openshift.non-scalable=true
+LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium"
+LABEL io.k8s.display-name="Headless VNC Container based on Ubuntu"
+LABEL io.openshift.expose-services="6901:http,5901:xvnc"
+LABEL io.openshift.tags="vnc, ubuntu, xfce"
+LABEL io.openshift.non-scalable=true
+LABEL opencadc.org/maintainer.name="Dustin Jenkins @ Canadian Astronomy Data Centre"
+LABEL opencadc.org/maintainer.email="Dustin.Jenkins@nrc-cnrc.gc.ca"
 
 ## Connection ports for controlling the UI:
 # VNC port:5901

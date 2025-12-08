@@ -9,7 +9,7 @@ Modifications include a customized desktop, enabling remote DISPLAY, disabling i
 To build the docker images for skaha-desktop, set the version number in VERSION, then:
 ```
 make
-./applyVersion.sh
+./apply-version.sh
 ```
 
 # desktop icons

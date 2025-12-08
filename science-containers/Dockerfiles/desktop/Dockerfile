@@ -1,1 +1,1 @@
-Dockerfile.centos.xfce.vnc
+Dockerfile.ubuntu.xfce.vnc
