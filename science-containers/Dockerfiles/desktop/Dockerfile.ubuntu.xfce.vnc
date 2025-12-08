@@ -3,7 +3,7 @@
 # Ubuntu 24.04.3 LTS
 FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2
 
-ENV REFRESHED_AT 2025-12-08
+ENV REFRESHED_AT=2025-12-08
 
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium"
 LABEL io.k8s.display-name="Headless VNC Container based on Ubuntu"
@@ -22,16 +22,17 @@ ENV DISPLAY=:1 \
 EXPOSE $VNC_PORT $NO_VNC_PORT
 
 ### Envrionment config
-ENV HOME=/headless \
-    TERM=xterm \
-    STARTUPDIR=/dockerstartup \
-    INST_SCRIPTS=/headless/install \
-    NO_VNC_HOME=/headless/noVNC \
-    DEBIAN_FRONTEND=noninteractive \
-    VNC_COL_DEPTH=24 \
-    VNC_RESOLUTION=1280x1024 \
-    VNC_PW=vncpassword \
-    VNC_VIEW_ONLY=false
+ENV HOME=/headless
+ENV TERM=xterm
+ENV STARTUPDIR=/dockerstartup
+ENV INST_SCRIPTS=/headless/install
+ENV NO_VNC_HOME=/headless/noVNC
+ENV DEBIAN_FRONTEND=noninteractive
+ENV VNC_COL_DEPTH=24
+ENV VNC_RESOLUTION=1280x1024
+ENV VNC_PW=vncpassword
+ENV VNC_VIEW_ONLY=false
+
 WORKDIR $HOME
 
 ### Add all install scripts for further steps
