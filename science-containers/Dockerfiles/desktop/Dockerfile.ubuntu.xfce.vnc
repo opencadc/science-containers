@@ -3,7 +3,7 @@
 # Ubuntu 24.04.3 LTS
 FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2
 
-ENV REFRESHED_AT=2025-12-08
+ENV REFRESHED_AT=2025-12-11
 
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium"
 LABEL io.k8s.display-name="Headless VNC Container based on Ubuntu"
@@ -71,6 +71,23 @@ ADD ./src/common/xfce/ $HOME/
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
+
+# Add scripts that launch sofware containers
+ADD software-scripts/*.sh /usr/local/bin/
+
+# Add desktop icon files
+RUN mkdir -p /headless/.icons
+COPY software-scripts/icons/* /headless/.icons
+
+# Add desktop links to those scripts
+COPY software-scripts/*.desktop /usr/share/applications/
+
+# Add a subset of software links to the desktop
+COPY software-scripts/arcade-feedback.desktop $HOME/Desktop/arcade-feedback.desktop
+COPY software-scripts/firefox.desktop $HOME/Desktop/firefox.desktop
+COPY software-scripts/gedit.desktop $HOME/Desktop/gedit.desktop
+COPY software-scripts/kill-session.desktop $HOME/Desktop/kill-session.desktop
+RUN chown guest $HOME/Desktop/*.desktop
 
 USER 1000
 
