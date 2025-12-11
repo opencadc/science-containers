@@ -3,6 +3,14 @@ set -e
 
 echo "Install Firefox"
 
+echo "Install XZ decompression tool"
+rm -rf /var/cache/apt/archives/*
+rm -rf /var/lib/apt/lists/*
+apt update
+apt install -y xz-utils
+apt clean -y
+rm -rf /var/lib/apt/lists/*
+
 function disableUpdate(){
     ff_def="$1/browser/defaults/profile"
     mkdir -p $ff_def
@@ -26,9 +34,9 @@ function instFF() {
             FF_INST=$2
             echo "download Firefox $FF_VERS and install it to '$FF_INST'."
             mkdir -p "$FF_INST"
-            FF_URL=http://releases.mozilla.org/pub/firefox/releases/$FF_VERS/linux-x86_64/en-US/firefox-$FF_VERS.tar.bz2
+            FF_URL="https://releases.mozilla.org/pub/firefox/releases/${FF_VERS}/linux-x86_64/en-US/firefox-${FF_VERS}.tar.xz"
             echo "FF_URL: $FF_URL"
-            wget -qO- $FF_URL | tar xvj --strip 1 -C $FF_INST/
+            wget -qO- $FF_URL | tar xvJ --strip 1 -C $FF_INST/
             ln -s "$FF_INST/firefox" /usr/bin/firefox
             disableUpdate $FF_INST
             exit $?
