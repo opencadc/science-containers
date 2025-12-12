@@ -108,7 +108,5 @@ RUN firefox --headless -CreateProfile "skaha /headless/mozilla/skaha"
 RUN chmod -R 777 /headless/mozilla/skaha
 ENV MOZ_FORCE_DISABLE_E10S=1
 
-USER 1000
-
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
 CMD ["--wait"]
