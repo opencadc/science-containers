@@ -1,9 +1,9 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
 # Ubuntu 24.04.3 LTS
-FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2
+FROM ubuntu@sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9e54
 
-ENV REFRESHED_AT=2025-12-11
+ENV REFRESHED_AT=2025-12-12
 
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium"
 LABEL io.k8s.display-name="Headless VNC Container based on Ubuntu"
@@ -83,11 +83,10 @@ COPY software-scripts/icons/* /headless/.icons
 COPY software-scripts/*.desktop /usr/share/applications/
 
 # Add a subset of software links to the desktop
-COPY software-scripts/arcade-feedback.desktop $HOME/Desktop/arcade-feedback.desktop
-COPY software-scripts/firefox.desktop $HOME/Desktop/firefox.desktop
-COPY software-scripts/gedit.desktop $HOME/Desktop/gedit.desktop
-COPY software-scripts/kill-session.desktop $HOME/Desktop/kill-session.desktop
-RUN chown guest $HOME/Desktop/*.desktop
+COPY --chown=1000 software-scripts/arcade-feedback.desktop $HOME/Desktop/arcade-feedback.desktop
+COPY --chown=1000 software-scripts/firefox.desktop $HOME/Desktop/firefox.desktop
+COPY --chown=1000 software-scripts/gedit.desktop $HOME/Desktop/gedit.desktop
+COPY --chown=1000 software-scripts/kill-session.desktop $HOME/Desktop/kill-session.desktop
 
 USER 1000
 
