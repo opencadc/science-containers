@@ -6,7 +6,7 @@ echo "Install some common tools for further installation"
 rm -rf /var/cache/apt/archives
 rm -rf /var/lib/apt/lists/*
 apt update
-apt install -y vim wget net-tools locales bzip2
+apt install -y bzip2 curl jq localnes net-tools vim wget
 apt clean -y
 rm -rf /var/lib/apt/lists/*
 
