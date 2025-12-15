@@ -139,6 +139,9 @@ fi
 if [ -z "$1" ] || [[ $1 =~ -w|--wait ]]; then
     echo "Waiting for ${PID_SUB} (noVNC) to execute in the foreground..."
     wait $PID_SUB
+
+    # keep container running and tail the VNC log
+    tail -f $STARTUPDIR/*.log /headless/.vnc/*$DISPLAY.log
 else
     # unknown option ==> call command
     echo -e "\n\n------------------ EXECUTE COMMAND ------------------"
