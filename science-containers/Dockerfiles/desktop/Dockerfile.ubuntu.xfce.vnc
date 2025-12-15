@@ -90,7 +90,8 @@ ADD software-scripts/*.sh /usr/local/bin/
 
 # Add desktop icon files
 RUN mkdir -p /headless/.icons \
-    && mkdir -p /etc/xdg/menus/applications-merged
+    && mkdir -p /etc/xdg/menus/applications-merged \
+    && chmod 777 /etc/xdg/menus/applications-merged
 COPY software-scripts/icons/* /headless/.icons
 
 # Add desktop links to those scripts
