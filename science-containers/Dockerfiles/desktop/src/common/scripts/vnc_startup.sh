@@ -129,7 +129,6 @@ sed 's/^#/\!/' $HOME/.Xresources > /tmp/.Xresources
 xrdb /tmp/.Xresources
 rm /tmp/.Xresources
 echo ".Xresources reloaded"
-echo ""
 
 if [[ $DEBUG == true ]] || [[ $1 =~ -t|--tail-log ]]; then
     echo -e "\n------------------ /headless/.vnc/*$DISPLAY.log ------------------"
@@ -138,6 +137,7 @@ if [[ $DEBUG == true ]] || [[ $1 =~ -t|--tail-log ]]; then
 fi
 
 if [ -z "$1" ] || [[ $1 =~ -w|--wait ]]; then
+    echo "Waiting for ${PID_SUB} (noVNC) to execute in the foreground..."
     wait $PID_SUB
 else
     # unknown option ==> call command
