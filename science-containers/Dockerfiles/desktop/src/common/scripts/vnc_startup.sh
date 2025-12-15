@@ -123,7 +123,13 @@ xset -dpms s off
 
 # BM: reload xterm config
 echo "reloading xtermconfig for $skaha_username"
-xrdb $HOME/.Xresources
+
+# DJ: Comments in .Xresources start with '!' instead of '#', so convert before loading
+sed 's/^#/\!/' $HOME/.Xresources > /tmp/.Xresources
+xrdb /tmp/.Xresources
+rm /tmp/.Xresources
+echo ".Xresources reloaded"
+echo ""
 
 if [[ $DEBUG == true ]] || [[ $1 =~ -t|--tail-log ]]; then
     echo -e "\n------------------ /headless/.vnc/*$DISPLAY.log ------------------"
