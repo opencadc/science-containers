@@ -110,4 +110,4 @@ RUN chmod -R 777 /headless/mozilla/skaha
 ENV MOZ_FORCE_DISABLE_E10S=1
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
-CMD ["--wait"]
+CMD ["--debug", "--wait"]
