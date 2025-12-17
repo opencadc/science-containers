@@ -18,7 +18,7 @@ RUN apt-get -f install
 RUN apt-get install -y libx11-dev
 RUN apt-get install -y xterm
 RUN apt-get install -y git-lfs
-RUN apt-get install -y graphviz
+RUN apt install -y graphviz
 
 # install ds9, no packages and not on lsst platform by default
 #RUN curl https://ds9.si.edu/download/centos7/ds9.centos7.8.5.tar.gz | tar -zx -f - -C /usr/bin/
