@@ -11,5 +11,5 @@ RUN set -eux; \
     && ls -l lib/build/libs/cadc-sso-*.jar
 
 # Currently, the CADC-SSO Adapter only works with the nightly build of Firefly
-FROM ipac/firefly:2025.2
+FROM ipac/firefly:2025.5
 COPY --from=builder /firefly/cadc-sso/lib/build/libs/cadc-sso-*.jar /usr/local/tomcat/webapps-ref/firefly/WEB-INF/lib/
