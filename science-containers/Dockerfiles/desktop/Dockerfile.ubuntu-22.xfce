@@ -66,6 +66,8 @@ ADD ./src/common/install/set_user_permission.sh $INST_SCRIPTS/
 RUN chmod +x $INST_SCRIPTS/set_user_permission.sh
 
 ADD ./src/common/scripts $STARTUPDIR/
+RUN chmod +x $STARTUPDIR/*.sh
+
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR /headless
 
 # Add desktop icon files
