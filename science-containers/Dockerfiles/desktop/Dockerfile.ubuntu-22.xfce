@@ -21,18 +21,33 @@ ENV XDG_CONFIG_HOME=/headless
 ENV MOZ_FORCE_DISABLE_E10S=1
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    bzip2 jq locales net-tools vim \
-    xfce4 xfce4-terminal dbus-x11 \
-    tigervnc-standalone-server tigervnc-common tigervnc-tools \
-    novnc websockify \
-    supervisor \
+RUN apt-get update \
+    && apt-get install -y \
+    bzip2 \
+    ca-certificates \
+    curl \
+    dbus-x11 \
     firefox \
-    wget curl ca-certificates \
-    xdg-utils \
+    jq \
+    locales \
     menu-xdg \
-    xfce4-appfinder \
+    net-tools \ 
+    novnc \
+    supervisor \
+    tigervnc-common \
+    tigervnc-standalone-server \
+    tigervnc-tools \
+    tigervnc-xorg-extension \
+    twm \
+    vim \
+    websockify \
+    wget \
     x11-xserver-utils \
+    xdg-utils \
+    xfce4 \
+    xfce4-terminal \
+    xfce4-appfinder \
+    xterm \
     --no-install-recommends \
     && mkdir -p /usr/lib/firefox/distribution \
     && printf '{ \
