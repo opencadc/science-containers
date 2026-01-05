@@ -73,17 +73,17 @@ RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR /headless
 # Add desktop icon files
 RUN mkdir -p ${HOME}/.icons \
     && mkdir -p ${HOME}/Desktop \
-    && chmod g+rwx ${HOME}/Desktop \
+    && chmod 777 ${HOME}/Desktop \
     && mkdir -p /etc/xdg/menus/applications-merged \
     && chmod 777 /etc/xdg/menus/applications-merged
 
 COPY software-scripts/icons/* ${HOME}/.icons
 
 # Add a subset of software links to the desktop
-COPY --chown=30001 software-scripts/arcade-feedback.desktop $HOME/Desktop/arcade-feedback.desktop
-COPY --chown=30001 software-scripts/firefox.desktop $HOME/Desktop/firefox.desktop
-COPY --chown=30001 software-scripts/gedit.desktop $HOME/Desktop/gedit.desktop
-COPY --chown=30001 software-scripts/kill-session.desktop $HOME/Desktop/kill-session.desktop
+COPY --chown=guest:root software-scripts/arcade-feedback.desktop $HOME/Desktop/arcade-feedback.desktop
+COPY --chown=guest:root software-scripts/firefox.desktop $HOME/Desktop/firefox.desktop
+COPY --chown=guest:root software-scripts/gedit.desktop $HOME/Desktop/gedit.desktop
+COPY --chown=guest:root software-scripts/kill-session.desktop $HOME/Desktop/kill-session.desktop
 
 # Create firefox profile and space
 # RUN mkdir -p /headless/mozilla/skaha
