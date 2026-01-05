@@ -13,7 +13,7 @@ ENV HOME=/headless
 ENV TERM=xterm
 ENV STARTUPDIR=/dockerstartup
 ENV INST_SCRIPTS=/headless/install
-ENV NO_VNC_HOME=/headless/noVNC
+ENV NO_VNC_HOME=/usr/share/novnc
 ENV VNC_COL_DEPTH=24
 ENV VNC_RESOLUTION=1280x1024
 ENV VNC_PW=vncpassword
@@ -34,6 +34,7 @@ RUN apt-get update \
     net-tools \ 
     novnc \
     python3-numpy \
+    python3-websockify \
     supervisor \
     tigervnc-common \
     tigervnc-standalone-server \
@@ -77,13 +78,6 @@ RUN useradd -m -g guest -u 30001 guest && \
 
 # Add scripts that launch sofware containers
 ADD software-scripts/*.sh /usr/local/bin/
-
-# ADD ./src/common/xfce/wm_startup.sh ${HOME}/
-# RUN chmod +x ${HOME}/wm_startup.sh
-
-ADD ./src/ubuntu/install/no_vnc.sh $INST_SCRIPTS/
-RUN chmod +x $INST_SCRIPTS/no_vnc.sh \
-    && $INST_SCRIPTS/no_vnc.sh
 
 ADD ./src/common/install/set_user_permission.sh $INST_SCRIPTS/
 RUN chmod +x $INST_SCRIPTS/set_user_permission.sh
