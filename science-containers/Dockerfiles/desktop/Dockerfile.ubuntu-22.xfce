@@ -72,6 +72,8 @@ RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR /headless
 
 # Add desktop icon files
 RUN mkdir -p ${HOME}/.icons \
+    && mkdir -p ${HOME}/Desktop \
+    && chmod g+rwx ${HOME}/Desktop \
     && mkdir -p /etc/xdg/menus/applications-merged \
     && chmod 777 /etc/xdg/menus/applications-merged
 
