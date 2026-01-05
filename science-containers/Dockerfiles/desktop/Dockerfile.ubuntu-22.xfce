@@ -63,6 +63,8 @@ RUN useradd -m -g guest -u 30001 guest && \
 ADD software-scripts/*.sh /usr/local/bin/
 
 ADD ./src/common/install/set_user_permission.sh $INST_SCRIPTS/
+RUN chmod +x $INST_SCRIPTS/set_user_permission.sh
+
 ADD ./src/common/scripts $STARTUPDIR/
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR /headless
 
