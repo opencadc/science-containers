@@ -6,7 +6,6 @@ FROM ubuntu@sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9
 ENV REFRESHED_AT=2026-01-05
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:1
-ENV VNC_PORT=5901
 ENV NOVNC_PORT=6901
 ENV NOVNC_TOKEN=vncpassword
 ENV HOME=/headless
@@ -141,11 +140,11 @@ USER root
 RUN mkdir -p /etc/supervisor/conf.d
 
 # Supervisor configuration (no VNC password, token-based noVNC)
-RUN printf "[supervisord]\nnodaemon=true\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -xstartup /etc/vnc/xstartup\nuser=root\n\n[program:novnc]\ncommand=/usr/bin/websockify --web=/usr/share/novnc/ --geometry ${VNC_RESOLUTION} --token-plugin TokenFile --token-source /etc/novnc/tokens %d localhost:%d\n" "$NOVNC_PORT" "$VNC_PORT" > /etc/supervisor/conf.d/supervisord.conf
+RUN printf "[supervisord]\nnodaemon=true\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -xstartup /etc/vnc/xstartup\nuser=root\n\n[program:novnc]\ncommand=/usr/bin/websockify --web=/usr/share/novnc/ --geometry ${VNC_RESOLUTION} --token-plugin TokenFile --token-source /etc/novnc/tokens %d localhost:%d\n" "${NOVNC_PORT}" "${NOVNC_PORT}" > /etc/supervisor/conf.d/supervisord.conf
 
 # noVNC token configuration
 RUN mkdir -p /etc/novnc && \
-    echo "token1: localhost:$VNC_PORT" > /etc/novnc/tokens
+    echo "token1: localhost:${NOVNC_PORT}" > /etc/novnc/tokens
 
 EXPOSE ${NOVNC_PORT}
 
