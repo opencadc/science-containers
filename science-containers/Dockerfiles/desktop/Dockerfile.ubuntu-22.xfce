@@ -24,7 +24,7 @@ ENV MOZ_FORCE_DISABLE_E10S=1
 RUN apt-get update && apt-get install -y \
     bzip2 jq locales net-tools vim \
     xfce4 xfce4-terminal dbus-x11 \
-    tigervnc-standalone-server tigervnc-common \
+    tigervnc-standalone-server tigervnc-common tigervnc-tools \
     novnc websockify \
     supervisor \
     firefox \
