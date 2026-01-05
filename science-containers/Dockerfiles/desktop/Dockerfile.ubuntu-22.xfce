@@ -33,6 +33,7 @@ RUN apt-get update \
     menu-xdg \
     net-tools \ 
     novnc \
+    python3-numpy \
     supervisor \
     tigervnc-common \
     tigervnc-standalone-server \
@@ -79,6 +80,10 @@ ADD software-scripts/*.sh /usr/local/bin/
 
 # ADD ./src/common/xfce/wm_startup.sh ${HOME}/
 # RUN chmod +x ${HOME}/wm_startup.sh
+
+ADD ./src/ubuntu/install/no_vnc.sh $INST_SCRIPTS/
+RUN chmod +x $INST_SCRIPTS/no_vnc.sh \
+    && $INST_SCRIPTS/no_vnc.sh
 
 ADD ./src/common/install/set_user_permission.sh $INST_SCRIPTS/
 RUN chmod +x $INST_SCRIPTS/set_user_permission.sh

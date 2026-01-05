@@ -103,7 +103,6 @@ if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -ge
 
 ## BM: The 'no password' start command is commented out
 vncserver -SecurityTypes None $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
-## vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
 echo -e "start window manager\n..."
 
 # $XDG_CONFIG_HOME/wm_startup.sh &> $STARTUPDIR/wm_startup.log
