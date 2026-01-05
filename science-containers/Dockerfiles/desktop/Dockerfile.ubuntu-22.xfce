@@ -145,8 +145,9 @@ RUN mkdir -p /etc/supervisor/conf.d \
 
 VOLUME [ "/var/log/supervisor", "/var/run/supervisor" ]
 
-# Supervisor configuration (no VNC password, token-based noVNC)
-RUN printf "[supervisord]\nnodaemon=true\nlogfile=/var/log/supervisor/supervisord.log\npidfile=/var/run/supervisor/supervisord.pid\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -xstartup /etc/vnc/xstartup -geometry ${VNC_RESOLUTION}\n\n[program:novnc]\ncommand=/usr/bin/websockify --web=/usr/share/novnc/ --token-plugin TokenFile --token-source /etc/novnc/tokens %d localhost:%d\n" "$NOVNC_PORT" "$VNC_PORT" > /etc/supervisor/conf.d/supervisord.conf
+# Supervisor configuration (no VNC password, token-based noVNC configuration)
+# This will start both the VNC server and the noVNC web server, proxying the $NOVNC_PORT to localhost:VNC_PORT as specified in /etc/novnc/tokens (below)
+RUN printf "[supervisord]\nnodaemon=true\nlogfile=/var/log/supervisor/supervisord.log\npidfile=/var/run/supervisor/supervisord.pid\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -xstartup /etc/vnc/xstartup -geometry ${VNC_RESOLUTION}\n\n[program:novnc]\ncommand=/usr/bin/websockify --web=/usr/share/novnc/ --token-plugin TokenFile --token-source /etc/novnc/tokens %d\n" "$NOVNC_PORT" > /etc/supervisor/conf.d/supervisord.conf
 
 # noVNC token configuration
 RUN mkdir -p /etc/novnc && \
