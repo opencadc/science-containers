@@ -136,12 +136,15 @@ exec startxfce4 & \
 ' > /etc/vnc/xstartup && \ 
     chmod +x /etc/vnc/xstartup 
 
-# Switch back to root for supervisor
-USER root
-RUN mkdir -p /etc/supervisor/conf.d
+# Supervisor setup
+# This will need to be run as the current user, so make this writable
+RUN mkdir -p /etc/supervisor/conf.d \
+    && chmod -R 777 /etc/supervisor/conf.d \
+    && mkdir -p /var/log/supervisor /var/run/supervisor \
+    && chmod -R 0775 /var/log/supervisor /var/run/supervisor
 
 # Supervisor configuration (no VNC password, token-based noVNC)
-RUN printf "[supervisord]\nnodaemon=true\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -xstartup /etc/vnc/xstartup\nuser=root\n\n[program:novnc]\ncommand=/usr/bin/websockify --web=/usr/share/novnc/ --geometry ${VNC_RESOLUTION} --token-plugin TokenFile --token-source /etc/novnc/tokens %d localhost:%d\n" "$NOVNC_PORT" "$VNC_PORT" > /etc/supervisor/conf.d/supervisord.conf
+RUN printf "[supervisord]\nnodaemon=true\nlogfile=/var/log/supervisor/supervisord.log\npidfile=/var/run/supervisor/supervisord.pid\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -xstartup /etc/vnc/xstartup\n\n[program:novnc]\ncommand=/usr/bin/websockify --web=/usr/share/novnc/ --geometry ${VNC_RESOLUTION} --token-plugin TokenFile --token-source /etc/novnc/tokens %d localhost:%d\n" "$NOVNC_PORT" "$VNC_PORT" > /etc/supervisor/conf.d/supervisord.conf
 
 # noVNC token configuration
 RUN mkdir -p /etc/novnc && \
