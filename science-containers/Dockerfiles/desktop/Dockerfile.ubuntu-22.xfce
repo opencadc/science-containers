@@ -137,7 +137,7 @@ xhost +
 # BM: disable screen saver
 xset s noblank
 xset s off
-exec startxfce4 &
+exec startxfce4
 EOF
 
 RUN chmod 777 /etc/vnc/xstartup
