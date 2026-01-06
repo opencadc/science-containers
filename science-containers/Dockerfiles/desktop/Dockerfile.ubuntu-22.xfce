@@ -125,9 +125,6 @@ RUN mkdir -p /etc/vnc && \
 #!/bin/bash
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
-# HOME is provided externally; do not modify user data
-export HOME="${HOME}"
-source ${HOME}/.bashrc
 
 # Merge user .Xresources if it exists
 if [ -f "${HOME}/.Xresources" ]; then
