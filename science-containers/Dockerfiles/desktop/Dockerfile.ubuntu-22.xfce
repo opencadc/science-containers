@@ -153,6 +153,8 @@ RUN printf "[supervisord]\nnodaemon=true\nlogfile=/var/log/supervisor/supervisor
 RUN mkdir -p /etc/novnc && \
     echo "token1: localhost:$VNC_PORT" > /etc/novnc/tokens
 
+RUN ln -s ${NO_VNC_HOME}/vnc.html ${NO_VNC_HOME}/index.html
+
 EXPOSE ${NOVNC_PORT}
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
