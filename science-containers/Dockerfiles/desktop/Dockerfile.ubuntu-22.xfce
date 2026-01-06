@@ -35,10 +35,13 @@ ENV MOZ_FORCE_DISABLE_E10S=1
 # Install system dependencies
 RUN apt-get update \
     && apt-get install -y \
+    at-spi2-core \
     bzip2 \
     ca-certificates \
     curl \
+    dbus-user-session \
     dbus-x11 \
+    gpg-agent \
     firefox \
     jq \
     locales \
