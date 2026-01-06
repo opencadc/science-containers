@@ -32,7 +32,9 @@ RUN apt-get update \
     locales \
     menu-xdg \
     net-tools \ 
+    nodejs \
     novnc \
+    npm \
     python3-numpy \
     python3-websockify \
     supervisor \
@@ -60,6 +62,9 @@ RUN apt-get update \
 }' > /usr/lib/firefox/distribution/policies.json \
     && apt-get purge -y xfce4-power-manager xscreensaver || true \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR ${NOVNC_HOME}/app
+RUN npm install @novnc/novnc
 
 # Assume multiple user home directories are mounted under /home
 WORKDIR $HOME
