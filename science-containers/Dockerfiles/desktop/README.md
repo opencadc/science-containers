@@ -1,4 +1,4 @@
-# skaha-desktop
+# Desktop User Session Image(s)
 
 The core of this project was forked and extended from the ConSol project: https://github.com/ConSol/docker-headless-vnc-container
 
