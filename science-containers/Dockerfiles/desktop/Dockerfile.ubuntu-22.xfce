@@ -1,9 +1,20 @@
+FROM ubuntu@sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9e54 AS novnc-extractor
+
+WORKDIR /tmp/novnc
+
+# Use curl to download the archive to stdout, pipe to tar to extract it directly.
+# Extract only the package.json file
+# The 1.3.0 is used here for compatibility with older Ubuntu (22.04) version
+RUN apt update \
+    && apt install -y curl tar \
+    && curl -sSL "https://github.com/novnc/noVNC/archive/v1.3.0.tar.gz" | tar -xzf - "package.json"
+
 # Ubuntu-based noVNC container with token auth and Firefox
 
 # Ubuntu 22.04 LTS base image
-FROM ubuntu@sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9e54
+FROM ubuntu@sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9e54 AS production
 
-ENV REFRESHED_AT=2026-01-05
+ENV REFRESHED_AT=2026-01-06
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:1
 ENV VNC_PORT=5901
@@ -32,9 +43,7 @@ RUN apt-get update \
     locales \
     menu-xdg \
     net-tools \ 
-    nodejs \
     novnc \
-    npm \
     python3-numpy \
     python3-websockify \
     supervisor \
@@ -62,9 +71,6 @@ RUN apt-get update \
 }' > /usr/lib/firefox/distribution/policies.json \
     && apt-get purge -y xfce4-power-manager xscreensaver || true \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-WORKDIR ${NOVNC_HOME}/app
-RUN npm install @novnc/novnc
 
 # Assume multiple user home directories are mounted under /home
 WORKDIR $HOME
@@ -160,6 +166,7 @@ RUN mkdir -p /etc/novnc && \
     echo "token1: localhost:$VNC_PORT" > /etc/novnc/tokens
 
 RUN ln -s ${NOVNC_HOME}/vnc.html ${NOVNC_HOME}/index.html
+COPY --from=novnc-extractor /tmp/novnc/package.json ${NOVNC_HOME}/app/package.json
 
 EXPOSE ${NOVNC_PORT}
 
