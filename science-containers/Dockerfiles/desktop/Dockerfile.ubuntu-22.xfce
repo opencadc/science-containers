@@ -121,32 +121,31 @@ COPY --chown=guest:root software-scripts/kill-session.desktop $HOME/Desktop/kill
 
 # Global VNC startup script (does not touch user HOME)
 RUN mkdir -p /etc/vnc && \
-    printf '#!/bin/sh \
-unset SESSION_MANAGER \
-unset DBUS_SESSION_BUS_ADDRESS \
- \
-# HOME is provided externally; do not modify user data \
-export HOME="${HOME}" \
- \ 
-source ${HOME}/.bashrc \
- \
-# Merge user .Xresources if it exists \
-if [ -f "$HOME/.Xresources" ]; then \
-    xrdb -merge "$HOME/.Xresources" \
-fi \
- \
-# BM: disable x auth \
-xhost + \
- \
-# BM: disable screen saver \
-xset s noblank \
-xset s off \
-xset dpms 0 0 0 \
-xset -dpms s off \
- \
-exec startxfce4 & \
-' > /etc/vnc/xstartup && \ 
-    chmod +x /etc/vnc/xstartup 
+    cat <<EOF > /etc/vnc/xstartup 
+#!/bin/sh
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+# HOME is provided externally; do not modify user data
+export HOME="${HOME}"
+source ${HOME}/.bashrc
+
+# Merge user .Xresources if it exists
+if [ -f "${HOME}/.Xresources" ]; then
+    xrdb -merge "${HOME}/.Xresources"
+fi
+
+# BM: disable x auth
+xhost +
+
+# BM: disable screen saver
+xset s noblank
+xset s off
+xset dpms 0 0 0
+xset -dpms s off
+exec startxfce4 &
+EOF
+
+RUN chmod +x /etc/vnc/xstartup
 
 # Supervisor setup
 # This will need to be run as the current user, so make this writable
