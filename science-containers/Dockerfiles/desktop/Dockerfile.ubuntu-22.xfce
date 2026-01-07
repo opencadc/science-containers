@@ -64,6 +64,7 @@ RUN apt-get update \
     xdg-utils \
     xfce4 \
     xfce4-appfinder \
+    xinit \
     xterm \
     --no-install-recommends \
     && mkdir -p /usr/lib/firefox/distribution \
