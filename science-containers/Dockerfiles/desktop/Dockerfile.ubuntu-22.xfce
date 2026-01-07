@@ -39,10 +39,14 @@ RUN apt-get update \
     bzip2 \
     ca-certificates \
     curl \
+    # D-Bus is needed for XFCE and Firefox
     dbus-user-session \
     dbus-x11 \
+    # Gnome Terminal is needed to start Desktop application scripts from the ~/.local/skaha/bin folder.
+    gnome-terminal \
     gpg-agent \
     firefox \
+    # JQ is used to format JSON
     jq \
     locales \
     menu-xdg \
@@ -157,7 +161,7 @@ VOLUME [ "/var/log/supervisor", "/var/run/supervisor" ]
 # Supervisor configuration (no VNC password, token-based noVNC configuration)
 # This will start both the VNC server and the noVNC web server, proxying the $NOVNC_PORT to localhost:VNC_PORT as specified in /etc/novnc/tokens (below)
 # RUN printf "[supervisord]\nnodaemon=true\nlogfile=/var/log/supervisor/supervisord.log\npidfile=/var/run/supervisor/supervisord.pid\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -cleanstale -verbose -xstartup /etc/vnc/xstartup -geometry ${VNC_RESOLUTION}\n\n[program:novnc]\ncommand=/usr/bin/websockify --web=/usr/share/novnc/ --token-plugin TokenFile --token-source /etc/novnc/tokens %d\n" "$NOVNC_PORT" > /etc/supervisor/conf.d/supervisord.conf
-RUN printf "[supervisord]\nnodaemon=true\nlogfile=/var/log/supervisor/supervisord.log\npidfile=/var/run/supervisor/supervisord.pid\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -cleanstale -verbose -SecurityTypes None -depth 24 -xstartup /etc/vnc/xstartup -geometry ${VNC_RESOLUTION}\n\n[program:novnc]\ncommand=${NOVNC_HOME}/utils/novnc_proxy --listen %d --vnc localhost:%d --record canfar-traffic --web /usr/share/novnc\n" "${NOVNC_PORT}" "${VNC_PORT}" > /etc/supervisor/conf.d/supervisord.conf
+RUN printf "[supervisord]\nnodaemon=true\nlogfile=/var/log/supervisor/supervisord.log\npidfile=/var/run/supervisor/supervisord.pid\n\n[program:vnc]\ncommand=/usr/bin/tigervncserver :1 -localhost -cleanstale -verbose -SecurityTypes None -depth 24 -xstartup /etc/vnc/xstartup -geometry ${VNC_RESOLUTION}\n\n[program:novnc]\ncommand=${NOVNC_HOME}/utils/novnc_proxy --listen %d --vnc localhost:%d --web /usr/share/novnc\n" "${NOVNC_PORT}" "${VNC_PORT}" > /etc/supervisor/conf.d/supervisord.conf
 
 # noVNC token configuration
 # RUN mkdir -p /etc/novnc && \
