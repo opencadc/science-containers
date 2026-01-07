@@ -39,14 +39,11 @@ RUN apt-get update \
     bzip2 \
     ca-certificates \
     curl \
-    # D-Bus is needed for XFCE and Firefox
     dbus-user-session \
     dbus-x11 \
-    # Gnome Terminal is needed to start Desktop application scripts from the ~/.local/skaha/bin folder.
     gnome-terminal \
     gpg-agent \
     firefox \
-    # JQ is used to format JSON
     jq \
     locales \
     menu-xdg \
@@ -66,7 +63,6 @@ RUN apt-get update \
     x11-xserver-utils \
     xdg-utils \
     xfce4 \
-    xfce4-terminal \
     xfce4-appfinder \
     xterm \
     --no-install-recommends \
@@ -77,7 +73,6 @@ RUN apt-get update \
     "DisableFirefoxStudies": true \
   } \
 }' > /usr/lib/firefox/distribution/policies.json \
-    && apt-get purge -y xfce4-power-manager xscreensaver || true \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Assume multiple user home directories are mounted under /home
