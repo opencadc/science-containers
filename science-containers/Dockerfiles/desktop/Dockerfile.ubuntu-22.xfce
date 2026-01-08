@@ -93,6 +93,10 @@ RUN useradd -m -g guest -u 30001 guest && \
     chown -R guest:guest /home/guest/.ssl && \
     ln -s /home/guest/.ssl /headless/.ssl
 
+RUN mkdir -p $XDG_CONFIG_HOME/.config
+ADD ./src/common/xfce/.config/user-dirs.dirs $XDG_CONFIG_HOME/.config/
+ADD ./src/common/xfce/.config/ $XDG_CONFIG_HOME/
+
 # Add scripts that launch sofware containers
 ADD software-scripts/*.sh /usr/local/bin/
 
@@ -154,9 +158,6 @@ xhost +
 # BM: disable screen saver
 xset s noblank
 xset s off
-
-# Remove the bottom panel and reset top panel to default
-xfconf-query --channel xfce4-panel --property /panels/panel-2 --reset
 
 exec startxfce4
 EOF
