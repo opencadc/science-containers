@@ -127,6 +127,7 @@ COPY --chown=guest:root software-scripts/kill-session.desktop $HOME/Desktop/kill
 # RUN chmod -R 777 /headless/mozilla/skaha
 
 RUN rm /etc/xdg/Thunar/uca.xml
+RUN rm -f /etc/xdg/autostart/xscreensaver.desktop
 
 # Global VNC startup script (does not touch user HOME)
 RUN mkdir -p /etc/vnc && \
@@ -152,6 +153,10 @@ xhost +
 # BM: disable screen saver
 xset s noblank
 xset s off
+
+# Remove the bottom panel and reset top panel to default
+xfconf-query --channel xfce4-panel --property /panels/panel-2 --reset --recursive
+
 exec startxfce4
 EOF
 
