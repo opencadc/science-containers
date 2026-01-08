@@ -141,13 +141,19 @@ RUN mkdir -p /etc/vnc && \
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
+# BM
+echo "about to source ${HOME}/.bashrc"
+
+# should also source $STARTUPDIR/generate_container_user
+source "${HOME}/.bashrc"
+
 # Merge user .Xresources if it exists
 if [ -f "${HOME}/.Xresources" ]; then
     xrdb -merge "${HOME}/.Xresources"
 fi
 
-mkdir -p ${HOME}/.vnc
-PASSWD_PATH=${HOME}/.vnc/passwd
+mkdir -p /headless/.vnc
+PASSWD_PATH=/headless/.vnc/passwd
 touch $PASSWD_PATH
 chmod 600 $PASSWD_PATH
 echo "${VNC_PW}" | vncpasswd -f >> "${PASSWD_PATH}"
