@@ -15,7 +15,7 @@ RUN apt update \
 # Ubuntu 22.04 LTS base image
 FROM ubuntu@sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9e54 AS production
 
-ENV REFRESHED_AT=2026-01-06
+ENV REFRESHED_AT=2026-01-08
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:1
 ENV VNC_PORT=5901
@@ -28,7 +28,8 @@ ENV NOVNC_HOME=/usr/share/novnc
 ENV VNC_COL_DEPTH=24
 ENV VNC_RESOLUTION=1920x1200
 ENV VNC_PW=changeit
-# ENV XDG_CONFIG_HOME=/headless
+ENV XDG_CONFIG_HOME=${HOME}
+ENV XDG_DESKTOP_DIR=${HOME}/Desktop
 ENV MOZ_FORCE_DISABLE_E10S=1
 
 # Install system dependencies
@@ -78,7 +79,7 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Assume multiple user home directories are mounted under /home
-WORKDIR $HOME
+WORKDIR /tmp
 
 # CANFAR Specifics Below
 COPY conf/xfce-applications.menu /etc/xdg/menus/xfce-applications.menu
