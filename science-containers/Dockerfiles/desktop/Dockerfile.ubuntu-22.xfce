@@ -29,7 +29,7 @@ ENV NOVNC_HOME=/usr/share/novnc
 ENV VNC_COL_DEPTH=24
 ENV VNC_RESOLUTION=1920x1200
 ENV VNC_PW=vncpassword
-ENV XDG_CONFIG_HOME=/headless
+# ENV XDG_CONFIG_HOME=/headless
 ENV MOZ_FORCE_DISABLE_E10S=1
 
 # Install system dependencies
@@ -46,6 +46,7 @@ RUN apt-get update \
     firefox \
     jq \
     locales \
+    mailcap \
     menu-xdg \
     net-tools \ 
     novnc \
@@ -111,6 +112,9 @@ RUN mkdir -p ${HOME}/.icons \
 
 COPY software-scripts/icons/* ${HOME}/.icons
 
+# Add desktop links to those scripts
+COPY software-scripts/*.desktop /usr/share/applications/
+
 # Add a subset of software links to the desktop
 COPY --chown=guest:root software-scripts/arcade-feedback.desktop $HOME/Desktop/arcade-feedback.desktop
 COPY --chown=guest:root software-scripts/firefox.desktop $HOME/Desktop/firefox.desktop
@@ -121,6 +125,8 @@ COPY --chown=guest:root software-scripts/kill-session.desktop $HOME/Desktop/kill
 # RUN mkdir -p /headless/mozilla/skaha
 # RUN firefox --headless -CreateProfile "skaha /headless/mozilla/skaha"
 # RUN chmod -R 777 /headless/mozilla/skaha
+
+RUN rm /etc/xdg/Thunar/uca.xml
 
 # Global VNC startup script (does not touch user HOME)
 RUN mkdir -p /etc/vnc && \
