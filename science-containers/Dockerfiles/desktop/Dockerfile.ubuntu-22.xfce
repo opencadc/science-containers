@@ -155,7 +155,7 @@ xset s noblank
 xset s off
 
 # Remove the bottom panel and reset top panel to default
-xfconf-query --channel xfce4-panel --property /panels/panel-2 --reset --recursive
+xfconf-query --channel xfce4-panel --property /panels/panel-2 --reset
 
 exec startxfce4
 EOF
