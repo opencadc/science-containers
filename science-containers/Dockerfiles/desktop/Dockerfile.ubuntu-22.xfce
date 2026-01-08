@@ -20,7 +20,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:1
 ENV VNC_PORT=5901
 ENV NOVNC_PORT=6901
-ENV NOVNC_TOKEN=vncpassword
 ENV HOME=/headless
 ENV TERM=xterm
 ENV STARTUPDIR=/dockerstartup
@@ -28,7 +27,7 @@ ENV INST_SCRIPTS=/headless/install
 ENV NOVNC_HOME=/usr/share/novnc
 ENV VNC_COL_DEPTH=24
 ENV VNC_RESOLUTION=1920x1200
-ENV VNC_PW=vncpassword
+ENV VNC_PW=changeit
 # ENV XDG_CONFIG_HOME=/headless
 ENV MOZ_FORCE_DISABLE_E10S=1
 
@@ -139,6 +138,12 @@ unset DBUS_SESSION_BUS_ADDRESS
 if [ -f "${HOME}/.Xresources" ]; then
     xrdb -merge "${HOME}/.Xresources"
 fi
+
+mkdir -p ${HOME}/.vnc
+PASSWD_PATH=${HOME}/.vnc/passwd
+touch $PASSWD_PATH
+chmod 600 $PASSWD_PATH
+echo "${VNC_PW}" | vncpasswd -f >> ${PASSWD_PATH}
 
 # BM: disable x auth
 xhost +
