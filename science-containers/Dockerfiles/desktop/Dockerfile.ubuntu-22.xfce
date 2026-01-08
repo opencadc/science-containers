@@ -158,8 +158,13 @@ touch "${PASSWD_PATH}"
 chmod 600 "${PASSWD_PATH}"
 echo "${VNC_PW}" | vncpasswd -f >> "${PASSWD_PATH}"
 
-# xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
-exec startxfce4 &
+# exec startxfce4 &
+
+if [ -x /etc/X11/xinit/xinitrc ]; then
+  exec /etc/X11/xinit/xinitrc
+elif [ -f /etc/X11/xinit/xinitrc ]; then
+  exec sh /etc/X11/xinit/xinitrc
+fi
 
 # BM: disable x auth
 xhost +
@@ -168,11 +173,7 @@ xhost +
 xset s noblank
 xset s off
 
-if [ -x /etc/X11/xinit/xinitrc ]; then
-  exec /etc/X11/xinit/xinitrc
-elif [ -f /etc/X11/xinit/xinitrc ]; then
-  exec sh /etc/X11/xinit/xinitrc
-fi
+xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
 
 EOF
 
