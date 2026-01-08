@@ -143,7 +143,7 @@ mkdir -p ${HOME}/.vnc
 PASSWD_PATH=${HOME}/.vnc/passwd
 touch $PASSWD_PATH
 chmod 600 $PASSWD_PATH
-echo "${VNC_PW}" | vncpasswd -f >> ${PASSWD_PATH}
+echo "${VNC_PW}" | vncpasswd -f >> "${PASSWD_PATH}"
 
 # BM: disable x auth
 xhost +
