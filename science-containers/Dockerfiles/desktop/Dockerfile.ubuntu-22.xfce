@@ -83,7 +83,6 @@ WORKDIR /tmp
 # CANFAR Specifics Below
 COPY conf/xfce-applications.menu /etc/xdg/menus/xfce-applications.menu
 COPY conf/xfce-applications.menu /etc/xdg/menus/applications.menu
-COPY conf/atacama.jpg /headless/atacama.jpg
 
 # create the guest account
 RUN groupadd -g 30001 guest
