@@ -84,6 +84,13 @@ WORKDIR /tmp
 COPY conf/xfce-applications.menu /etc/xdg/menus/xfce-applications.menu
 COPY conf/xfce-applications.menu /etc/xdg/menus/applications.menu
 
+# Add desktop icon files
+RUN mkdir -p /headless/.icons \
+    && mkdir -p /headless/Desktop \
+    && chmod 777 /headless/Desktop \
+    && mkdir -p /etc/xdg/menus/applications-merged \
+    && chmod 777 /etc/xdg/menus/applications-merged
+
 # create the guest account
 RUN groupadd -g 30001 guest
 RUN useradd -m -g guest -u 30001 guest && \
@@ -105,13 +112,6 @@ ADD ./src/common/scripts $STARTUPDIR/
 RUN chmod +x $STARTUPDIR/*.sh
 
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR /headless
-
-# Add desktop icon files
-RUN mkdir -p /headless/.icons \
-    && mkdir -p /headless/Desktop \
-    && chmod 777 /headless/Desktop \
-    && mkdir -p /etc/xdg/menus/applications-merged \
-    && chmod 777 /etc/xdg/menus/applications-merged
 
 COPY software-scripts/icons/* /headless/.icons
 
