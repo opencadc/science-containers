@@ -140,14 +140,13 @@ unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
 # BM
-echo "about to source ${HOME}/.bashrc"
+echo "about to source \${HOME}/.bashrc"
 
-# should also source $STARTUPDIR/generate_container_user
-source "${HOME}/.bashrc"
+source "\${HOME}/.bashrc"
 
 # Merge user .Xresources if it exists
-if [ -f "${HOME}/.Xresources" ]; then
-    xrdb -merge "${HOME}/.Xresources"
+if [ -f "\${HOME}/.Xresources" ]; then
+    xrdb -merge "\${HOME}/.Xresources"
 fi
 
 mkdir -p /headless/.vnc
@@ -175,7 +174,7 @@ echo "Starting xfce4 session - done - setting xhost value - done"
 xset s noblank
 xset s off
 
-xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+xterm -geometry 80x24+10+10 -ls -title "\${VNCDESKTOP} Desktop" &
 
 EOF
 
