@@ -250,6 +250,10 @@ COPY conf/novnc/*-logo.png ${NOVNC_HOME}/app/images/
 COPY --from=novnc-extractor /tmp/novnc/package.json ${NOVNC_HOME}/app/package.json
 COPY --from=novnc-extractor /tmp/novnc/package.json ${NOVNC_HOME}/package.json
 
+# Modify the default UI JavaScript to allow remote resizing, and modify the title
+RUN sed -i "s/('resize',\ 'off')/\('resize',\ 'remote')/" ${NOVNC_HOME}/app/ui.js \
+    && sed -i 's/PAGE_TITLE\ =\ "noVNC"/PAGE_TITLE\ =\ "ARCADE"/' ${NOVNC_HOME}/app/ui.js
+
 EXPOSE ${NOVNC_PORT}
 
 # Start SupervisorD to launch VNC and noVNC services
