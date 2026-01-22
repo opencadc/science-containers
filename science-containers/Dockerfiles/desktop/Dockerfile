@@ -21,7 +21,7 @@ RUN apt update \
 #
 FROM opencadc/ubuntu-desktop-base@sha256:c3d3e6af0e345a6573516086187aaa5cbb80085d44bd50d201824b20cfd23a21 AS production
 
-ENV REFRESHED_AT=2026-01-16
+ENV REFRESHED_AT=2026-01-22
 
 # Ensure noninteractive apt operations (keep in frontend)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -66,6 +66,7 @@ RUN apt-get update \
     bzip2 \
     ca-certificates \
     curl \
+    dconf-cli \
     dbus-user-session \
     dbus-x11 \
     gedit \
@@ -119,6 +120,9 @@ RUN mkdir -p /headless/mozilla/skaha \
     && firefox-esr --headless -CreateProfile "skaha /headless/mozilla/skaha" \
     && chmod -R 777 /headless/mozilla/skaha
 
+# Set gnome-terminal as the default terminal emulator to prevent being prompted.
+RUN update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/gnome-terminal 50   
+
 # Out of the way working directory
 WORKDIR /tmp
 
@@ -133,12 +137,13 @@ COPY conf/xfce-applications.menu /etc/xdg/menus/xfce-applications.menu
 COPY conf/xfce-applications.menu /etc/xdg/menus/applications.menu
 
 # Add desktop icon files
-RUN mkdir -p /headless/.icons \
+RUN rm -rf /headless \
+    && mkdir -p /headless/.icons \
     && mkdir -p /headless/Desktop \
     && mkdir -p /headless/xfce4 \
+    && mkdir -p /headless/dconf \
     && chmod 777 /headless/.icons \
     && chmod 777 /headless/Desktop \ 
-    && chmod 1777 /headless/xfce4 \
     && mkdir -p /etc/xdg/menus/applications-merged \
     && chmod 777 /etc/xdg/menus/applications-merged
 
@@ -150,7 +155,8 @@ RUN useradd -m -g guest -u 30001 guest && \
     ln -s /home/guest/.ssl /headless/.ssl
 
 # XDG Menu configuration (user directories and general config for the top left menu)
-RUN mkdir -p $XDG_CONFIG_HOME/.config
+RUN mkdir -p $XDG_CONFIG_HOME/.config \
+    && chmod -R 777 $XDG_CONFIG_HOME/.config
 ADD ./src/common/xfce/.config/user-dirs.dirs $XDG_CONFIG_HOME/.config/
 ADD ./src/common/xfce/.config/ $XDG_CONFIG_HOME/
 
@@ -183,9 +189,10 @@ RUN rm -f /etc/xdg/autostart/xscreensaver.desktop
 # - DPMS is not installed by default in the base image, so no need to disable that specifically
 # - It sources the user's .Xresources file if it exists.  The distributed .Xresources file has some basic settings for copy and paste
 #   but it also contains invalid comments that begin with # instead of !, so those are fixed before loading.
-# - Uses xfconf-query to set the desktop background image style to "0" (empty) to avoid issues with some VNC viewers
+# - Uses xfconf-query to set the desktop wallpaper settings to blank (no wallpaper) for ease of viewing.
+# - Users xconf-query to set gnome-terminal as the default terminal emulator to prevent being prompted.
 #
-# jenkinsd 2026.01.20
+# jenkinsd 2026.01.22
 #
 RUN mkdir -p /etc/vnc && \
     cat <<'EOF' > /etc/vnc/xstartup
@@ -198,14 +205,15 @@ if [ -r "$HOME/.Xresources" ]; then
     xrdb "$HOME/.Xresources"
 fi
 
+eval "$(dbus-launch --sh-syntax)"
+
 xhost +
 xset s off
 xset s noblank
 
-exec dbus-launch --exit-with-session xfce4-session
+gsettings set org.gnome.Terminal.Legacy.Settings always-check-default-terminal false
 
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/image-style -s "0"
-xfdesktop --reload
+exec startxfce4
 
 EOF
 
@@ -252,9 +260,13 @@ COPY --from=novnc-extractor /tmp/novnc/package.json ${NOVNC_HOME}/package.json
 
 # Modify the default UI JavaScript to allow remote resizing, and modify the title
 RUN sed -i "s/('resize',\ 'off')/\('resize',\ 'remote')/" ${NOVNC_HOME}/app/ui.js \
-    && sed -i 's/PAGE_TITLE\ =\ "noVNC"/PAGE_TITLE\ =\ "ARCADE"/' ${NOVNC_HOME}/app/ui.js
+    && sed -i 's/document\.title\ =.*;/document\.title\ =\ "ARCADE";/' ${NOVNC_HOME}/app/ui.js \
+    && sed -i 's/<title>noVNC<\/title>/<title>ARCADE<\/title>/' ${NOVNC_HOME}/index.html
 
 EXPOSE ${NOVNC_PORT}
+
+RUN chmod -R 2777 /headless/xfce4 \
+    && chmod -R 2777 /headless/dconf
 
 # Start SupervisorD to launch VNC and noVNC services
 # Ensure any overriding scripts reproduce this command!
