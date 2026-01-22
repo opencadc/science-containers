@@ -49,6 +49,17 @@ ENV MOZ_FORCE_DISABLE_E10S=1
 
 # Install system dependencies
 # The software-porperties-common is required to add the Firefox PPA below
+#
+# This installation includes:
+# - Install XFCE desktop and VNC/noVNC packages
+# - Firefox ESR from Mozilla PPA (Mainstream Firefox requires SNAP)
+# - SVG Support to display icons
+# - gedit text editor
+# - jq for JSON processing in scripts
+# - gnome-terminal for terminal emulator
+# - XDG packages for menu management and generation
+# - updated ca certificates
+#
 RUN apt-get update \
     && apt-get install -y \
     at-spi2-core \
@@ -57,11 +68,13 @@ RUN apt-get update \
     curl \
     dbus-user-session \
     dbus-x11 \
+    gedit \
     gettext \
     gnome-terminal \
     gpg-agent \
     iproute2 \
     jq \
+    librsvg2-common \
     locales \
     mailcap \
     menu-xdg \
@@ -122,7 +135,10 @@ COPY conf/xfce-applications.menu /etc/xdg/menus/applications.menu
 # Add desktop icon files
 RUN mkdir -p /headless/.icons \
     && mkdir -p /headless/Desktop \
-    && chmod 777 /headless/Desktop \
+    && mkdir -p /headless/xfce4 \
+    && chmod 777 /headless/.icons \
+    && chmod 777 /headless/Desktop \ 
+    && chmod 1777 /headless/xfce4 \
     && mkdir -p /etc/xdg/menus/applications-merged \
     && chmod 777 /etc/xdg/menus/applications-merged
 
@@ -165,19 +181,31 @@ RUN rm -f /etc/xdg/autostart/xscreensaver.desktop
 # - It disables screen blanking and power saving
 # - It enables access control for X11 (xhost +) to allow applications to connect to the X server
 # - DPMS is not installed by default in the base image, so no need to disable that specifically
+# - It sources the user's .Xresources file if it exists.  The distributed .Xresources file has some basic settings for copy and paste
+#   but it also contains invalid comments that begin with # instead of !, so those are fixed before loading.
+# - Uses xfconf-query to set the desktop background image style to "0" (empty) to avoid issues with some VNC viewers
+#
+# jenkinsd 2026.01.20
+#
 RUN mkdir -p /etc/vnc && \
     cat <<'EOF' > /etc/vnc/xstartup
 #!/bin/sh
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
-[ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
+if [ -r "$HOME/.Xresources" ]; then
+    sed -i 's/^#/\!/' "$HOME/.Xresources"
+    xrdb "$HOME/.Xresources"
+fi
 
 xhost +
 xset s off
 xset s noblank
 
 exec dbus-launch --exit-with-session xfce4-session
+
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/image-style -s "0"
+xfdesktop --reload
 
 EOF
 
@@ -206,7 +234,7 @@ logfile=/var/log/supervisor/supervisord.log
 pidfile=/var/run/supervisor/supervisord.pid
 
 [program:vnc]
-command=/usr/bin/tigervncserver -fg :1 -localhost no -listen tcp -cleanstale -AlwaysShared -NeverShared=0 -SecurityTypes None -depth %(ENV_VNC_COL_DEPTH)s -geometry %(ENV_VNC_RESOLUTION)s -xstartup /etc/vnc/xstartup --I-KNOW-THIS-IS-INSECURE
+command=/usr/bin/tigervncserver -fg :1 -localhost no -listen tcp -cleanstale -AlwaysShared -AcceptSetDesktopSize=1 -NeverShared=0 -SecurityTypes None -depth %(ENV_VNC_COL_DEPTH)s -geometry %(ENV_VNC_RESOLUTION)s -xstartup /etc/vnc/xstartup --I-KNOW-THIS-IS-INSECURE
 autorestart=unexpected
 startsecs=3
 
@@ -216,7 +244,9 @@ autorestart=true
 EOF
 
 # Setup NoVNC default page, and copy the extracted package.json from the novnc-extractor stage
-RUN ln -s ${NOVNC_HOME}/vnc_lite.html ${NOVNC_HOME}/index.html
+COPY conf/novnc/index.html ${NOVNC_HOME}/index.html
+COPY conf/novnc/canfar-icon.png ${NOVNC_HOME}/app/images/icons/
+COPY conf/novnc/*-logo.png ${NOVNC_HOME}/app/images/
 COPY --from=novnc-extractor /tmp/novnc/package.json ${NOVNC_HOME}/app/package.json
 COPY --from=novnc-extractor /tmp/novnc/package.json ${NOVNC_HOME}/package.json
 
