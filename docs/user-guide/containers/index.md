@@ -1,19 +1,48 @@
 # Containers
 
-**Working with astronomy software containers on CANFAR**
+- [Containers](#containers)
+  - [Working with astronomy software containers on CANFAR](#working-with-astronomy-software-containers-on-canfar)
+    - [🎯 What You'll Learn](#-what-youll-learn)
+    - [Key Concept: Reproducible Environments](#key-concept-reproducible-environments)
+  - [Understanding CANFAR Containers](#understanding-canfar-containers)
+    - [Runtime Environment](#runtime-environment)
+    - [Persistence Reminder](#persistence-reminder)
+  - [Container Types and Session Integration](#container-types-and-session-integration)
+    - [Notebook Containers](#notebook-containers)
+    - [Desktop Container](#desktop-container)
+      - [Technical Details](#technical-details)
+      - [Desktop-App Containers](#desktop-app-containers)
+        - [Technical Details](#technical-details-1)
+    - [Headless Containers](#headless-containers)
+  - [Working with Existing Containers](#working-with-existing-containers)
+  - [Container Categories](#container-categories)
+    - [CANFAR-Supported Containers](#canfar-supported-containers)
+    - [Community-Maintained Containers](#community-maintained-containers)
+    - [Team and Individual Containers](#team-and-individual-containers)
+  - [Harbor Registry and Distribution](#harbor-registry-and-distribution)
+  - [Building Custom Containers](#building-custom-containers)
+    - [Development Workflow](#development-workflow)
+    - [Container Architecture Considerations](#container-architecture-considerations)
+    - [Building and Testing Process](#building-and-testing-process)
+  - [Container Management and Best Practices](#container-management-and-best-practices)
+  - [Included Software](#included-software)
+  - [Maintenance](#maintenance)
+  - [Integration with CANFAR Workflows](#integration-with-canfar-workflows)
 
-!!! abstract "🎯 What You'll Learn"
-    - What containers are and how they run on CANFAR
-    - How container types map to session types (Notebook, Desktop, Headless)
-    - How to choose and use existing containers effectively
-    - How containers are categorized (CANFAR-supported, community, team)
-    - How to build, manage, version, and distribute custom containers
-    - How containers integrate with CANFAR storage and workflows
+## Working with astronomy software containers on CANFAR
+
+### 🎯 What You'll Learn
+- What containers are and how they run on CANFAR
+- How container types map to session types (Notebook, Desktop, Headless)
+- How to choose and use existing containers effectively
+- How containers are categorized (CANFAR-supported, community, team)
+- How to build, manage, version, and distribute custom containers
+- How containers integrate with CANFAR storage and workflows
 
 Containers provide pre-packaged software environments that include everything needed to run astronomy applications. On CANFAR, containers eliminate the "works on my machine" problem by ensuring consistent, reproducible computational environments across different sessions and workflows.
 
-!!! success "Key Concept: Reproducible Environments"
-    Containers provide consistent, reproducible software environments for astronomy work across sessions and teams.
+### Key Concept: Reproducible Environments
+> Containers provide consistent, reproducible software environments for astronomy work across sessions and teams.
 
 ## Understanding CANFAR Containers
 
@@ -23,24 +52,30 @@ The container ecosystem on CANFAR follows a layered approach. Base containers pr
 
 ### Runtime Environment
 
-!!! info "How Containers Run on CANFAR"
-    - Containers run as your CADC user (not root)
-    - `/arc/home/[username]` is the container's home directory
-    - Project directories under `/arc/projects/` are mounted and accessible
-    - `/scratch/` provides high-speed temporary storage
+**How Containers Operate on CANFAR**
+
+When you start a container session on CANFAR, the system sets up the container runtime environment with specific configurations to integrate with CANFAR's storage and user management systems. Key aspects of this runtime setup include:
+- Containers run as your CADC user (not root)
+- `/<cavern-root>/home/[username]` is the container's home directory
+- Project directories under `/<cavern-root>/projects/` are mounted and accessible
+- `/scratch/` provides high-speed temporary storage
 
 ```bash
 # Inside a running container, check your environment
 echo $USER                      # Your CADC username
-echo $HOME                      # /arc/home/[username]
-ls /arc/projects/               # Available project directories
+echo $HOME                      # /<cavern-root>/home/[username]
+ls /<cavern-root>/projects/     # Available project directories
 ls /scratch/                    # Temporary high-speed storage
 ```
 
-This runtime setup means there's an important compatibility consideration between code packaged in the container image and code stored on the `/arc` filesystem. Best practice involves keeping stable, tested code within the container image while placing development scripts and analysis notebooks in your `/arc/home` or project directories where they can be easily modified and version controlled.
+This runtime setup means there's an important compatibility consideration between code packaged in the container image and code stored on the `/<cavern-root>` filesystem. Best practice involves keeping stable, tested code within the container image while placing development scripts and analysis notebooks in your `/<cavern-root>/home` or project directories where they can be easily modified and version controlled.
 
-!!! warning "Persistence Reminder"
-    Software installed inside a running container (e.g., `pip install --user`) is temporary and lost when the session ends. Keep stable software in the image; keep notebooks/scripts on `/arc`.
+**Note**
+
+Cavern is the name of the underlying filesystem used by CANFAR for user home directories and project storage.  In the default CANFAR installation, Cavern is mounted at `/arc` inside containers.
+
+### Persistence Reminder
+Software installed inside a running container (e.g., `pip install --user`) is temporary and lost when the session ends. Keep stable software in the image; keep notebooks/scripts in Cavern.
 
 ---
 
@@ -65,7 +100,7 @@ print(f"NumPy version: {np.__version__}")
 # Access your data
 import os
 
-data_path = f"/arc/projects/{os.environ.get('PROJECT_NAME', 'myproject')}"
+data_path = f"/<cavern-root>/projects/{os.environ.get('PROJECT_NAME', 'myproject')}"
 print(f"Project data at: {data_path}")
 ```
 
@@ -83,13 +118,43 @@ if torch.cuda.is_available():
 print(f"TensorFlow GPU devices: {len(tf.config.list_physical_devices('GPU'))}")
 ```
 
-### Desktop-App Containers
+### Desktop Container
+
+There is a single Desktop container maintained by CANFAR that provides a full Ubuntu desktop environment with GUI applications like Firefox, file managers, and terminal access. This container is ideal for workflows requiring graphical interfaces, such as legacy astronomy software or interactive data visualization tools.
+
+The Desktop Session provides access to the full desktop environment through a VNC connection in your browser via a web-based VNC client.
+
+#### Technical Details
+Given that Desktop Application run in their own containers in the cluster (see [below](#desktop-app-containers)), the Desktop Session is hard-coded with low resource requirements:
+```yaml
+resources:
+    requests:
+        memory: "1Gi"
+        cpu: "250m"
+        ephemeral-storage: "2Gi"
+    limits:
+        memory: "4Gi"
+        cpu: "1"
+        ephemeral-storage: "10Gi"
+```
+
+The Desktop container uses SupervisorD to manage two main processes:
+- [TigerVNC](https://tigervnc.org/) server for remote desktop access
+- [noVNC](https://novnc.com/info.html) web client for browser-based access
+  - The noVNC client connects to the TigerVNC server over WebSockets, and has a slightly customized interface to better fit within the CANFAR web portal.
+  
+Other technical features:
+- X11 with remote sharing enabled to allow multiple simultaneous connections to the same desktop session (through `xhost`).  Wayland support is disabled.
+- Ubuntu 24.04 LTS base with standard desktop packages and CANFAR-specific configurations.
+- Auto (remote) resize of the desktop session to fit the browser window.
+
+#### Desktop-App Containers
 
 While CANFAR maintains the base **desktop** container that provides the Ubuntu desktop environment, users can create **desktop-app** containers that package specific GUI applications to run within desktop sessions. These containers focus on single applications or related tool suites rather than providing complete desktop environments.
 
 ```dockerfile
 # Example desktop-app container for DS9 image viewer
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Install DS9 and dependencies
 RUN apt-get update && apt-get install -y \
@@ -109,6 +174,10 @@ CMD ["/usr/local/bin/start-ds9"]
 ```
 
 Desktop-app containers are particularly useful for legacy astronomy software, specialized visualization tools, or applications that require specific library versions or configurations. When launched in a desktop session, these applications integrate seamlessly with the desktop environment while maintaining their isolated software dependencies.
+
+##### Technical Details
+
+All Desktop Application containers launch as a Job in Kubernetes, likely using Kueue if configured on the CANFAR instance. The Job is configured, by Skaha, with the IP Address of the associated Desktop Session, allowing the application to connect to the X11 server running in the Desktop Session container using Remote X11 Sharing.
 
 ### Headless Containers
 
@@ -166,7 +235,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 ```
 
 !!! tip "Best Practice: Code Placement"
-    Keep stable, tested code inside the container image. Keep frequently edited analysis code and notebooks in `/arc/home` or project directories.
+    Keep stable, tested code inside the container image. Keep frequently edited analysis code and notebooks in `/<cavern-root>/home` or project directories.
 
 !!! warning "Temporary Installs"
     Software installations using `pip install --user` or `apt` inside a running container are temporary and will be lost when the session ends.
@@ -237,8 +306,8 @@ docker build -t myteam/analysis-env:latest .
 
 # Test locally with mounted data
 docker run -it --rm \
-  -v $(pwd)/test-data:/arc/projects/test \
-  -v $(pwd)/home:/arc/home/testuser \
+  -v $(pwd)/test-data:/<cavern-root>/projects/test \
+  -v $(pwd)/home:/<cavern-root>/home/testuser \
   myteam/analysis-env:latest \
   /bin/bash
 ```
@@ -249,9 +318,9 @@ Create your Dockerfile starting from an appropriate base image like `images.canf
 
 All CANFAR containers run on Linux x86_64 architecture and must support the CANFAR user context system. Containers execute as the user who submitted the job, never as root, though they can be configured with sudo access for specific operations during the build process.
 
-The container filesystem integrates with CANFAR storage at runtime. The `/arc` filesystem containing home and project directories is mounted automatically, providing access to persistent data and development code. Temporary high-speed storage is available under `/scratch/` for intensive processing tasks.
+The container filesystem integrates with CANFAR storage at runtime. The `/<cavern-root>` filesystem containing home and project directories is mounted automatically, providing access to persistent data and development code. Temporary high-speed storage is available under `/scratch/` for intensive processing tasks.
 
-When designing containers, separate stable production code that belongs in the container image from development and analysis code that should reside on the `/arc` filesystem. This separation enables easier maintenance and allows users to modify analysis scripts without rebuilding containers.
+When designing containers, separate stable production code that belongs in the container image from development and analysis code that should reside on the `/<cavern-root>` filesystem. This separation enables easier maintenance and allows users to modify analysis scripts without rebuilding containers.
 
 ### Building and Testing Process
 
@@ -343,7 +412,7 @@ COPY iraf-setup.cl /home/iraf/
 RUN echo '#!/bin/bash\n\
 export IRAFARCH=linux64\n\
 export TERM=xgterm\n\
-cd /arc/home/$USER\n\
+cd /<cavern-root>/home/$USER\n\
 exec xgterm -sb -sl 1000 -j -ls -fn 9x15 -title "IRAF" &\n\
 exec ds9 &\n\
 wait\n' > /usr/local/bin/start-iraf && \
@@ -455,7 +524,7 @@ The container system supports different resource configurations including CPU, m
 
 Session persistence allows users to return to running containers across browser sessions while maintaining computational state. However, containers themselves are ephemeral - when sessions end, any changes made within the container filesystem are lost. This design encourages proper separation between stable container environments and dynamic analysis code.
 
-Understanding this integration helps optimize workflows by leveraging container strengths while working within system constraints. Plan computational workflows to use containers for consistent software environments while storing results, code, and data on the persistent `/arc` filesystem.
+Understanding this integration helps optimize workflows by leveraging container strengths while working within system constraints. Plan computational workflows to use containers for consistent software environments while storing results, code, and data on the persistent `/<cavern-root>` filesystem.
 
 ---
 
