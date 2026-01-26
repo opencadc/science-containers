@@ -1,9 +1,28 @@
+# Base Ubuntu 24.04 image.
+# This image updates apt sources to use https and updates CA certificates.  It exists to workaround
+# local network issues where plain http apt sources are blocked or intercepted.
+# If this is not needed in your environment, you can use:
+# <code>FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2</code> (Ubuntu 24.04 LTS)
+# directly in the actual Dockerfile.
+# jenkinsd - 2026-01-16
+#
+FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2 AS base
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update trusted CA certificates, and ensure https is used in apt sources
+RUN apt-get update \
+    && apt-get install --reinstall -y apt-transport-https ca-certificates \
+    && update-ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i "s|http:|https:|g" /etc/apt/sources.list.d/*
+
 # Ubuntu custom base image (based from 24.04 LTS) to extract noVNC package.json
 # This layer is used to avoid downloading the full noVNC source each time the main image is built.
 # The package.json is used by some desktop environments to identify the noVNC version.
 # jenkinsd - 2026-01-16
 #
-FROM opencadc/ubuntu-desktop-base@sha256:c3d3e6af0e345a6573516086187aaa5cbb80085d44bd50d201824b20cfd23a21 AS novnc-extractor
+FROM base AS novnc-extractor
 
 WORKDIR /tmp/novnc
 
@@ -19,9 +38,9 @@ RUN apt update \
 # with XFCE desktop environment, TigerVNC server, and noVNC web client.
 # jenkinsd - 2026-01-16
 #
-FROM opencadc/ubuntu-desktop-base@sha256:c3d3e6af0e345a6573516086187aaa5cbb80085d44bd50d201824b20cfd23a21 AS production
+FROM base AS production
 
-ENV REFRESHED_AT=2026-01-22
+ENV REFRESHED_AT=2026-01-26
 
 # Ensure noninteractive apt operations (keep in frontend)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -64,11 +83,11 @@ RUN apt-get update \
     && apt-get install -y \
     at-spi2-core \
     bzip2 \
-    ca-certificates \
     curl \
     dconf-cli \
     dbus-user-session \
     dbus-x11 \
+    emacs \
     gedit \
     gettext \
     gnome-terminal \
