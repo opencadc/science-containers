@@ -1,12 +1,6 @@
 # Base Ubuntu 24.04 image.
-# This image updates apt sources to use https and updates CA certificates.  It exists to workaround
-# local network issues where plain http apt sources are blocked or intercepted.
-# If this is not needed in your environment, you can use:
-# <code>FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2</code> (Ubuntu 24.04 LTS)
-# directly in the actual Dockerfile.
-# jenkinsd - 2026-01-16
 #
-FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2 AS base
+FROM ubuntu:24.04 AS base
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update trusted CA certificates, and ensure https is used in apt sources
@@ -188,10 +182,13 @@ COPY software-scripts/icons/* /headless/.icons
 # Add desktop links to those scripts
 COPY software-scripts/*.desktop /usr/share/applications/
 
+# Cleanup existing desktop links to remove unwanted applications
+RUN rm -f /usr/share/applications/xfce4-terminal-emulator.desktop \
+    && rm -f /usr/share/applications/xfce4-web-browser.desktop \   
+    && rm -f /usr/share/applications/debian*.desktop
+
 # Add a subset of software links to the desktop
 COPY --chown=guest:root software-scripts/arcade-feedback.desktop /headless/Desktop/arcade-feedback.desktop
-COPY --chown=guest:root software-scripts/firefox.desktop /headless/Desktop/firefox.desktop
-COPY --chown=guest:root software-scripts/gedit.desktop /headless/Desktop/gedit.desktop
 COPY --chown=guest:root software-scripts/kill-session.desktop /headless/Desktop/kill-session.desktop
 
 # Cleanup default Thunar user custom actions and screensaver autostart
