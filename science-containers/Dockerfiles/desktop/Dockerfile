@@ -1,6 +1,7 @@
 # Base Ubuntu 24.04 image.
 #
-FROM ubuntu:24.04 AS base
+# Use opencadc/ubuntu-desktop-base@sha256:c3d3e6af0e345a6573516086187aaa5cbb80085d44bd50d201824b20cfd23a21 AS base within CADC.
+FROM opencadc/ubuntu-desktop-base@sha256:c3d3e6af0e345a6573516086187aaa5cbb80085d44bd50d201824b20cfd23a21 AS base
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update trusted CA certificates, and ensure https is used in apt sources
@@ -58,6 +59,7 @@ ENV VNC_VIEW_ONLY=false
 # Use a headless XDG config and desktop directory to avoid needing a real user home
 ENV XDG_CONFIG_HOME=/headless
 ENV XDG_DESKTOP_DIR=/headless/Desktop
+ENV SUPERVISOR_DIR=/headless/supervisor
 ENV MOZ_FORCE_DISABLE_E10S=1
 
 # Install system dependencies
@@ -240,13 +242,11 @@ RUN chmod 775 /etc/vnc/xstartup
 # SupervisorD is a daemon that can manage multiple processes.  The configuration below will start both the VNC server (TigerVNC)
 # and the noVNC web server (websockify) to allow browser-based VNC access.  SupervisorD will also manage restarts of these services if they exit unexpectedly.
 
-# SupervisorD will need to be run as the current user, so make this writable
+# SupervisorD will need to be run as the current user, so make these writable.
 RUN mkdir -p /etc/supervisor/conf.d \
     && chmod -R 777 /etc/supervisor/conf.d \
-    && mkdir -p /var/log/supervisor /var/run/supervisor \
-    && chmod -R 0775 /var/log/supervisor /var/run/supervisor
-
-VOLUME [ "/var/log/supervisor", "/var/run/supervisor" ]
+    && mkdir -p ${SUPERVISOR_DIR} \
+    && chmod -R 777 ${SUPERVISOR_DIR}
 
 # Supervisor configuration (no VNC password, token-based noVNC configuration)
 # This will start both the VNC server and the noVNC web server, proxying the $NOVNC_PORT to localhost:VNC_PORT as specified in /etc/novnc/tokens (below)
@@ -254,8 +254,8 @@ VOLUME [ "/var/log/supervisor", "/var/run/supervisor" ]
 RUN cat <<'EOF' > /etc/supervisor/conf.d/supervisord.conf
 [supervisord]
 nodaemon=true
-logfile=/var/log/supervisor/supervisord.log
-pidfile=/var/run/supervisor/supervisord.pid
+logfile=%(ENV_SUPERVISOR_DIR)s/supervisord.log
+pidfile=%(ENV_SUPERVISOR_DIR)s/supervisord.pid
 
 [program:vnc]
 command=/usr/bin/tigervncserver -fg :1 -localhost no -listen tcp -cleanstale -AlwaysShared -AcceptSetDesktopSize=1 -NeverShared=0 -SecurityTypes None -depth %(ENV_VNC_COL_DEPTH)s -geometry %(ENV_VNC_RESOLUTION)s -xstartup /etc/vnc/xstartup --I-KNOW-THIS-IS-INSECURE
@@ -263,7 +263,7 @@ autorestart=unexpected
 startsecs=3
 
 [program:novnc]
-command=%(ENV_NOVNC_HOME)s/utils/novnc_proxy --listen %(ENV_NOVNC_PORT)s --vnc localhost:%(ENV_VNC_PORT)s --web /usr/share/novnc
+command=%(ENV_NOVNC_HOME)s/utils/novnc_proxy --listen %(ENV_NOVNC_PORT)s --vnc localhost:%(ENV_VNC_PORT)s --web %(ENV_NOVNC_HOME)s
 autorestart=true
 EOF
 
@@ -283,6 +283,12 @@ EXPOSE ${NOVNC_PORT}
 
 RUN chmod -R 2777 /headless/xfce4 \
     && chmod -R 2777 /headless/dconf
+
+# Backwards compatibility for any scripts that expect a startup script to launch the VNC session.
+RUN mkdir -p /dockerstartup \
+    && chmod 777 /dockerstartup \
+    && echo "/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf" > /dockerstartup/vnc_startup.sh \
+    && chmod 777 /dockerstartup/vnc_startup.sh
 
 # Start SupervisorD to launch VNC and noVNC services
 # Ensure any overriding scripts reproduce this command!
