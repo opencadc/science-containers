@@ -1,7 +1,7 @@
 # Base Ubuntu 24.04 image.
 #
 # Use opencadc/ubuntu-desktop-base@sha256:c3d3e6af0e345a6573516086187aaa5cbb80085d44bd50d201824b20cfd23a21 AS base within CADC.
-FROM opencadc/ubuntu-desktop-base@sha256:c3d3e6af0e345a6573516086187aaa5cbb80085d44bd50d201824b20cfd23a21 AS base
+FROM ubuntu:24.04 AS base
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update trusted CA certificates, and ensure https is used in apt sources
