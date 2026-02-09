@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt update && \
     apt install -y software-properties-common && \
@@ -8,12 +8,12 @@ RUN apt update && \
 
 RUN mkdir /carta
 WORKDIR /carta
-ENV HOME /carta
 
-# nsswitch for correct sss lookup
-ADD src/nsswitch.conf /etc/
+EXPOSE 3002
 
-EXPOSE 6901
 RUN chmod -R a+rwx /carta
+
+ENV HOME=/carta
+ENV CARTA_DOCKER_DEPLOYMENT=1
 
 CMD ["carta", "--no_browser"]
