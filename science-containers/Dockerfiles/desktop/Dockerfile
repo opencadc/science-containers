@@ -46,7 +46,7 @@ ENV VNC_PORT=5901
 # The Port that noVNC web server listens on.  This is used by browser clients to connect to the VNC session from the Science Portal.
 ENV NOVNC_PORT=6901
 
-ENV TERM=xterm
+ENV TERM=xterm-256color
 
 # Where the noVNC installation is located.  Used to determine the web page (HTML) for the browser client.
 ENV NOVNC_HOME=/usr/share/novnc
