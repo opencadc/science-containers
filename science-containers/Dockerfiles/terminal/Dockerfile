@@ -21,10 +21,12 @@ RUN apt update \
     ca-certificates \
     curl \
     emacs-nox \
+    fontconfig \
     fonts-hack \
     git \
     htop \
     jq \
+    libxft2 \
     locales \
     python3 \
     python3-pip \
@@ -32,6 +34,7 @@ RUN apt update \
     rclone \
     tmux \
     vim-nox \
+    xfonts-base \
     xterm \
  && curl -fsSL https://opencode.ai/install | bash \
  && mv /root/.opencode/bin/opencode /usr/local/bin/opencode \
