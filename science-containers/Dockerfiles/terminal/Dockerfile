@@ -21,6 +21,7 @@ RUN apt update \
     ca-certificates \
     curl \
     emacs-nox \
+    fonts-hack \
     git \
     htop \
     jq \
