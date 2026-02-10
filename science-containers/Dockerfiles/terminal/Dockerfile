@@ -11,6 +11,9 @@ ENV SHELL=/bin/bash \
     HISTSIZE=10000 \
     HISTFILESIZE=20000 \
     TERM=xterm-256color \
+    LANG=en_US.UTF-8 \
+    LC_CTYPE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 
 # BUCKET 1: System Foundation (Pure CLI-only tools)
@@ -26,6 +29,7 @@ RUN apt update \
     git \
     htop \
     jq \
+    libfreetype6 \
     libxft2 \
     locales \
     python3 \
