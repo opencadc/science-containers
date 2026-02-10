@@ -25,6 +25,7 @@ RUN apt update \
     git \
     htop \
     jq \
+    locales \
     python3 \
     python3-pip \
     python3-venv \
@@ -40,7 +41,12 @@ RUN apt update \
  && pip3 install --break-system-packages cadcdata cadctap cadcutils canfar vos \
  && rm -rf /var/lib/apt/lists/*
 
-# BUCKET 2: Shell Configuration, Aliases & Robust Gruvbox Theme
+# BUCKET 2: Locale Settings for UTF-8 Support.  This will ensure xterm and other terminal emulators can properly display UTF-8 characters, which is essential for
+# applications like the canfar client and overall terminal aesthetics.
+RUN locale-gen en_US.UTF-8 \
+    && update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+
+# BUCKET 3: Shell Configuration, Aliases & Robust Gruvbox Theme
 RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'alias oc="opencode"' >> /etc/bash.bashrc \
  && echo 'alias ..="cd .."' >> /etc/bash.bashrc \
