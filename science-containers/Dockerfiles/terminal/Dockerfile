@@ -11,9 +11,6 @@ ENV SHELL=/bin/bash \
     HISTSIZE=10000 \
     HISTFILESIZE=20000 \
     TERM=xterm-256color \
-    LANG=en_US.UTF-8 \
-    LC_CTYPE=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 
 # BUCKET 1: System Foundation (Pure CLI-only tools)
@@ -52,6 +49,10 @@ RUN apt update \
 # applications like the canfar client and overall terminal aesthetics.
 RUN locale-gen en_US.UTF-8 \
     && update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+
+# Should be set from the command above, but just in case, we set these environment variables to ensure that the terminal and applications within it use UTF-8 encoding by default.
+ENV LC_CTYPE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8 
 
 # BUCKET 3: Shell Configuration, Aliases & Robust Gruvbox Theme
 RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
