@@ -20,6 +20,7 @@ RUN apt update \
     bash-completion \
     ca-certificates \
     curl \
+    cython3 \
     emacs-nox \
     fontconfig \
     fonts-hack \
@@ -30,6 +31,10 @@ RUN apt update \
     libxft2 \
     locales \
     python3 \
+    python3-astropy \
+    python3-astroquery \
+    python3-matplotlib \
+    python3-numpy \
     python3-pip \
     python3-venv \
     rclone \
