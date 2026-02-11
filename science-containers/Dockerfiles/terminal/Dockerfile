@@ -1,5 +1,16 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS base
 
+
+# Install a Nerd Font (Hack) to ensure that the terminal can display a wide range of Unicode characters, including those used in the Starship prompt and other terminal applications. This is important for a visually appealing and functional terminal experience, especially when using themes like Gruvbox that may utilize special characters.
+FROM base AS nerd-font-installer
+ADD https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip /tmp/Hack.zip
+RUN apt update \
+    && apt install -y --no-install-recommends fontconfig unzip \
+    && mkdir -p /usr/share/fonts/truetype/hacknerdfont/ \
+    && unzip /tmp/Hack.zip -d /usr/share/fonts/truetype/hacknerdfont/
+
+
+FROM base AS production
 # --- METADATA ---
 LABEL maintainer="jenkinsd" \
       project="Desktop Application Terminal Emulator" \
@@ -30,16 +41,17 @@ RUN apt update \
     cython3 \
     emacs-nox \
     fontconfig \
-    fonts-hack \
     git \
     htop \
     jq \
     libfreetype6 \
+    libgl1 \
     libxft2 \
     locales \
     python3 \
     python3-pip \
     python3-venv \
+    qt5dxcb-plugin \
     rclone \
     tmux \
     vim-nox \
@@ -54,6 +66,12 @@ RUN apt update \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /root/.cache \
  && update-alternatives --install /usr/bin/python python /usr/bin/python3 8
+
+ # Port the Nerd Font from the builder stage.
+COPY --from=nerd-font-installer /usr/share/fonts/ /usr/share/fonts/
+
+# Ensure the newly added fonts are recognized by the font cache.
+RUN fc-cache -f -v
 
 # All Python packages are installed through pip to ensure compatibility with dependencies, especially for the CANFAR client libraries which are not available in APT. The --break-system-packages flag is used to allow installation of packages that may conflict with the system's Python installation, but this should be done with caution as it can potentially break system tools that rely on the default Python installation.
 RUN pip3 install --break-system-packages astropy astroquery cadcdata cadctap cadcutils canfar matplotlib numpy spyder vos
@@ -82,6 +100,6 @@ RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'export HISTFILE="${HOME}/.bash_history"' >> /etc/bash.bashrc \
  && echo 'shopt -s histappend' >> /etc/bash.bashrc \
  && echo 'PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' >> /etc/bash.bashrc \
- && printf 'scan_timeout = 1000\ncommand_timeout = 1000\npalette = "gruvbox"\n\n[palettes.gruvbox]\nbg0 = "#282828"\nyellow = "#d79921"\naqua = "#689d6a"\ngreen = "#98971a"\nred = "#cc241d"\n\n[username]\nshow_always = true\nstyle_user = "bg:yellow fg:bg0"\nstyle_root = "bg:red fg:bg0"\nformat = "[ $user ]($style)"\n\n[directory]\nstyle = "bg:aqua fg:bg0"\nformat = "[ $path ]($style)"\ntruncation_length = 0\ntruncate_to_repo = false\n\n[git_branch]\nsymbol = "git:"\nstyle = "bg:green fg:bg0"\nformat = "[ $symbol$branch ]($style)"\n\n[git_status]\ndisabled = true\n\n[container]\ndisabled = true\n\n[character]\nsuccess_symbol = "[ > ](bold green)"\nerror_symbol = "[ x ](bold red)"\n' > /etc/starship.toml
+ && printf 'scan_timeout = 1000\ncommand_timeout = 1000\npalette = "gruvbox"\n\n[palettes.gruvbox]\nbg0 = "#282828"\nyellow = "#d79921"\naqua = "#689d6a"\ngreen = "#98971a"\nred = "#cc241d"\n\n[username]\nshow_always = true\nstyle_user = "bg:yellow fg:bg0"\nstyle_root = "bg:red fg:bg0"\nformat = "[ $user ]($style)"\n\n[directory]\nstyle = "bg:aqua fg:bg0"\nformat = "[ $path ]($style)"\ntruncation_length = 0\ntruncate_to_repo = false\n\n[git_branch]\nsymbol = "git:"\nstyle = "bg:green fg:bg0"\nformat = "[ $symbol$branch ]($style)"\n\n[git_status]\ndisabled = true\n\n[container]\ndisabled = true\n\n[python]\ndisabled = true\n\n[java]\ndisabled = true\n\n[c]\ndisabled = true\n\n[cpp]\ndisabled = true\n\n[rust]\ndisabled = true\n\n[character]\nsuccess_symbol = "[ > ](bold green)"\nerror_symbol = "[ x ](bold red)"\n' > /etc/starship.toml
 
 CMD ["/bin/bash", "-c", "exec xterm -ls"]
