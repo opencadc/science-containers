@@ -3,12 +3,12 @@ name = "science-containers"
 version = "0.7.0"
 description = "Science Containers for CANFAR"
 authors = ["CANFAR <support@canfar.net>"]
-license = "GNU Affero GPL v3.0"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-
 
 [tool.poetry.group.docs.dependencies]
 mkdocs-material = "^9.4"
