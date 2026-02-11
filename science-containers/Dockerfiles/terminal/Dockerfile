@@ -14,6 +14,13 @@ ENV SHELL=/bin/bash \
     DEBIAN_FRONTEND=noninteractive
 
 # BUCKET 1: System Foundation (Pure CLI-only tools)
+# This will install the necessary APT packages for a robust terminal environment, including Python and its scientific libraries, as well as tools like tmux, vim, and htop. It also installs the Starship prompt and OpenCode CLI for enhanced terminal functionality. After installation, it cleans up APT caches to reduce the image size.
+# Important note:
+# Python packages are installed with --break-system-packages to allow installation of packages that may conflict with the system's Python installation. This is necessary because some scientific Python packages may have dependencies that conflict with the versions provided by the base Ubuntu image. However, this should be done with caution, as it can potentially break system tools that rely on the default Python installation.
+# While Debian based systems recommend using APT to install Python packages, the CADC and CANFAR client libraries are missing from APT and more up-to-date and better maintained on PyPI, so we use pip for those installations.
+# This also means that all Python packages are installed through pip to ensure compatibility with dependencies.
+# Ensure that the default python command points to python3.
+# jenkinsd 2026.02.11
 RUN apt update \
     && apt install -y --no-install-recommends \
     bash \
@@ -31,10 +38,6 @@ RUN apt update \
     libxft2 \
     locales \
     python3 \
-    python3-astropy \
-    python3-astroquery \
-    python3-matplotlib \
-    python3-numpy \
     python3-pip \
     python3-venv \
     rclone \
@@ -47,8 +50,13 @@ RUN apt update \
  && chmod +x /usr/local/bin/opencode \
  && rm -rf /root/.opencode \
  && curl -sS https://starship.rs/install.sh | sh -s -- --yes \
- && pip3 install --break-system-packages cadcdata cadctap cadcutils canfar vos \
- && rm -rf /var/lib/apt/lists/*
+ && apt clean \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /root/.cache \
+ && update-alternatives --install /usr/bin/python python /usr/bin/python3 8
+
+# All Python packages are installed through pip to ensure compatibility with dependencies, especially for the CANFAR client libraries which are not available in APT. The --break-system-packages flag is used to allow installation of packages that may conflict with the system's Python installation, but this should be done with caution as it can potentially break system tools that rely on the default Python installation.
+RUN pip3 install --break-system-packages astropy astroquery cadcdata cadctap cadcutils canfar matplotlib numpy spyder vos
 
 # BUCKET 2: Locale Settings for UTF-8 Support.  This will ensure xterm and other terminal emulators can properly display UTF-8 characters, which is essential for
 # applications like the canfar client and overall terminal aesthetics.
