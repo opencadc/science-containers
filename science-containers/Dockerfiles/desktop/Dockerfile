@@ -78,6 +78,7 @@ ENV MOZ_FORCE_DISABLE_E10S=1
 RUN apt-get update \
     && apt-get install -y \
     at-spi2-core \
+    autocutsel \
     bzip2 \
     curl \
     dconf-cli \
@@ -218,6 +219,8 @@ RUN mkdir -p /etc/vnc && \
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
+autocutsel -fork
+
 if [ -r "$HOME/.Xresources" ]; then
     sed -i 's/^#/\!/' "$HOME/.Xresources"
     xrdb "$HOME/.Xresources"
@@ -258,7 +261,7 @@ logfile=%(ENV_SUPERVISOR_DIR)s/supervisord.log
 pidfile=%(ENV_SUPERVISOR_DIR)s/supervisord.pid
 
 [program:vnc]
-command=/usr/bin/tigervncserver -fg :1 -localhost no -listen tcp -cleanstale -AlwaysShared -AcceptSetDesktopSize=1 -NeverShared=0 -SecurityTypes None -depth %(ENV_VNC_COL_DEPTH)s -geometry %(ENV_VNC_RESOLUTION)s -xstartup /etc/vnc/xstartup --I-KNOW-THIS-IS-INSECURE
+command=/usr/bin/tigervncserver -fg :1 -localhost no -listen tcp -cleanstale -AlwaysShared -SendCutText=1 -SendPrimary=1 -AcceptCutText=1 -AcceptSetDesktopSize=1 -NeverShared=0 -SecurityTypes None -depth %(ENV_VNC_COL_DEPTH)s -geometry %(ENV_VNC_RESOLUTION)s -xstartup /etc/vnc/xstartup --I-KNOW-THIS-IS-INSECURE
 autorestart=unexpected
 startsecs=3
 
