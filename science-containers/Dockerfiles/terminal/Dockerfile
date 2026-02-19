@@ -99,7 +99,7 @@ RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'alias rm="rm -i"' >> /etc/bash.bashrc \
  && echo 'alias cp="cp -i"' >> /etc/bash.bashrc \
  && echo 'alias mv="mv -i"' >> /etc/bash.bashrc \
- && echo 'alias xterm=xterm -fa "Hack Nerd Font" -fs 13' >> /etc/bash.bashrc \
+ && echo 'alias xterm="xterm -fa \"Hack Nerd Font\" -fs 13"' >> /etc/bash.bashrc \
  && /usr/local/bin/starship init bash --print-full-init >> /etc/bash.bashrc \
  && echo 'export HISTFILE="${HOME}/.bash_history"' >> /etc/bash.bashrc \
  && echo 'shopt -s histappend' >> /etc/bash.bashrc \
