@@ -74,8 +74,8 @@ COPY --from=nerd-font-installer /usr/share/fonts/ /usr/share/fonts/
 # Ensure the newly added fonts are recognized by the font cache.
 RUN fc-cache -f -v
 
-RUN cat <<'EOF' > /tmp/.Xresources \
-xterm*faceName: Hack Nerd Font Mono
+RUN cat <<'EOF' > /tmp/.Xresources
+xterm*faceName: Hack Nerd Font
 xterm*faceSize: 13
 EOF
 
