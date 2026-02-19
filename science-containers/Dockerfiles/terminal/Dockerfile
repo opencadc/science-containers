@@ -87,10 +87,10 @@ ENV LC_ALL=en_US.UTF-8
 
 # Ensure the xterm command uses the Hack Nerd Font for better aesthetics and compatibility with the Starship prompt. This is done by creating a wrapper script for xterm that specifies the font settings. 
 # The script is made executable and placed in /usr/local/bin, which is in the system's PATH, so it will override the default xterm command when executed.  Assumes /usr/local/bin is in the PATH, which is standard for most Linux distributions. 
-# This allows users to simply run "xterm" and get the enhanced terminal experience with the Hack Nerd Font.
+# This allows users to simply run "xterm" and get the enhanced terminal experience with the Hack Nerd Font.  Also show a scrollbar on the right side of the terminal for better usability, and set the font size to 14 for improved readability.
 RUN printf '%s\n' \
 '#!/bin/sh' \
-'exec /usr/bin/xterm -fa "Hack Nerd Font" -fs 13 "$@"' \
+'exec /usr/bin/xterm -sb -rightbar -fa "Hack Nerd Font" -fs 14 "$@"' \
 > /usr/local/bin/xterm && \
 chmod +x /usr/local/bin/xterm
 
