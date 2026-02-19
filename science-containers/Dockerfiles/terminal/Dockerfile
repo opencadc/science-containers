@@ -55,7 +55,6 @@ RUN apt update \
     rclone \
     tmux \
     vim-nox \
-    x11-xserver-utils \
     xfonts-base \
     xterm \
  && curl -fsSL https://opencode.ai/install | bash \
@@ -74,13 +73,6 @@ COPY --from=nerd-font-installer /usr/share/fonts/ /usr/share/fonts/
 # Ensure the newly added fonts are recognized by the font cache.
 RUN fc-cache -f -v
 
-RUN cat <<'EOF' > /tmp/.Xresources
-xterm*faceName: Hack Nerd Font
-xterm*faceSize: 13
-EOF
-
-RUN xrdb -merge /tmp/.Xresources
-
 # All Python packages are installed through pip to ensure compatibility with dependencies, especially for the CANFAR client libraries which are not available in APT. The --break-system-packages flag is used to allow installation of packages that may conflict with the system's Python installation, but this should be done with caution as it can potentially break system tools that rely on the default Python installation.
 RUN pip3 install --break-system-packages astropy astroquery cadcdata cadctap cadcutils canfar matplotlib numpy spyder vos
 
@@ -94,6 +86,9 @@ ENV LC_CTYPE=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8 
 
 # BUCKET 3: Shell Configuration, Aliases & Robust Gruvbox Theme
+# This will set up a series of useful aliases for common commands, configure the Starship prompt with a Gruvbox color scheme, and ensure that the shell history is persistent across sessions. 
+# The Starship configuration is written directly to /etc/starship.toml, which is the global configuration file for Starship, ensuring that all users of the terminal will have the same prompt configuration.
+# Also includes a small overwrite hack for xterm to ensure it uses the Hack Nerd Font for better aesthetics and compatibility with the Starship prompt.
 RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'alias oc="opencode"' >> /etc/bash.bashrc \
  && echo 'alias ..="cd .."' >> /etc/bash.bashrc \
@@ -104,6 +99,7 @@ RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'alias rm="rm -i"' >> /etc/bash.bashrc \
  && echo 'alias cp="cp -i"' >> /etc/bash.bashrc \
  && echo 'alias mv="mv -i"' >> /etc/bash.bashrc \
+ && echo 'alias xterm=xterm -fa "Hack Nerd Font" -fs 13' >> /etc/bash.bashrc \
  && /usr/local/bin/starship init bash --print-full-init >> /etc/bash.bashrc \
  && echo 'export HISTFILE="${HOME}/.bash_history"' >> /etc/bash.bashrc \
  && echo 'shopt -s histappend' >> /etc/bash.bashrc \
