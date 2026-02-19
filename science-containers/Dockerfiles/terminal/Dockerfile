@@ -55,6 +55,7 @@ RUN apt update \
     rclone \
     tmux \
     vim-nox \
+    x11-xserver-utils \
     xfonts-base \
     xterm \
  && curl -fsSL https://opencode.ai/install | bash \
@@ -72,6 +73,13 @@ COPY --from=nerd-font-installer /usr/share/fonts/ /usr/share/fonts/
 
 # Ensure the newly added fonts are recognized by the font cache.
 RUN fc-cache -f -v
+
+RUN cat <<'EOF' > /tmp/.Xresources \
+xterm*faceName: Hack Nerd Font Mono
+xterm*faceSize: 13
+EOF
+
+RUN xrdb -merge /tmp/.Xresources
 
 # All Python packages are installed through pip to ensure compatibility with dependencies, especially for the CANFAR client libraries which are not available in APT. The --break-system-packages flag is used to allow installation of packages that may conflict with the system's Python installation, but this should be done with caution as it can potentially break system tools that rely on the default Python installation.
 RUN pip3 install --break-system-packages astropy astroquery cadcdata cadctap cadcutils canfar matplotlib numpy spyder vos
