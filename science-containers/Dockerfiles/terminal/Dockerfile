@@ -83,12 +83,20 @@ RUN locale-gen en_US.UTF-8 \
 
 # Should be set from the command above, but just in case, we set these environment variables to ensure that the terminal and applications within it use UTF-8 encoding by default.
 ENV LC_CTYPE=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8 
+ENV LC_ALL=en_US.UTF-8
+
+# Ensure the xterm command uses the Hack Nerd Font for better aesthetics and compatibility with the Starship prompt. This is done by creating a wrapper script for xterm that specifies the font settings. 
+# The script is made executable and placed in /usr/local/bin, which is in the system's PATH, so it will override the default xterm command when executed.  Assumes /usr/local/bin is in the PATH, which is standard for most Linux distributions. 
+# This allows users to simply run "xterm" and get the enhanced terminal experience with the Hack Nerd Font.
+RUN printf '%s\n' \
+'#!/bin/sh' \
+'exec /usr/bin/xterm -fa "Hack Nerd Font" -fs 13 "$@"' \
+> /usr/local/bin/xterm && \
+chmod +x /usr/local/bin/xterm
 
 # BUCKET 3: Shell Configuration, Aliases & Robust Gruvbox Theme
 # This will set up a series of useful aliases for common commands, configure the Starship prompt with a Gruvbox color scheme, and ensure that the shell history is persistent across sessions. 
 # The Starship configuration is written directly to /etc/starship.toml, which is the global configuration file for Starship, ensuring that all users of the terminal will have the same prompt configuration.
-# Also includes a small overwrite hack for xterm to ensure it uses the Hack Nerd Font for better aesthetics and compatibility with the Starship prompt.
 RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'alias oc="opencode"' >> /etc/bash.bashrc \
  && echo 'alias ..="cd .."' >> /etc/bash.bashrc \
@@ -99,7 +107,6 @@ RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'alias rm="rm -i"' >> /etc/bash.bashrc \
  && echo 'alias cp="cp -i"' >> /etc/bash.bashrc \
  && echo 'alias mv="mv -i"' >> /etc/bash.bashrc \
- && printf '%s\n' 'alias xterm="/usr/bin/xterm -fa \"Hack Nerd Font\" -fs 13"' >> /etc/bash.bashrc \
  && /usr/local/bin/starship init bash --print-full-init >> /etc/bash.bashrc \
  && echo 'export HISTFILE="${HOME}/.bash_history"' >> /etc/bash.bashrc \
  && echo 'shopt -s histappend' >> /etc/bash.bashrc \
