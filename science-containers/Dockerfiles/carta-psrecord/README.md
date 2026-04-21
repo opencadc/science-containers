@@ -13,6 +13,23 @@ Logs and plots are written to `~/.carta_logs/` on session exit:
 - `<timestamp>_carta-backend.log` — CPU, memory, and I/O usage over time
 - `<timestamp>_carta-backend.png` — Plot of the above
 
+### Timed diagnostics (`psrecord --duration`)
+
+If the Skaha session does not run this image’s `CMD` (so `start.sh` never executes), you will not get `.carta_logs/` output; that is independent of duration.
+
+When `start.sh` does run, you can force `psrecord` to stop after a fixed number of seconds so log/plot are written without manually ending the session:
+
+- **Runtime:** `PSRECORD_DURATION_SECONDS=600` (example: 600 = 10 minutes).
+- **Build-time:** pass `--build-arg PSRECORD_DURATION_SECONDS=600` so the value is baked into the image.
+
+Example local run (macOS/Linux, map a folder with FITS as read-only data):
+
+```
+docker run --rm -e PSRECORD_DURATION_SECONDS=120 -p 3002:3002 -v "$HOME/carta-data:/data:ro" images.canfar.net/skaha/carta:5.1.0-psrecord
+```
+
+Adjust the published host port to match the port CARTA prints in the container logs.
+
 ## Building and Publishing
 
 skaha images are managed in the CANFAR image registry at https://images.canfar.net
@@ -32,5 +49,7 @@ docker buildx build \
   . \
   --push
 ```
+
+To bake in a fixed duration (e.g. 600 seconds) for diagnostics, add `--build-arg PSRECORD_DURATION_SECONDS=600` and use a distinct tag (example: `5.1.0-psrecord-timed`).
 
 After pushing, add the `carta` label to the image in the Harbor portal under `skaha/carta` to make it visible in the CANFAR science platform.
