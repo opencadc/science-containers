@@ -45,7 +45,7 @@ In order to push images to this registry, you need to be a publishing member of 
 ```
 docker buildx build \
   --platform linux/amd64 \
-  -t images.canfar.net/skaha/carta:5.1.0-psrecord \
+  --tag images.canfar.net/skaha/carta:5.1.0-psrecord \
   . \
   --push
 ```
