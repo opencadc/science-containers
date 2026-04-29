@@ -32,7 +32,7 @@ then select **carta** as your session type.
 Note that the menu options update automatically after your session type selection. 
 Choose the CARTA version that meets your needs:
 
-- **CARTA 4.0** (recommended): Latest features and bug fixes
+- **CARTA 5.1.0** (recommended): Latest features and bug fixes
 (The screenshot is old and showed older versions only.)
 > ![image](../images/carta/2_select_carta_container.png)
 
