@@ -11,7 +11,7 @@ RUN pip3 install --break-system-packages psrecord matplotlib
 RUN mkdir /carta
 WORKDIR /carta
 
-EXPOSE 3002
+EXPOSE 6901
 
 RUN chmod -R a+rwx /carta
 
