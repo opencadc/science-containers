@@ -9,11 +9,14 @@ RUN apt update && \
 RUN mkdir /carta
 WORKDIR /carta
 
-EXPOSE 3002
+EXPOSE 6901
 
 RUN chmod -R a+rwx /carta
 
 ENV HOME=/carta
 ENV CARTA_DOCKER_DEPLOYMENT=1
 
-CMD ["carta", "--no_browser"]
+COPY start.sh /carta/start.sh
+RUN chmod +x /carta/start.sh
+
+CMD ["/carta/start.sh"]

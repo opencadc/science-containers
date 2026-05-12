@@ -125,7 +125,7 @@ images.canfar.net/skaha/casa:6.5-notebook
 images.canfar.net/skaha/casa:6.5-desktop
 
 # CARTA for visualization
-images.canfar.net/skaha/carta:3.0
+images.canfar.net/skaha/carta:5.1.0
 
 # Custom radio astronomy stack
 images.canfar.net/skaha/radio-submm:latest
@@ -250,7 +250,7 @@ impv(
 
 CARTA excels at visualizing radio data cubes:
 
-1. **Launch CARTA session**: Use CARTA 3.0 for best performance
+1. **Launch CARTA session**: Use CARTA 5.1.0 for best performance
 2. **Load cube**: Open your CASA image or FITS cube
 3. **Navigate channels**: Use channel slider for frequency/velocity
 4. **Create animations**: Generate movies through the cube
