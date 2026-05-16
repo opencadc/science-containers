@@ -2,14 +2,15 @@
 DEVNAME = sciplat-lab
 
 NAME = images.canfar.net/lsst/$(DEVNAME)
-VERSION = latest_release
-MINOR = 
+VERSION = latest_daily
+DATE := $(shell date '+%Y%m%d')
 
-build: dependencies Dockerfile
-	docker build --build-arg VERSION=$(VERSION) -t $(NAME):$(VERSION)$(MINOR) -f Dockerfile .
+deploy: dependencies Dockerfile
+	docker build --target deploy --build-arg VERSION=$(VERSION) -t $(NAME):$(DATE) -f Dockerfile .
+	docker push $(NAME):$(DATE)
 
-push: build
-	docker push $(NAME):$(VERSION)$(MINOR)
+dev: dependencies Dockerfile
+	docker build --target dev --build-arg VERSION=$(VERSION) -t $(NAME):$(DATE) -f Dockerfile .
 
 dependencies: 
 
