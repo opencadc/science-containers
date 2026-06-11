@@ -4,7 +4,7 @@ ARG CARTA_VERSION=5.1.0
 ENV CARTA_VERSION=${CARTA_VERSION}
 
 RUN apt update && \
-    apt install -y wget && \
+    apt install -y libcurl4t64 wget && \
     rm -rf /var/lib/apt/lists/*
 
 # Extract the AppImage at build time so FUSE is not required at runtime (e.g. Kubernetes).
