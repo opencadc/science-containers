@@ -3,7 +3,8 @@ set -euo pipefail
 
 # Default command works for local docker runs.
 # When Skaha env vars are provided, align with platform launch flags.
-carta_cmd=(carta --no_browser)
+carta_bin="${CARTA_APP:?CARTA_APP is not set}"
+carta_cmd=("${carta_bin}" --no_browser)
 if [ -n "${SKAHA_TOP_LEVEL_DIR:-}" ] || [ -n "${SKAHA_PROJECTS_DIR:-}" ] || [ -n "${SKAHA_SESSION_URL_PATH:-}" ]; then
   top_dir="${SKAHA_TOP_LEVEL_DIR:-/arc}"
   start_dir="${SKAHA_PROJECTS_DIR:-/arc/projects}"
