@@ -2,7 +2,7 @@
 
 ## About
 
-A CARTA session container for skaha based on the official [CARTA AppImage](https://github.com/CARTAvis/carta/releases). Supported versions are built as separate image tags via the `CARTA_VERSION` build argument.
+A CARTA session container for skaha based on the official [CARTA AppImage](https://github.com/CARTAvis/carta/releases). The AppImage is extracted at build time so FUSE is not required at runtime in Kubernetes. Supported versions are built as separate image tags via the `CARTA_VERSION` build argument.
 
 ## Building and Publishing
 
