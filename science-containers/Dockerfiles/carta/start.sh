@@ -1,10 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-dtm=$(date +%Y%m%d%H%M%S)
-logdir="${HOME}/.carta_logs"
-mkdir -p "${logdir}"
-
 # Default command works for local docker runs.
 # When Skaha env vars are provided, align with platform launch flags.
 carta_cmd=(carta --no_browser)
@@ -32,20 +28,4 @@ command_str="$(printf '%q ' "${carta_cmd[@]}")"
 command_str="${command_str% }"
 echo "start.sh: command=${command_str}"
 
-duration_args=()
-if [ -n "${PSRECORD_DURATION_SECONDS:-}" ]; then
-  if ! [[ "${PSRECORD_DURATION_SECONDS}" =~ ^[0-9]+$ ]] || [ "${PSRECORD_DURATION_SECONDS}" -eq 0 ]; then
-    echo "start.sh: PSRECORD_DURATION_SECONDS must be a positive integer (got: ${PSRECORD_DURATION_SECONDS})" >&2
-    exit 1
-  fi
-  duration_args=(--duration "${PSRECORD_DURATION_SECONDS}")
-  echo "start.sh: psrecord will stop after ${PSRECORD_DURATION_SECONDS}s (then write log/plot under ${logdir})" >&2
-fi
-
-psrecord "${command_str}" \
-  --log "${logdir}/${dtm}_carta-backend.log" \
-  --plot "${logdir}/${dtm}_carta-backend.png" \
-  --include-io \
-  --interval 1 \
-  --include-children \
-  "${duration_args[@]}"
+exec "${carta_cmd[@]}"
