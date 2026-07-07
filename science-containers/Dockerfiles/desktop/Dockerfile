@@ -191,6 +191,7 @@ RUN rm -f /usr/share/applications/xfce4-terminal-emulator.desktop \
     && rm -f /usr/share/applications/debian*.desktop
 
 # Add a subset of software links to the desktop
+COPY --chown=guest:root src/common/xfce/Desktop/firefox.desktop /headless/Desktop/firefox.desktop
 COPY --chown=guest:root software-scripts/arcade-feedback.desktop /headless/Desktop/arcade-feedback.desktop
 COPY --chown=guest:root software-scripts/kill-session.desktop /headless/Desktop/kill-session.desktop
 
