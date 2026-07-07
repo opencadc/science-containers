@@ -194,6 +194,7 @@ RUN rm -f /usr/share/applications/xfce4-terminal-emulator.desktop \
 COPY --chown=guest:root src/common/xfce/Desktop/firefox.desktop /headless/Desktop/firefox.desktop
 COPY --chown=guest:root software-scripts/arcade-feedback.desktop /headless/Desktop/arcade-feedback.desktop
 COPY --chown=guest:root software-scripts/kill-session.desktop /headless/Desktop/kill-session.desktop
+RUN chmod +x /headless/Desktop/*.desktop
 
 # Cleanup default Thunar user custom actions and screensaver autostart
 RUN rm /etc/xdg/Thunar/uca.xml
