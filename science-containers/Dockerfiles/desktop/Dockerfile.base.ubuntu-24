@@ -1,0 +1,18 @@
+# Base Ubuntu 24.04 image.
+# This image updates apt sources to use https and updates CA certificates.  It exists to workaround
+# local network issues where plain http apt sources are blocked or intercepted.
+# If this is not needed in your environment, you can use:
+# <code>FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2</code> (Ubuntu 24.04 LTS)
+# directly in the actual Dockerfile.
+# jenkinsd - 2026-01-16
+#
+FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2 AS base
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update trusted CA certificates, and ensure https is used in apt sources
+RUN apt-get update \
+    && apt-get install --reinstall -y apt-transport-https ca-certificates \
+    && update-ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i "s|http:|https:|g" /etc/apt/sources.list.d/*

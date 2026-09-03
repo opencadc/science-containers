@@ -103,10 +103,9 @@ if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -ge
 
 ## BM: The 'no password' start command is commented out
 vncserver -SecurityTypes None $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
-## vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
 echo -e "start window manager\n..."
 
-$XDG_CONFIG_HOME/wm_startup.sh &> $STARTUPDIR/wm_startup.log
+# $XDG_CONFIG_HOME/wm_startup.sh &> $STARTUPDIR/wm_startup.log
 
 ## log connect options
 echo -e "\n\n------------------ VNC environment started ------------------"
@@ -123,7 +122,12 @@ xset -dpms s off
 
 # BM: reload xterm config
 echo "reloading xtermconfig for $skaha_username"
-xrdb $HOME/.Xresources
+
+# DJ: Comments in .Xresources start with '!' instead of '#', so convert before loading
+sed 's/^#/\!/' $HOME/.Xresources > /tmp/.Xresources
+xrdb /tmp/.Xresources
+rm /tmp/.Xresources
+echo ".Xresources reloaded"
 
 if [[ $DEBUG == true ]] || [[ $1 =~ -t|--tail-log ]]; then
     echo -e "\n------------------ /headless/.vnc/*$DISPLAY.log ------------------"
@@ -132,7 +136,11 @@ if [[ $DEBUG == true ]] || [[ $1 =~ -t|--tail-log ]]; then
 fi
 
 if [ -z "$1" ] || [[ $1 =~ -w|--wait ]]; then
+    echo "Waiting for ${PID_SUB} (noVNC) to execute in the foreground..."
     wait $PID_SUB
+
+    # keep container running and tail the VNC log
+    tail -f $STARTUPDIR/*.log /headless/.vnc/*$DISPLAY.log
 else
     # unknown option ==> call command
     echo -e "\n\n------------------ EXECUTE COMMAND ------------------"
