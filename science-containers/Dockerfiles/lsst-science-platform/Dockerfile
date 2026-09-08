@@ -44,7 +44,16 @@ RUN mkdir /skaha
 COPY src/startup.sh /skaha/startup.sh
 RUN chmod +x /skaha/startup.sh
 COPY src/launch_firefly_on_canfar.py /skaha/launch_firefly_on_canfar.py
+COPY src/populate_discovery.py /skaha/populate_discovery.py
+RUN chmod +x /skaha/populate_discovery.py
 COPY src/jupyter /usr/bin/jupyter
+# cadc_dataset_map.yaml is NOT copied into the image; it is deployed to
+# /arc/projects/LSST/ via Argo CD (see arc-projects-LSST/README.md).
+
+# Writable Nublado discovery/token paths used by lsst.rsp.RSPDiscovery.
+# Skaha sessions run as arbitrary UIDs, so these must be world-writable.
+RUN mkdir -p /etc/nublado/discovery /etc/nublado/secrets \
+ && chmod 1777 /etc/nublado /etc/nublado/discovery /etc/nublado/secrets
 
 # Some items to make this a better experience on CANFAR
 RUN /skaha/startup.sh pip install cadctap cadcdata vos canfar safir rsp-jupyter-extensions lsdb
