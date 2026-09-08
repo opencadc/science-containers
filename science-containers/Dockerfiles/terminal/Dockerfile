@@ -25,6 +25,7 @@ RUN apt update \
     git \
     htop \
     jq \
+    openssh-client \
     python3 \
     python3-pip \
     python3-scipy \
@@ -57,6 +58,7 @@ RUN echo 'alias py="python3"' >> /etc/bash.bashrc \
  && echo 'export HISTFILE="${HOME}/.bash_history"' >> /etc/bash.bashrc \
  && echo 'shopt -s histappend' >> /etc/bash.bashrc \
  && echo 'PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' >> /etc/bash.bashrc \
+ && printf '\n# Persistent user configuration shared by terminal and Webterm sessions.\n[ -r /etc/profile.d/terminal.sh ] && . /etc/profile.d/terminal.sh\n' >> /etc/bash.bashrc \
  && cat > /etc/starship.toml <<'EOF'
 scan_timeout = 1000
 command_timeout = 1000
@@ -96,6 +98,9 @@ home_symbol = "~"
 success_symbol = "[ > ](bold green)"
 error_symbol = "[ x ](bold red)"
 EOF
+
+COPY terminal.sh /etc/profile.d/terminal.sh
+RUN chmod 644 /etc/profile.d/terminal.sh
 
 # xset -b: disable X keyboard bell; xterm +vb: no visual bell; bellIsUrgent: no WM urgency flash
 CMD ["/bin/bash", "-c", "xset -b 2>/dev/null; exec xterm -ls +vb -xrm 'XTerm*bellIsUrgent: false'"]
