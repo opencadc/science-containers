@@ -1,0 +1,140 @@
+# Map RSP dataset labels to CADC/IVOA resources and optional literal URLs.
+#
+# Deployed location (outside the container image):
+#   /arc/projects/LSST/cadc_dataset_map.yaml
+#
+# At session start, populate_discovery.py reads this file and writes
+# /etc/nublado/discovery/v1.json for lsst.rsp.RSPDiscovery.
+#
+# Service values may be:
+#   - ivo://...     → resolve via resource-caps + VOSI capabilities (CANFAR/CADC)
+#   - https://...   → literal URL (used to mirror Rubin services into discovery)
+#   - {url, versions} dict for fully specified literal entries
+#
+# AUTH WARNING
+# ------------
+# RSPDiscovery attaches a single bearer token to every service URL for a
+# dataset. CANFAR (CADC) tokens and Rubin (Gafaelfawr) tokens are different.
+#   - dp1 / dp2: default session token is the CADC token from startup.sh.
+#     CANFAR-resolved services (tap, gms, sia, cutout, datalink) work with it.
+#     hips entries below point at Rubin and will NOT authenticate with that
+#     CADC token; call them only with an explicit Rubin token, or use the
+#     Rubin-mirrored datasets (dp02 / prompt) instead.
+#   - dp02 / prompt: URLs point at data.lsst.cloud. Use a Rubin token:
+#       RSPDiscovery("dp02", token=os.environ["RUBIN_TOKEN"])
+#     Do not expect the default CANFAR ACCESS_TOKEN / NUBLADO_TOKEN to work.
+#
+# Source of truth: science-containers/.../arc-projects-LSST/
+# Sync to ARC via Argo CD (see README.md in that directory).
+
+resource_caps_url: https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/reg/resource-caps
+discovery_path: /etc/nublado/discovery/v1.json
+environment_name: canfar
+
+# RSPDiscovery service name → IVOA capability standardID(s) to match
+# inside a resource's VOSI capabilities document (IVOID entries only).
+service_standard_ids:
+  tap:
+    - ivo://ivoa.net/std/TAP
+  sia:
+    - ivo://ivoa.net/std/SIA#query-2.0
+    - ivo://ivoa.net/std/SIA
+  datalink:
+    - ivo://ivoa.net/std/DataLink#links-1.1
+    - ivo://ivoa.net/std/DataLink
+  cutout:
+    - ivo://ivoa.net/std/SODA#sync-1.0
+    - ivo://ivoa.net/std/SODA
+  gms:
+    - ivo://ivoa.net/std/GMS#search-1.0
+    - ivo://ivoa.net/std/GMS#search-0.1
+
+datasets:
+  # --- CANFAR-authenticated datasets (default session CADC token) ---
+  dp1:
+    description: >-
+      Data Preview 1 on CANFAR (YouCAT + CAOM ops + CADC GMS). HiPS URL is
+      Rubin's and needs a separate Rubin token.
+    docs_url: https://dp1.lsst.io/
+    butler_config: https://ws-uv.canfar.net/lsst/api/butler/repo/dp1/butler.yaml
+    services:
+      tap: ivo://cadc.nrc.ca/youcat
+      gms: ivo://cadc.nrc.ca/gms
+      sia: ivo://cadc.nrc.ca/sia
+      cutout: ivo://cadc.nrc.ca/caom2ops
+      datalink: ivo://cadc.nrc.ca/caom2ops
+      hips:
+        url: https://data.lsst.cloud/api/hips/v2/dp1/list
+        versions:
+          hips-list-1.0:
+            url: https://data.lsst.cloud/api/hips/v2/dp1/list
+
+  dp2:
+    description: >-
+      Data Preview 2 on CANFAR (YouCAT + CAOM ops + CADC GMS). HiPS URL is
+      Rubin's and needs a separate Rubin token.
+    docs_url: https://dp2.lsst.io/
+    butler_config: https://ws-uv.canfar.net/lsst/api/butler/repo/dp2/butler.yaml
+    services:
+      tap: ivo://cadc.nrc.ca/youcat
+      gms: ivo://cadc.nrc.ca/gms
+      sia: ivo://cadc.nrc.ca/sia
+      cutout: ivo://cadc.nrc.ca/caom2ops
+      datalink: ivo://cadc.nrc.ca/caom2ops
+      hips:
+        url: https://data.lsst.cloud/api/hips/v2/dp2/list
+        versions:
+          hips-list-1.0:
+            url: https://data.lsst.cloud/api/hips/v2/dp2/list
+
+  # --- Rubin-mirrored datasets (require a Rubin Gafaelfawr token) ---
+  dp02:
+    description: >-
+      DP0.2 discovery entries pointing at Rubin data.lsst.cloud services.
+      Authenticate with a Rubin token, not the CANFAR session token.
+    docs_url: https://dp0-2.lsst.io/
+    butler_config: https://data.lsst.cloud/api/butler/repo/dp02/butler.yaml
+    services:
+      tap:
+        url: https://data.lsst.cloud/api/tap
+        versions:
+          tables:
+            url: https://data.lsst.cloud/api/tap/tables
+      sia:
+        url: https://data.lsst.cloud/api/sia/dp02
+        versions:
+          sia-query-2.0:
+            url: https://data.lsst.cloud/api/sia/dp02/query
+      cutout:
+        url: https://data.lsst.cloud/api/cutout
+        versions:
+          soda-async-1.0:
+            url: https://data.lsst.cloud/api/cutout/jobs
+          soda-sync-1.0:
+            url: https://data.lsst.cloud/api/cutout/sync
+      datalink:
+        url: https://data.lsst.cloud/api/datalink
+        versions:
+          datalink-links-1.1:
+            url: https://data.lsst.cloud/api/datalink/links
+      gms:
+        url: https://data.lsst.cloud/auth/gms
+        versions:
+          gms-search-1.0:
+            url: https://data.lsst.cloud/auth/gms
+      hips:
+        url: https://data.lsst.cloud/api/hips/v2/dp02/list
+        versions:
+          hips-list-1.0:
+            url: https://data.lsst.cloud/api/hips/v2/dp02/list
+
+  prompt:
+    description: >-
+      Rubin prompt-product discovery (alerts). Requires a Rubin token.
+    services:
+      alerts: https://data.lsst.cloud/api/alerts
+      gms:
+        url: https://data.lsst.cloud/auth/gms
+        versions:
+          gms-search-1.0:
+            url: https://data.lsst.cloud/auth/gms

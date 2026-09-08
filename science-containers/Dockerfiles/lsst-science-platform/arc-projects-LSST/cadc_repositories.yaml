@@ -1,0 +1,18 @@
+# Butler repository index for CANFAR LSST sessions.
+#
+# Deployed location (outside the container image):
+#   /arc/projects/LSST/cadc_repositories.yaml
+#
+# Referenced by startup.sh as DAF_BUTLER_REPOSITORY_INDEX
+# (also served at
+# https://www.canfar.net/storage/arc/file/projects/LSST/cadc_repositories.yaml).
+#
+# Source of truth: science-containers/.../arc-projects-LSST/
+# Sync to ARC via Argo CD (see README.md in this directory).
+
+dp1: "https://ws-uv.canfar.net/lsst/api/butler/repo/dp1/butler.yaml"
+dp2: "https://ws-uv.canfar.net/lsst/api/butler/repo/dp2/butler.yaml"
+canfar-dp1: "https://ws-uv.canfar.net/lsst/api/butler/repo/dp1/butler.yaml"
+canfar-dp2: "https://ws-uv.canfar.net/lsst/api/butler/repo/dp2/butler.yaml"
+rubin-dp1: "https://data.lsst.cloud/api/butler/repo/dp1/butler.yaml"
+rubin-dp2: "https://data.lsst.cloud/api/butler/repo/dp2/butler.yaml"
