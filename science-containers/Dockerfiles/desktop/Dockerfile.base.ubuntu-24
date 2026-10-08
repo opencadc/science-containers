@@ -1,0 +1,21 @@
+# Base Ubuntu 24.04 image.
+# Corporate proxies intercept HTTPS (unknown issuer) and corrupt HTTP by-hash
+# indexes. Stay on Ubuntu's default HTTP mirrors; fetch Packages by path.
+# If this is not needed in your environment, you can use:
+# FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2
+# (Ubuntu 24.04 LTS) directly in the actual Dockerfile.
+# jenkinsd - 2026-01-16
+#
+FROM ubuntu@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5549bd6db258ac2 AS base
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN printf '%s\n' \
+        'Acquire::By-Hash "0";' \
+        'Acquire::http::Pipeline-Depth "0";' \
+        'Acquire::http::No-Cache "true";' \
+        > /etc/apt/apt.conf.d/99no-by-hash \
+ && apt-get update \
+ && apt-get install --reinstall -y ca-certificates \
+ && update-ca-certificates \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
