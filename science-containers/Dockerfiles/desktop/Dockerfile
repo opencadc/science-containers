@@ -4,13 +4,19 @@
 FROM ubuntu:24.04 AS base
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update trusted CA certificates, and ensure https is used in apt sources
-RUN apt-get update \
-    && apt-get install --reinstall -y apt-transport-https ca-certificates \
-    && update-ca-certificates \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && sed -i "s|http:|https:|g" /etc/apt/sources.list.d/*
+# Corporate proxies intercept HTTPS (unknown issuer) and corrupt HTTP by-hash
+# indexes. Stay on Ubuntu's default HTTP mirrors; fetch Packages by path.
+# Later stages inherit this apt config.
+RUN printf '%s\n' \
+        'Acquire::By-Hash "0";' \
+        'Acquire::http::Pipeline-Depth "0";' \
+        'Acquire::http::No-Cache "true";' \
+        > /etc/apt/apt.conf.d/99no-by-hash \
+ && apt-get update \
+ && apt-get install --reinstall -y ca-certificates \
+ && update-ca-certificates \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 # Ubuntu custom base image (based from 24.04 LTS) to extract noVNC package.json
 # This layer is used to avoid downloading the full noVNC source each time the main image is built.
