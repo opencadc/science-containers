@@ -1,0 +1,99 @@
+name: Build & Push lsst/sciplat-lab
+
+# Maintainer-gated deploy: merge to main does not ship an image.
+# Primary: Actions → Run workflow (optional base-image VERSION).
+# Secondary: push a tag matching lsst-sciplat-lab-* for a git-auditable ship.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Base lsstsqre/sciplat-lab tag (also used as floating image tag)
+        required: true
+        default: latest_release
+        type: choice
+        options:
+          - latest_release
+          - latest_daily
+  push:
+    tags:
+      - 'lsst-sciplat-lab-*'
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: images.canfar.net
+  IMAGE: lsst/sciplat-lab
+  # Dispatch input when present; tag-triggered runs default to latest_release.
+  VERSION: ${{ github.event.inputs.version || 'latest_release' }}
+  MAKEFILE_DIR: science-containers/Dockerfiles/lsst-science-platform
+
+jobs:
+  build:
+    name: Build and Push LSST Science Platform
+    runs-on: ubuntu-latest
+    permissions:
+      attestations: write # Attest the build provenance
+      id-token: write # Generate OIDC token for cosign
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: free disk space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          df -h
+          docker system prune -af && sudo rm -rf /tmp/*
+          df -h
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.10.0
+
+      - name: Log in to CANFAR images registry
+        uses: docker/login-action@v3.4.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.CANFAR_HARBOR_ROBOT_PUBLISHER_USERNAME }}
+          password: ${{ secrets.CANFAR_HARBOR_ROBOT_PUBLISHER_SECRET }}
+
+      - name: Build & push lsst/sciplat-lab
+        id: deploy
+        working-directory: ${{ env.MAKEFILE_DIR }}
+        run: |
+          DATE="$(date '+%Y%m%d')"
+          META="$(mktemp)"
+          echo "Building/pushing ${REGISTRY}/${IMAGE}:{${VERSION},${DATE}}"
+          make deploy \
+            VERSION="${VERSION}" \
+            DATE="${DATE}" \
+            CACHE_FROM=type=gha \
+            CACHE_TO=type=gha,mode=max \
+            METADATA_FILE="${META}"
+          DIGEST="$(jq -r '."containerimage.digest"' "${META}")"
+          test -n "${DIGEST}" && test "${DIGEST}" != "null"
+          echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
+          echo "Pushed ${REGISTRY}/${IMAGE}@${DIGEST}"
+
+      - name: Attest Image
+        id: attest
+        uses: actions/attest-build-provenance@v2.3.0
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE }}
+          subject-digest: ${{ steps.deploy.outputs.digest }}
+          show-summary: true
+
+      - name: Install Cosign
+        id: install-cosign
+        uses: sigstore/cosign-installer@v3.8.2
+        with:
+          cosign-release: 'v2.4.3'
+
+      - name: Cosign Container Image
+        id: cosign
+        run: |
+          cosign version
+          cosign sign --yes ${{ env.REGISTRY }}/${{ env.IMAGE }}@${{ steps.deploy.outputs.digest }} --upload
