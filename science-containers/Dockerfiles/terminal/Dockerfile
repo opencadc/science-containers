@@ -14,7 +14,14 @@ ENV SHELL=/bin/bash \
     DEBIAN_FRONTEND=noninteractive
 
 # BUCKET 1: System Foundation (Pure CLI-only tools)
-RUN apt update \
+# Corporate proxies intercept HTTPS (unknown issuer) and corrupt HTTP by-hash
+# indexes. Stay on Ubuntu's default HTTP mirrors; fetch Packages by path.
+RUN printf '%s\n' \
+        'Acquire::By-Hash "0";' \
+        'Acquire::http::Pipeline-Depth "0";' \
+        'Acquire::http::No-Cache "true";' \
+        > /etc/apt/apt.conf.d/99no-by-hash \
+ && apt update \
     && apt install -y --no-install-recommends \
     acl \
     bash \
@@ -33,7 +40,11 @@ RUN apt update \
     rclone \
     tmux \
     vim-nox \
+    fontconfig \
+    fonts-dejavu-core \
+    libxft2 \
     x11-xserver-utils \
+    xfonts-base \
     xterm \
  && curl -fsSL https://opencode.ai/install | bash \
  && mv /root/.opencode/bin/opencode /usr/local/bin/opencode \
@@ -102,5 +113,29 @@ EOF
 COPY terminal.sh /etc/profile.d/terminal.sh
 RUN chmod 644 /etc/profile.d/terminal.sh
 
+# Nested Desktop xterm is an X client: core bitmap fonts are loaded by the
+# VNC X server, so menu sizes grey out if 9x15/10x20 are missing there.
+# TrueType (Xft) is rendered in this container; faceSize* is the size ladder.
+ENV XENVIRONMENT=/etc/X11/Xresources/xterm-fonts
+RUN mkdir -p /etc/X11/Xresources \
+ && cat > /etc/X11/Xresources/xterm-fonts <<'EOF'
+XTerm.VT100.renderFont: true
+XTerm.VT100.faceName: DejaVu Sans Mono
+XTerm.VT100.font1: nil2
+XTerm.VT100.font2: 5x7
+XTerm.VT100.font3: 6x10
+XTerm.VT100.font4: 7x13
+XTerm.VT100.font5: 9x15
+XTerm.VT100.font6: 10x20
+XTerm.VT100.faceSize1: 8
+XTerm.VT100.faceSize2: 10
+XTerm.VT100.faceSize3: 12
+XTerm.VT100.faceSize4: 14
+XTerm.VT100.faceSize5: 18
+XTerm.VT100.faceSize6: 24
+XTerm.VT100.faceSize7: 32
+EOF
+
 # xset -b: disable X keyboard bell; xterm +vb: no visual bell; bellIsUrgent: no WM urgency flash
-CMD ["/bin/bash", "-c", "xset -b 2>/dev/null; exec xterm -ls +vb -xrm 'XTerm*bellIsUrgent: false'"]
+# -fa enables Xft so Ctrl+right-click Large/Huge change point size in this client.
+CMD ["/bin/bash", "-c", "xset -b 2>/dev/null; exec xterm -ls +vb -fa 'DejaVu Sans Mono' -xrm 'XTerm*bellIsUrgent: false'"]
