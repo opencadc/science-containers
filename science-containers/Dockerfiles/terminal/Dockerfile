@@ -40,6 +40,9 @@ RUN printf '%s\n' \
     rclone \
     tmux \
     vim-nox \
+    fontconfig \
+    fonts-dejavu-core \
+    libxft2 \
     x11-xserver-utils \
     xfonts-base \
     xterm \
@@ -110,12 +113,14 @@ EOF
 COPY terminal.sh /etc/profile.d/terminal.sh
 RUN chmod 644 /etc/profile.d/terminal.sh
 
-# Ctrl+right-click VT Fonts (Large=font5/9x15, Huge=font6/10x20). Bitmap files
-# come from xfonts-base; faceSize* is used if TrueType is enabled.
-# XENVIRONMENT is read by this xterm only and does not change the default size.
+# Nested Desktop xterm is an X client: core bitmap fonts are loaded by the
+# VNC X server, so menu sizes grey out if 9x15/10x20 are missing there.
+# TrueType (Xft) is rendered in this container; faceSize* is the size ladder.
 ENV XENVIRONMENT=/etc/X11/Xresources/xterm-fonts
 RUN mkdir -p /etc/X11/Xresources \
  && cat > /etc/X11/Xresources/xterm-fonts <<'EOF'
+XTerm.VT100.renderFont: true
+XTerm.VT100.faceName: DejaVu Sans Mono
 XTerm.VT100.font1: nil2
 XTerm.VT100.font2: 5x7
 XTerm.VT100.font3: 6x10
@@ -132,4 +137,5 @@ XTerm.VT100.faceSize7: 32
 EOF
 
 # xset -b: disable X keyboard bell; xterm +vb: no visual bell; bellIsUrgent: no WM urgency flash
-CMD ["/bin/bash", "-c", "xset -b 2>/dev/null; exec xterm -ls +vb -xrm 'XTerm*bellIsUrgent: false'"]
+# -fa enables Xft so Ctrl+right-click Large/Huge change point size in this client.
+CMD ["/bin/bash", "-c", "xset -b 2>/dev/null; exec xterm -ls +vb -fa 'DejaVu Sans Mono' -xrm 'XTerm*bellIsUrgent: false'"]
